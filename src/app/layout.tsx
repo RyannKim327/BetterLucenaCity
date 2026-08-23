@@ -12,8 +12,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: `BetterLucena`,
-    template: `%s · BetterLucena`,
+    default: `${site.name}`,
+    template: `%s · ${site.name}`,
   },
   description: site.description,
 };

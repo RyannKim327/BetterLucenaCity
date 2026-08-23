@@ -1,8 +1,8 @@
-# BetterLucena
+# BetterLucenaCity
 
 **Transparent. Accessible. Para sa mamamayan.**
 
-BetterLucena is a community-driven platform that makes Lucena City's government information and public services more accessible, transparent, and easy to navigate.
+BetterLucenaCity is a community-driven platform that makes Lucena City's government information and public services more accessible, transparent, and easy to navigate.
 
 Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 
@@ -25,8 +25,8 @@ Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 ## Getting Started
 
 ```bash
-git clone https://github.com/<your-username>/betterlucenacity.git
-cd betterlucenacity
+git clone https://github.com/<your-username>/BetterLucenaCity.git
+cd BetterLucenaCity
 npm install
 npm run dev
 ```

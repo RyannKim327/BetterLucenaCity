@@ -4,7 +4,7 @@ Salamat sa pag-contribute! This guide covers everything you need to start helpin
 
 ## About the Project
 
-A citizen-first civic technology portal that makes Lucena City government services, announcements, and public data transparent, accessible, and actionable. We are non-partisan and facts-first.
+BetterLucenaCity is a community-driven platform that makes Lucena City's government information and public services more accessible, transparent, and easy to navigate.
 
 ## Ways to Contribute
 
