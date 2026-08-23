@@ -50,11 +50,32 @@ export default function Home() {
           <h2 id="about-heading" className="text-2xl font-semibold tracking-tight">Lucena City at a Glance</h2>
         </div>
         <div className="flex gap-4">
-          <Card className="flex flex-col w-[calc(25%-0.5rem)] h-full">
+          <Card className="flex flex-col gap-2 w-[calc(25%-0.5rem)] h-full">
+            <p
+              className="text-xs uppercase tracking-wider text-secondary">Population</p>
+            <span>280,331</span>
+            <span className="text-xs">2024 Census</span>
+          </Card>
+          <Card className="flex flex-col gap-2 w-[calc(25%-0.5rem)] h-full">
             <p
               className="text-xs uppercase tracking-wider text-secondary">Barangay</p>
             <span>{LUCENA.barangays.length} Barangays</span>
+            <span className="text-xs text-transparent">. </span>
           </Card>
+          <Card className="flex flex-col gap-2 w-[calc(25%-0.5rem)] h-full">
+            <p
+              className="text-xs uppercase tracking-wider text-secondary">Income Classification</p>
+            <span>1st Class</span>
+            <span className="text-xs">Source: PSA</span>
+
+          </Card>
+          <Card className="flex flex-col gap-2 w-[calc(25%-0.5rem)] h-full">
+            <p
+              className="text-xs uppercase tracking-wider text-secondary">Land Area</p>
+            <span>80.21 km²</span>
+            <span className="text-xs text-transparent">. </span>
+          </Card>
+
         </div>
       </section>
 
