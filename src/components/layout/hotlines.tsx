@@ -7,11 +7,13 @@ export default function Hotlines() {
         <div className="flex gap-5 font-semibold p-2">
           {
             hotlines.map((hotline, i: number) => {
-              return (
-                <span key={`${i}. ${hotline.name}`}>
-                  {hotline.name} {hotline.dial}
-                </span>
-              )
+              if (hotline.head) {
+                return (
+                  <span key={`${i}. ${hotline.name}`}>
+                    {hotline.name} {hotline.dial.join(" | ")}
+                  </span>
+                )
+              }
             })
           }
         </div>
