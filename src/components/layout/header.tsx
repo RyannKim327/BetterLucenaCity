@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 import { navLinks, site } from "@/lib/data/site";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import Hotlines from "./hotlines";
 
 export function Header() {
@@ -32,43 +34,41 @@ export function Header() {
             </span>
           </Link>
 
-          <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex items-center gap-1">
-              {navLinks.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`inline-flex h-10 items-center rounded-full px-4 text-sm transition-colors ${active
-                        ? "bg-primary-container text-on-primary-container font-semibold"
-                        : "text-on-surface-variant hover:bg-primary/8"
-                        }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+          <div className="flex items-center gap-1">
+            <nav aria-label="Primary" className="hidden md:block">
+              <ul className="flex items-center gap-1">
+                {navLinks.map((link) => {
+                  const active = pathname === link.href;
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`inline-flex h-10 items-center rounded-full px-4 text-sm transition-colors ${active
+                          ? "bg-primary-container text-on-primary-container font-semibold"
+                          : "text-on-surface-variant hover:bg-primary/8"
+                          }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            className="inline-flex size-11 items-center justify-center rounded-full text-on-surface hover:bg-primary/8 md:hidden"
-          >
-            <span className="sr-only">Toggle navigation</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              {open ? (
-                <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-              ) : (
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-              )}
-            </svg>
-          </button>
+            <ThemeToggle />
+
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              className="inline-flex size-11 items-center justify-center rounded-full text-on-surface hover:bg-primary/8 md:hidden"
+            >
+              <span className="sr-only">Toggle navigation</span>
+              {open ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
+            </button>
+          </div>
         </div>
       </div>
 

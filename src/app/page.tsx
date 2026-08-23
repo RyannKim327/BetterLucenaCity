@@ -103,26 +103,6 @@ export default function Home() {
           ))}
         </ul>
       </section>
-
-      <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-        <div className="rounded-card bg-primary-container p-6 text-on-primary-container md:p-10 shadow-elevation-1">
-          <h2 className="text-xl font-semibold">Emergency Hotlines</h2>
-          <p className="mt-1 text-sm opacity-80">Mga numerong maaari mong tawagan laging handa.</p>
-          <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {emergencyHotlines.map((hotline) => (
-              <li key={hotline.name}>
-                <p className="text-sm opacity-80">{hotline.name}</p>
-                <a
-                  href={`tel:${hotline.number.replace(/[^+\d]/g, "")}`}
-                  className="text-lg font-semibold hover:underline"
-                >
-                  {hotline.number}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
     </div>
   );
 }

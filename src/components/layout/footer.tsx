@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { emergencyHotlines } from "@/lib/data/announcements";
 import { navLinks, site } from "@/lib/data/site";
+import { hotlines } from "@/lib/data/hotlines";
 
 export function Footer() {
   return (
@@ -38,11 +39,11 @@ export function Footer() {
             Emergency Hotlines
           </p>
           <ul className="mt-3 space-y-2">
-            {emergencyHotlines.map((hotline) => (
+            {hotlines.map((hotline) => (
               <li key={hotline.name} className="text-sm">
                 <span className="text-on-surface-variant">{hotline.name}: </span>
-                <a href={`tel:${hotline.number.replace(/[^+\d]/g, "")}`} className="font-medium hover:text-primary">
-                  {hotline.number}
+                <a href={`tel:${hotline.dial.join(" ").replace(/[^+\d]/g, "")}`} className="font-medium hover:text-primary">
+                  {hotline.dial.join(" | ")}
                 </a>
               </li>
             ))}
@@ -55,6 +56,6 @@ export function Footer() {
           © {new Date().getFullYear()} {site.name} · {site.tagline}
         </p>
       </div>
-    </footer>
+    </footer >
   );
 }

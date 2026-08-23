@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  color-scheme: light;
   --background: #fafdfb;
   --foreground: #171d1b;
   --primary: #00695c;
@@ -21,9 +24,9 @@
   --outline-variant: #bec9c5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #101413;
+.dark {
+  color-scheme: dark;
+  --background: #101413;
     --foreground: #dfe4e1;
     --primary: #82d5c7;
     --on-primary: #003731;
@@ -41,7 +44,6 @@
     --on-surface-variant: #bec9c4;
     --outline: #89938f;
     --outline-variant: #3f4946;
-  }
 }
 
 @theme inline {
