@@ -5,6 +5,7 @@ import { announcements, emergencyHotlines } from "@/lib/data/announcements";
 import { services } from "@/lib/data/services";
 import { site } from "@/lib/data/site";
 import MapClient from "@/components/map/map-client";
+import { LUCENA } from "@/lib/sources/shared";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-PH", {
@@ -24,11 +25,10 @@ export default function Home() {
         <div className="flex mx-auto max-w-6xl gap-6 px-4 py-16 sm:px-6 md:py-24">
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-widest text-secondary">
-              {site.locality}, {site.province}
+              Maligayang pagdating sa
             </p>
             <h1 className="mt-3 text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Para sa bayan.{" "}
-              <span className="text-primary">Para sa kinabukasan.</span>
+              <span className="text-primary">{site.locality}</span>, {site.province}
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-on-surface-variant">
               Find city services, track public spending, and stay informed
@@ -42,6 +42,19 @@ export default function Home() {
             </div>
           </div>
           <MapClient className="w-full aspect-video" />
+        </div>
+      </section>
+
+      <section className="flex flex-col mx-auto max-w-6xl gap-4 px-4 py-16 sm:px-6" aria-labelledby="about-heading">
+        <div className="flex items-center justify-between gap-4">
+          <h2 id="about-heading" className="text-2xl font-semibold tracking-tight">Lucena City at a Glance</h2>
+        </div>
+        <div className="flex gap-4">
+          <Card className="flex flex-col h-full">
+            <p
+              className="text-xs uppercase tracking-wider text-secondary">Barangay</p>
+            <span>{LUCENA.barangays.length} Barangays</span>
+          </Card>
         </div>
       </section>
 
@@ -103,6 +116,6 @@ export default function Home() {
           ))}
         </ul>
       </section>
-    </div>
+    </div >
   );
 }
