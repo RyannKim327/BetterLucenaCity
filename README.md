@@ -44,16 +44,17 @@ npm run lint    # eslint
 ## Project Structure
 
 ```
-app/                  # Next.js App Router pages and API routes
-  api/                # Route handlers proxying external data sources
-components/
-  layout/             # Header, footer, page headers
-  live/               # Live civic data client components
-  map/                # Leaflet map components
-  ui/                 # Reusable primitives (Card, Button)
-lib/
-  data/               # Local site content and sample data
-  sources/            # Server-side clients for external APIs
+src/
+  app/                  # Next.js App Router pages and API routes
+    api/                # Route handlers proxying external data sources
+  components/
+    layout/             # Header, footer, page headers
+    live/               # Live civic data client components
+    map/                # Leaflet map components
+    ui/                 # Reusable primitives (Card, Button)
+  lib/
+    data/               # Local site content and sample data
+    sources/            # Server-side clients for external APIs
 ```
 
 ## Data Sources
