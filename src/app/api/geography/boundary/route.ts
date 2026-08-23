@@ -1,6 +1,10 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
+import { cached } from "@/lib/cache";
 
 const LUCENA_OSM_RELATION = "R11124741";
+
+export const revalidate = 86_400;
 
 interface NominatimLookupResponse {
   place_id: number;
@@ -18,23 +22,32 @@ interface NominatimLookupResponse {
 
 export async function GET() {
   try {
-    const url =
-      `https://nominatim.openstreetmap.org/lookup?osm_ids=${LUCENA_OSM_RELATION}` +
-      "&format=json&polygon_geojson=1";
+    const place = await cached(
+      `nominatim:boundary:${LUCENA_OSM_RELATION}`,
+      86_400,
+      async () => {
+        const url =
+          `https://nominatim.openstreetmap.org/lookup?osm_ids=${LUCENA_OSM_RELATION}` +
+          "&format=json&polygon_geojson=1";
 
-    const results = (await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "BetterGov.ph Lucena City portal (civic tech, non-commercial)",
-      },
-      next: { revalidate: 86_400 },
-      signal: AbortSignal.timeout(15_000),
-    }).then((res) => {
-      if (!res.ok) throw new Error(`Nominatim responded ${res.status}`);
-      return res.json();
-    })) as NominatimLookupResponse[];
+        const results = (
+          await axios.get<NominatimLookupResponse[]>(url, {
+            headers: {
+              Accept: "application/json",
+              "User-Agent": "BetterGov.ph Lucena City portal (civic tech, non-commercial)",
+            },
+            timeout: 15_000,
+          })
+        ).data;
 
-    const place = results[0];
+        const found = results[0];
+        if (!found?.geojson) {
+          throw new Error("Boundary not found for Lucena City.");
+        }
+        return found;
+      }
+    );
+
     if (!place?.geojson) {
       return NextResponse.json(
         { error: "Boundary not found for Lucena City." },
@@ -57,6 +70,10 @@ export async function GET() {
         east: Number(east),
       },
       boundary: place.geojson,
+    }, {
+      headers: {
+        "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
+      },
     });
   } catch (error) {
     console.error("Boundary fetch failed:", error);

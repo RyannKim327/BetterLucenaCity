@@ -14,7 +14,11 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getEarthquakes(Number.isFinite(radius) ? radius : 200);
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "public, max-age=600, stale-while-revalidate=1800",
+      },
+    });
   } catch (error) {
     console.error("Earthquake fetch failed:", error);
     return NextResponse.json(

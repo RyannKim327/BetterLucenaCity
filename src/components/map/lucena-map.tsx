@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { CircleMarker, GeoJSON, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { LatLngBoundsExpression } from "leaflet";
@@ -37,10 +38,18 @@ export default function LucenaMap() {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    fetch("/api/geography/boundary")
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then(setBoundary)
-      .catch(() => setFailed(true));
+    let cancelled = false;
+    axios
+      .get<BoundaryData>("/api/geography/boundary")
+      .then((res) => {
+        if (!cancelled) setBoundary(res.data);
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (

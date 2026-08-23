@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface WeatherData {
   current: {
@@ -81,25 +82,33 @@ function Failed() {
   return <p className="text-red-600 dark:text-red-400">Unavailable right now. Please try again later.</p>;
 }
 
+type ApiError = { error: string };
+
 export function LiveDataSection() {
   const [weather, setWeather] = useState<PanelState<WeatherData>>({ status: "loading" });
   const [quakes, setQuakes] = useState<PanelState<EarthquakeData>>({ status: "loading" });
   const [dpwh, setDpwh] = useState<PanelState<DpwhData>>({ status: "loading" });
 
   useEffect(() => {
-    fetch("/api/weather")
-      .then((r) => r.json())
-      .then((d) => (d.error ? setWeather({ status: "error" }) : setWeather({ status: "ready", data: d })))
+    axios
+      .get<WeatherData | ApiError>("/api/weather")
+      .then((res) =>
+        "error" in res.data ? setWeather({ status: "error" }) : setWeather({ status: "ready", data: res.data })
+      )
       .catch(() => setWeather({ status: "error" }));
 
-    fetch("/api/earthquakes?radius=200")
-      .then((r) => r.json())
-      .then((d) => (d.error ? setQuakes({ status: "error" }) : setQuakes({ status: "ready", data: d })))
+    axios
+      .get<EarthquakeData | ApiError>("/api/earthquakes", { params: { radius: 200 } })
+      .then((res) =>
+        "error" in res.data ? setQuakes({ status: "error" }) : setQuakes({ status: "ready", data: res.data })
+      )
       .catch(() => setQuakes({ status: "error" }));
 
-    fetch("/api/dpwh/projects?limit=6&status=Ongoing")
-      .then((r) => r.json())
-      .then((d) => (d.error ? setDpwh({ status: "error" }) : setDpwh({ status: "ready", data: d })))
+    axios
+      .get<DpwhData | ApiError>("/api/dpwh/projects", { params: { limit: 6, status: "Ongoing" } })
+      .then((res) =>
+        "error" in res.data ? setDpwh({ status: "error" }) : setDpwh({ status: "ready", data: res.data })
+      )
       .catch(() => setDpwh({ status: "error" }));
   }, []);
 

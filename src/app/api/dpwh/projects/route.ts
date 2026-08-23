@@ -32,7 +32,11 @@ export async function GET(request: NextRequest) {
       page: Number(params.get("page")) || undefined,
       scopeAll: params.get("scope") === "national",
     });
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "public, max-age=900, stale-while-revalidate=3600",
+      },
+    });
   } catch (error) {
     console.error("DPWH fetch failed:", error);
     return NextResponse.json(
