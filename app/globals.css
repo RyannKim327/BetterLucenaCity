@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafdfb;
+  --foreground: #171d1b;
+  --primary: #00695c;
+  --on-primary: #ffffff;
+  --primary-container: #9ef2e0;
+  --on-primary-container: #00201b;
+  --secondary: #7a5900;
+  --on-secondary: #ffffff;
+  --secondary-container: #ffdf9e;
+  --on-secondary-container: #261a00;
+  --surface-dim: #d5dbd8;
+  --surface-container-low: #f4faf6;
+  --surface-container: #eef4f0;
+  --surface-container-high: #e8eee9;
+  --on-surface: #171d1b;
+  --on-surface-variant: #3f4946;
+  --outline: #6f7976;
+  --outline-variant: #bec9c5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #101413;
+    --foreground: #dfe4e1;
+    --primary: #82d5c7;
+    --on-primary: #003731;
+    --primary-container: #004f48;
+    --on-primary-container: #9ef2e2;
+    --secondary: #ecc248;
+    --on-secondary: #3f2e00;
+    --secondary-container: #5b4300;
+    --on-secondary-container: #ffdf9e;
+    --surface-dim: #0e1111;
+    --surface-container-low: #181c1b;
+    --surface-container: #1c201f;
+    --surface-container-high: #262b29;
+    --on-surface: #dfe4e1;
+    --on-surface-variant: #bec9c4;
+    --outline: #89938f;
+    --outline-variant: #3f4946;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-elevation-1:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 1px 3px 1px rgba(0, 0, 0, 0.06);
+  --shadow-elevation-2:
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 2px 6px 2px rgba(0, 0, 0, 0.07);
+  --shadow-elevation-3:
+    0 4px 8px 3px rgba(0, 0, 0, 0.09),
+    0 1px 3px rgba(0, 0, 0, 0.12);
+
+  --radius-card: 1rem;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
