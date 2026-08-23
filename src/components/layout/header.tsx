@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navLinks, site } from "@/lib/data/site";
+import Hotlines from "./hotlines";
 
 export function Header() {
   const pathname = usePathname();
@@ -12,6 +13,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-outline-variant/40 shadow-elevation-1">
+      <Hotlines />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>

@@ -1,8 +1,8 @@
 export const site = {
-  name: "BetterGov.ph",
+  name: "BetterLucena",
   locality: "Lucena City",
   province: "Quezon",
-  tagline: "Transparent. Accessible. Para sa mamamayan.",
+  tagline: "Para sa bayan. Para sa kinabukasan.",
   description:
     "A citizen-first portal for Lucena City government services, announcements, and public data.",
   cityHallAddress:
