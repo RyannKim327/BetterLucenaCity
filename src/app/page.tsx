@@ -50,7 +50,7 @@ export default function Home() {
           <h2 id="about-heading" className="text-2xl font-semibold tracking-tight">Lucena City at a Glance</h2>
         </div>
         <div className="flex gap-4">
-          <Card className="flex flex-col h-full">
+          <Card className="flex flex-col w-[calc(25%-0.5rem)] h-full">
             <p
               className="text-xs uppercase tracking-wider text-secondary">Barangay</p>
             <span>{LUCENA.barangays.length} Barangays</span>
