@@ -36,5 +36,5 @@ jobs:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          model: tencent/hy3
+          model: opencode/hy3-free
           use_github_token: true
