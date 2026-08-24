@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { announcements, emergencyHotlines } from "@/lib/data/announcements";
+import { announcements } from "@/lib/data/announcements";
 import { services } from "@/lib/data/services";
 import { site } from "@/lib/data/site";
 import MapClient from "@/components/map/map-client";
