@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description: site.description,
+  icons: {
+    icon: "/better-lucena-logo.svg",
+  },
 };
 
 export default function RootLayout({

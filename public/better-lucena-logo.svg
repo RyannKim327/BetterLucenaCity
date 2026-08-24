@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Better Lucena City logo">
+  <defs>
+    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A47B8"/>
+      <stop offset="1" stop-color="#273397"/>
+    </linearGradient>
+  </defs>
+  <!-- gold sunrise rising behind the map -->
+  <g fill="#FCD20F">
+    <circle cx="32" cy="19" r="9.5"/>
+  </g>
+  <g stroke="#FCD20F" stroke-width="1.6" stroke-linecap="round">
+    <line x1="32" y1="3" x2="32" y2="6.5"/>
+    <line x1="20" y1="9" x2="22.5" y2="11.5"/>
+    <line x1="44" y1="9" x2="41.5" y2="11.5"/>
+    <line x1="11" y1="19" x2="14.5" y2="19"/>
+    <line x1="53" y1="19" x2="49.5" y2="19"/>
+  </g>
+  <!-- Lucena City map silhouette -->
+  <path d="M 33.26,23.47 L 33.3,24.24 L 33.92,24.01 L 34.17,24.33 L 34.52,23.72 L 34.98,24.16 L 35.71,24.07 L 36.17,24.68 L 35.76,25.19 L 35.75,26.1 L 42.02,31.29 L 40.88,32.59 L 42.51,40.7 L 40.29,46.91 L 39.95,54.51 L 39.14,54.87 L 35.48,56.03 L 31.99,56.5 L 28.47,43.86 L 25.94,36.24 L 24.47,34.73 L 24.55,33.09 L 23.79,32.27 L 24.06,31.63 L 22.96,31.06 L 21.49,28.55 L 21.49,28.04 L 23.03,26.86 L 23.69,26.86 L 24.83,25.22 L 26.15,24.97 L 25.96,24.39 L 27.01,25.02 L 28.35,23.22 L 29.24,24.45 L 29.11,23.76 L 29.72,23.87 L 29.55,22.66 L 30.59,21.97 L 30.28,21.5 L 33.25,23.41 L 33.26,23.47 Z" fill="url(#land)"/>
+</svg>
