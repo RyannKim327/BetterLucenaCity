@@ -23,13 +23,13 @@ interface WeatherData {
 interface EarthquakeData {
   location: string;
   earthquakes: Array<{
-    id: string;
-    magnitude: number | null;
-    place: string;
-    time: string;
-    depthKm: number;
-    distanceFromLucenaKm: number;
-    url: string;
+    date_time: string
+    latitude: number
+    longitude: number
+    depth_km: number
+    magnitude: number
+    location: string,
+    details_link: string
   }>;
 }
 
@@ -156,14 +156,13 @@ export function LiveDataSection() {
           )}
           {quakes.status === "ready" && quakes.data.earthquakes.length > 0 && (
             <ul className="space-y-3">
-              {quakes.data.earthquakes.slice(0, 4).map((q) => (
-                <li key={q.id}>
-                  <a href={q.url} target="_blank" rel="noreferrer" className="font-medium hover:text-primary">
-                    M{q.magnitude?.toFixed(1)} · {q.place}
+              {quakes.data.earthquakes.slice(0, 4).map((q, i: number) => (
+                <li key={i}>
+                  <a href={q.details_link} target="_blank" rel="noreferrer" className="font-medium hover:text-primary">
+                    M{q.magnitude?.toFixed(1)} · {q.location}
                   </a>
                   <p className="text-xs text-on-surface-variant">
-                    {new Date(q.time).toLocaleDateString("en-PH", { month: "short", day: "numeric" })} ·{" "}
-                    {q.depthKm} km deep · {q.distanceFromLucenaKm} km away
+                    {q.date_time} • {q.depth_km} km deep
                   </p>
                 </li>
               ))}

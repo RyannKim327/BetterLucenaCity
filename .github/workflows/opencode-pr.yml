@@ -29,5 +29,5 @@ jobs:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          model: opencode/big-pickle
+          model: tencent/hy3
           use_github_token: true

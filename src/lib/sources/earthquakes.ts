@@ -2,18 +2,13 @@ import { LUCENA, fetchJson } from "./shared";
 
 interface UsgsResponse {
   features: Array<{
-    id: string;
-    properties: {
-      mag: number | null;
-      place: string;
-      time: number;
-      url: string;
-      tsunami: number;
-      magType: string | null;
-    };
-    geometry: {
-      coordinates: [number, number, number];
-    };
+    date_time: string
+    latitude: number
+    longitude: number
+    depth_km: number
+    magnitude: number
+    location: string,
+    details_link: string
   }>;
 }
 
@@ -43,34 +38,14 @@ export async function getEarthquakes(radiusKm = 200) {
   });
 
   const json = await fetchJson<UsgsResponse>(
-    `https://earthquake.usgs.gov/fdsnws/event/1/query?${params.toString()}`,
+    `https://earthquakeapi.forestparty223.workers.dev/api/earthquakes`,
     600
   );
 
   return {
-    source: "USGS Earthquake Hazards Program",
-    attributionUrl: "https://earthquake.usgs.gov/",
+    source: "PHIVOLCS LATEST EARTHQUAKE INFORMATION",
+    attributionUrl: "https://earthquakeapi.forestparty223.workers.dev/api/earthquakes",
     location: `Within ${radius} km of ${LUCENA.name}`,
-    earthquakes: json.features.map((f) => ({
-      id: f.id,
-      magnitude: f.properties.mag,
-      magType: f.properties.magType,
-      place: f.properties.place,
-      time: new Date(f.properties.time).toISOString(),
-      depthKm: Math.round(f.geometry.coordinates[2]),
-      distanceFromLucenaKm: Math.round(
-        haversineKm(
-          LUCENA.latitude,
-          LUCENA.longitude,
-          f.geometry.coordinates[1],
-          f.geometry.coordinates[0]
-        )
-      ),
-      url: f.properties.url,
-      coordinates: {
-        latitude: f.geometry.coordinates[1],
-        longitude: f.geometry.coordinates[0],
-      },
-    })),
+    earthquakes: json,
   };
 }
