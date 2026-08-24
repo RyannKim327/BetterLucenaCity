@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
 import { LiveDataSection } from "@/components/live/live-data-section";
+import { NationalBudgetSection } from "@/components/transparency/national-budget-section";
 import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Transparency",
 };
+
+export const revalidate = 3600;
 
 const transparencyAreas = [
   {
@@ -14,6 +17,13 @@ const transparencyAreas = [
     description:
       "Annual budget allocations, appropriations, and summaries of city expenditures.",
     status: "Coming soon",
+  },
+  {
+    title: "National Budget",
+    description:
+      "How the national appropriations (GAA FY2020–2026) fund programs reaching Lucena City, powered by the BetterGov.ph Budget Data API.",
+    status: "View live data",
+    href: "#national-budget",
   },
   {
     title: "Procurement",
@@ -70,6 +80,8 @@ export default function TransparencyPage() {
           ))}
         </ul>
       </section>
+
+      <NationalBudgetSection />
 
       <LiveDataSection />
     </div>
