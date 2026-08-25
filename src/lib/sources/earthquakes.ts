@@ -1,6 +1,6 @@
 import { LUCENA, fetchJson } from "./shared";
 
-interface UsgsResponse {
+interface EarthquakeResponse {
   features: Array<{
     date_time: string
     latitude: number
@@ -14,7 +14,7 @@ interface UsgsResponse {
 
 export async function getEarthquakes(radiusKm = 200) {
   const radius = Math.min(Math.max(radiusKm, 10), 500);
-  const json = await fetchJson<UsgsResponse>(
+  const json = await fetchJson<EarthquakeResponse>(
     `https://earthquakeapi.forestparty223.workers.dev/api/earthquakes`,
     200
   );

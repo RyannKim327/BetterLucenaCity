@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Earthquake fetch failed:", error);
     return NextResponse.json(
-      { error: "Failed to reach USGS earthquake source. Try again later." },
+      { error: "Failed to reach Phivolcs earthquake source. Try again later." },
       { status: 502 }
     );
   }
