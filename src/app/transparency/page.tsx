@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
-import { LiveDataSection } from "@/components/live/live-data-section";
 import { NationalBudgetSection } from "@/components/transparency/national-budget-section";
 import { Card } from "@/components/ui/card";
 
@@ -83,7 +82,6 @@ export default function TransparencyPage() {
 
       <NationalBudgetSection />
 
-      <LiveDataSection />
     </div>
   );
 }

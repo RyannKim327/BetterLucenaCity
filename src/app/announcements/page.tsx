@@ -15,7 +15,7 @@ function formatDate(iso: string) {
   });
 }
 
-export default function AnnouncementsPage() {
+export default async function AnnouncementsPage() {
   return (
     <div>
       <PageHeader

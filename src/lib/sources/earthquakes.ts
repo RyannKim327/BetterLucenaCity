@@ -16,7 +16,7 @@ export async function getEarthquakes(radiusKm = 200) {
   const radius = Math.min(Math.max(radiusKm, 10), 500);
   const json = await fetchJson<UsgsResponse>(
     `https://earthquakeapi.forestparty223.workers.dev/api/earthquakes`,
-    600
+    200
   );
 
   return {

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
-import { emergencyHotlines } from "@/lib/data/announcements";
 import { site } from "@/lib/data/site";
+import { hotlines } from "@/lib/data/hotlines";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -38,15 +38,14 @@ export default function ContactPage() {
         <Card className="md:col-span-2">
           <h2 className="text-base font-semibold">Hotlines</h2>
           <ul className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {emergencyHotlines.map((hotline) => (
+            {hotlines.map((hotline) => (
               <li key={hotline.name}>
                 <p className="text-xs uppercase tracking-wider text-on-surface-variant">{hotline.name}</p>
-                <a
-                  href={`tel:${hotline.number.replace(/[^+\d]/g, "")}`}
-                  className="text-lg font-semibold hover:text-primary"
-                >
-                  {hotline.number}
-                </a>
+                {hotline.dial.map(n => {
+                  return (
+                    <p>{n}</p>
+                  )
+                })}
               </li>
             ))}
           </ul>
