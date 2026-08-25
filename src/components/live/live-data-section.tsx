@@ -117,9 +117,9 @@ export function LiveDataSection() {
       <h2 id="live-data-heading" className="text-2xl font-semibold tracking-tight">
         Live Civic Data
       </h2>
-      <p className="mt-1 text-on-surface-variant">
+      {/*<p className="mt-1 text-on-surface-variant">
         Real-time feeds from national agencies, served through our own API.
-      </p>
+      </p> */}
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Panel title="Weather · Lucena City">
@@ -197,7 +197,7 @@ export function LiveDataSection() {
       </div>
 
       <p className="mt-4 text-xs text-on-surface-variant">
-        Sources: Open-Meteo · USGS Earthquake Hazards Program · DPWH Infrastructure Transparency Portal.
+        Sources: Open-Meteo · Phivolcs · DPWH Infrastructure Transparency Portal.
         Cached server-side; not an official government channel.
       </p>
     </section>

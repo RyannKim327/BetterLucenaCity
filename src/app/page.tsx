@@ -6,6 +6,7 @@ import { services } from "@/lib/data/services";
 import { site } from "@/lib/data/site";
 import MapClient from "@/components/map/map-client";
 import { LUCENA } from "@/lib/sources/shared";
+import { LiveDataSection } from "@/components/live/live-data-section";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-PH", {
@@ -137,6 +138,8 @@ export default function Home() {
           ))}
         </ul>
       </section>
+      <LiveDataSection />
+
     </div >
   );
 }

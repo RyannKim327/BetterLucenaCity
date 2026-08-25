@@ -67,7 +67,7 @@ We will keep you informed of progress toward a fix and may ask follow-up questio
 | Service | Purpose | Data Shared |
 |---------|---------|-------------|
 | Open-Meteo | Weather forecasts | Coordinates (Lucena City) |
-| USGS Earthquake API | Earthquake advisories | None |
+| Phivolcs Scrape API | Earthquake advisories | None |
 | Nominatim / OpenStreetMap | Boundary and map data | Query parameters (Lucena City) |
 | DPWH Transparency API | Infrastructure projects | None |
 

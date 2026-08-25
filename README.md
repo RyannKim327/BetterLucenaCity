@@ -12,7 +12,7 @@ Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 - **Transparency dashboard** — budget and project data surfaced from public sources
 - **Ordinances & legal documents** — searchable local legislation
 - **Announcements** — city advisories and bulletins
-- **Live civic data** — server-proxied feeds for weather (Open-Meteo), earthquakes (USGS), and DPWH infrastructure projects
+- **Live civic data** — server-proxied feeds for weather (Open-Meteo), earthquakes (Phivolcs), and DPWH infrastructure projects
 - **Interactive map** — Leaflet map of Lucena City with boundary data
 
 ## Tech Stack
@@ -64,7 +64,7 @@ External data is proxied through our own route handlers with attribution include
 | Feed | Source |
 |------|--------|
 | Weather | Open-Meteo |
-| Earthquakes | USGS Earthquake Hazards Program |
+| Earthquakes | earthquakeapi.forestparty223 |
 | Infrastructure projects | DPWH Infrastructure Transparency Portal |
 
 Official service details, hotline numbers, and records are verified before publishing. Placeholders are clearly marked when verified values are unavailable — never invent government data.

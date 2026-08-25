@@ -23,6 +23,13 @@ export const LUCENA = {
   ]
 } as const;
 
+export function internalApiUrl(path: string): string {
+  const base =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  return `${base}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
 export async function fetchJson<T>(
   url: string,
   revalidate = 300

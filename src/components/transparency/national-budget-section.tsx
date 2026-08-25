@@ -51,7 +51,7 @@ export async function NationalBudgetSection() {
             National appropriations by fiscal year
           </h3>
           <ul className="mt-4 space-y-2">
-            {years.map((total) => (
+            {years.reverse().map((total) => (
               <li key={total.year} className="text-sm">
                 <span className="flex items-baseline justify-between gap-3">
                   <span className="font-medium">{total.year}</span>
