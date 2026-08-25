@@ -41,9 +41,9 @@ export default function ContactPage() {
             {hotlines.map((hotline) => (
               <li key={hotline.name}>
                 <p className="text-xs uppercase tracking-wider text-on-surface-variant">{hotline.name}</p>
-                {hotline.dial.map(n => {
+                {hotline.dial.map((n: number, i: number) => {
                   return (
-                    <p>{n}</p>
+                    <a key={`${i}. ${n}`} href={`tel:${n.toString().replace(/[^+\d]/g, "")}`}><p>{n}</p></a>
                   )
                 })}
               </li>
