@@ -1,11 +1,6 @@
-import { getNationalBudget, type NationalBudgetData } from "@/lib/sources/budget";
-
-function formatPeso(n: number) {
-  if (n >= 1_000_000_000_000) return `₱${(n / 1_000_000_000_000).toFixed(2)}T`;
-  if (n >= 1_000_000_000) return `₱${(n / 1_000_000_000).toFixed(1)}B`;
-  if (n >= 1_000_000) return `₱${(n / 1_000_000).toFixed(1)}M`;
-  return `₱${n.toLocaleString("en-PH")}`;
-}
+import { formatPeso } from "@/lib/functions";
+import { getNationalBudget } from "@/lib/sources/budget";
+import { NationalBudgetData } from "@/types/sources";
 
 function Unavailable() {
   return (

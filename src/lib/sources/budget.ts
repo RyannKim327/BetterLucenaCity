@@ -1,54 +1,10 @@
+import { GaaNationalResponse, GaaSearchResponse, NationalBudgetData } from "@/types/sources";
 import { LUCENA, fetchJson } from "./shared";
 
 const BASE_URL = "https://budget.bettergov.ph/api/v1";
 const DATE = new Date()
 const LATEST_YEAR = DATE.getFullYear();
 const REVALIDATE_SECONDS = 3600;
-
-export interface GaaYearTotal {
-  year: number;
-  lineItems: number;
-  amount: number;
-}
-
-export interface BudgetProgram {
-  name: string;
-  departmentId: string;
-  department: string;
-  agencyId: string;
-  amount: number;
-}
-
-export interface NationalBudgetData {
-  source: string;
-  attributionUrl: string;
-  docsUrl: string;
-  query: string;
-  latestYear: number;
-  currency: "PHP";
-  nationalTotals: GaaYearTotal[];
-  lucenaMatch: {
-    programCount: number;
-    totalAmount: number;
-    topPrograms: BudgetProgram[];
-  };
-}
-
-interface GaaNationalResponse {
-  meta: { dataset: string; years: number[]; currency: string; scale: string };
-  data: Array<{ year: number; line_items: number; amount: number }>;
-}
-
-interface GaaSearchResponse {
-  meta: { dataset: string; years: number[]; query: string; year: number };
-  data: Array<{
-    department_id: string;
-    agency_id: string;
-    name: string;
-    department: string;
-    years: Record<string, { count: number; amount: number }>;
-  }>;
-}
 
 export async function getNationalBudget(): Promise<NationalBudgetData> {
   const query = LUCENA.name;
@@ -59,6 +15,7 @@ export async function getNationalBudget(): Promise<NationalBudgetData> {
       `${BASE_URL}/gaa/search?q=${encodeURIComponent(query)}&year=${LATEST_YEAR}&limit=100`,
       REVALIDATE_SECONDS
     ),
+
   ]);
 
   const matched = search.data

@@ -1,16 +1,5 @@
+import { EarthquakeResponse } from "@/types/sources";
 import { LUCENA, fetchJson } from "./shared";
-
-interface EarthquakeResponse {
-  features: Array<{
-    date_time: string
-    latitude: number
-    longitude: number
-    depth_km: number
-    magnitude: number
-    location: string,
-    details_link: string
-  }>;
-}
 
 export async function getEarthquakes(radiusKm = 200) {
   const radius = Math.min(Math.max(radiusKm, 10), 500);

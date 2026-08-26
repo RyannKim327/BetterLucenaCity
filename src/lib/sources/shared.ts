@@ -20,7 +20,20 @@ export const LUCENA = {
     "Mayao Crossing", "Mayao Kanluran", "Mayao Parada",
     "Mayao Silangan", "Ransohan", "Salinas",
     "Talao-Talao"
-  ]
+  ],
+  area: "83.59 km²",
+  populationDensity: "3,354/km²",
+  annualPopulationChange: "0.12%",
+  population: {
+    male: 139_143,
+    female: 139_204
+  },
+  ageGroup: {
+    "0-14": 87_451,
+    "15-64": 177_173,
+    "65+": 13_723
+  },
+
 } as const;
 
 export function internalApiUrl(path: string): string {
