@@ -8,19 +8,11 @@ import {
   legalDocuments,
   isLegalDocType,
 } from "@/lib/data/legal-documents";
+import { formatDate } from "@/lib/functions";
 
 export const metadata: Metadata = {
   title: "Laws & Ordinances",
 };
-
-function formatDate(iso: string | null) {
-  if (!iso) return "Date pending verification";
-  return new Date(iso).toLocaleDateString("en-PH", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 const chipBase =
   "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors";
@@ -52,11 +44,10 @@ export default async function LegalPage({
         <div className="flex flex-wrap gap-2" role="navigation" aria-label="Filter by document type">
           <Link
             href="/legal"
-            className={`${chipBase} ${
-              !activeType
-                ? "border-primary bg-primary text-on-primary font-medium"
-                : "border-outline-variant text-on-surface-variant hover:bg-primary/8"
-            }`}
+            className={`${chipBase} ${!activeType
+              ? "border-primary bg-primary text-on-primary font-medium"
+              : "border-outline-variant text-on-surface-variant hover:bg-primary/8"
+              }`}
           >
             All ({legalDocuments.length})
           </Link>
@@ -67,11 +58,10 @@ export default async function LegalPage({
               <Link
                 key={t.id}
                 href={`/legal?type=${t.id}`}
-                className={`${chipBase} ${
-                  active
-                    ? "border-primary bg-primary text-on-primary font-medium"
-                    : "border-outline-variant text-on-surface-variant hover:bg-primary/8"
-                } ${count === 0 ? "opacity-50" : ""}`}
+                className={`${chipBase} ${active
+                  ? "border-primary bg-primary text-on-primary font-medium"
+                  : "border-outline-variant text-on-surface-variant hover:bg-primary/8"
+                  } ${count === 0 ? "opacity-50" : ""}`}
               >
                 {t.label} ({count})
               </Link>
