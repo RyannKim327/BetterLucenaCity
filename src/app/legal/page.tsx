@@ -3,12 +3,12 @@ import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import {
-  LEGAL_DOC_TYPES,
   legalDisclaimer,
   legalDocuments,
   isLegalDocType,
 } from "@/lib/data/legal-documents";
 import { formatDate } from "@/lib/functions";
+import { LEGAL_DOC_TYPES } from "@/types/sources";
 
 export const metadata: Metadata = {
   title: "Laws & Ordinances",
@@ -87,7 +87,7 @@ export default async function LegalPage({
                     </span>
                   )}
                   <time dateTime={doc.date ?? undefined} className="text-xs text-on-surface-variant">
-                    {formatDate(doc.date)}
+                    {formatDate(doc.date as string)}
                   </time>
                 </div>
 

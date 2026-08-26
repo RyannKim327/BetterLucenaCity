@@ -1,3 +1,4 @@
+import { OpenMeteoResponse } from "@/types/sources";
 import { LUCENA, fetchJson } from "./shared";
 
 const WMO_CODES: Record<number, { label: string; icon: string }> = {
@@ -20,26 +21,6 @@ const WMO_CODES: Record<number, { label: string; icon: string }> = {
   96: { label: "Thunderstorm with hail", icon: "⛈️" },
   99: { label: "Thunderstorm with hail", icon: "⛈️" },
 };
-
-interface OpenMeteoResponse {
-  current: {
-    time: string;
-    temperature_2m: number;
-    relative_humidity_2m: number;
-    precipitation: number;
-    weather_code: number;
-    wind_speed_10m: number;
-    wind_gusts_10m: number;
-  };
-  daily: {
-    time: string[];
-    weather_code: number[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-    precipitation_probability_max: number[];
-    precipitation_sum: number[];
-  };
-}
 
 export async function getWeather() {
   const params = new URLSearchParams({

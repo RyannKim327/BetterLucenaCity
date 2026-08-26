@@ -1,10 +1,4 @@
-export interface Service {
-  slug: string;
-  name: string;
-  description: string;
-  office: string;
-  featured?: boolean;
-}
+import { Service } from "@/types/sources";
 
 export const services: Service[] = [
   {
@@ -14,6 +8,7 @@ export const services: Service[] = [
       "Apply for or renew business permits, secure mayor's permits, and check licensing requirements.",
     office: "Business Permits and Licensing Office",
     featured: true,
+    process: []
   },
   {
     slug: "civil-registry",
@@ -22,6 +17,7 @@ export const services: Service[] = [
       "Request copies of birth, marriage, and death certificates, and file late registrations.",
     office: "Office of the City Civil Registrar",
     featured: true,
+    process: []
   },
   {
     slug: "real-property-tax",
@@ -30,6 +26,7 @@ export const services: Service[] = [
       "Assess and pay real property tax, request tax clearances, and update property records.",
     office: "City Assessor & City Treasury",
     featured: true,
+    process: []
   },
   {
     slug: "health-services",
@@ -38,6 +35,7 @@ export const services: Service[] = [
       "Access consultations, immunization, maternal care, and medical assistance programs.",
     office: "City Health Office",
     featured: true,
+    process: []
   },
   {
     slug: "social-services",
@@ -46,6 +44,7 @@ export const services: Service[] = [
       "Social assistance, senior citizen and PWD IDs, and support for indigent residents.",
     office: "City Social Welfare and Development Office",
     featured: true,
+    process: []
   },
   {
     slug: "building-permits",
@@ -54,6 +53,7 @@ export const services: Service[] = [
       "Secure building permits, occupancy permits, and coordinate inspections.",
     office: "Office of the City Building Official",
     featured: true,
+    process: []
   },
   {
     slug: "employment",
@@ -61,6 +61,7 @@ export const services: Service[] = [
     description:
       "Job matching, local employment facilitation, and special program for employment of students.",
     office: "Public Employment Service Office (PESO)",
+    process: []
   },
   {
     slug: "scholarship",
@@ -68,5 +69,6 @@ export const services: Service[] = [
     description:
       "City-funded scholarships for qualified students of Lucena City.",
     office: "City Scholarship Office",
+    process: []
   },
 ];

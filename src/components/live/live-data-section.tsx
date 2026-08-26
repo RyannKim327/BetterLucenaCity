@@ -2,64 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface WeatherData {
-  current: {
-    temperatureC: number;
-    humidityPct: number;
-    windSpeedKph: number;
-    label: string;
-    icon: string;
-  };
-  daily: Array<{
-    date: string;
-    maxTempC: number;
-    minTempC: number;
-    rainProbabilityPct: number;
-    icon: string;
-  }>;
-}
-
-interface EarthquakeData {
-  location: string;
-  earthquakes: Array<{
-    date_time: string
-    latitude: number
-    longitude: number
-    depth_km: number
-    magnitude: number
-    location: string,
-    details_link: string
-  }>;
-}
-
-interface DpwhData {
-  scope: string;
-  summary: {
-    totalProjects: number;
-    completed: number;
-    ongoing: number;
-    forProcurement: number;
-    totalBudget: number;
-  };
-  projects: Array<{
-    contractId: string;
-    description: string;
-    status: string;
-    budget: number;
-    infraYear: string;
-  }>;
-}
-
-type PanelState<T> = { status: "loading" } | { status: "error" } | { status: "ready"; data: T };
-
-function formatPeso(n: number) {
-  return n >= 1_000_000_000
-    ? `₱${(n / 1_000_000_000).toFixed(1)}B`
-    : n >= 1_000_000
-      ? `₱${(n / 1_000_000).toFixed(1)}M`
-      : `₱${n.toLocaleString()}`;
-}
+import { DpwhData, EarthquakeData, PanelState, WeatherData } from "@/types/components";
+import { formatPeso } from "@/lib/functions";
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (

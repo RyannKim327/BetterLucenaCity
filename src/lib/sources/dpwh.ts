@@ -1,57 +1,5 @@
+import { DpwhQuery, DpwhResponse } from "@/types/sources";
 import { LUCENA, fetchJson } from "./shared";
-
-export interface DpwhProject {
-  contractId: string;
-  description: string;
-  category: string;
-  status: string;
-  budget: number;
-  amountPaid: number;
-  progress: number;
-  location: { province: string; region: string };
-  contractor: string;
-  startDate: string | null;
-  completionDate: string | null;
-  infraYear: string;
-  programName: string;
-  sourceOfFunds: string;
-  latitude: number | null;
-  longitude: number | null;
-}
-
-interface DpwhResponse {
-  status: number;
-  code: string;
-  data: {
-    data: DpwhProject[];
-    summary: {
-      totalProjects: number;
-      completed: number;
-      ongoing: number;
-      notStarted: number;
-      forProcurement: number;
-      terminated: number;
-      totalBudget: number;
-    };
-    pagination: {
-      page: number;
-      limit: number;
-      totalCount: number;
-      totalPages: number;
-      hasNext: boolean;
-      hasPrev: boolean;
-    };
-  };
-}
-
-export interface DpwhQuery {
-  search?: string;
-  status?: string;
-  year?: string;
-  limit?: number;
-  page?: number;
-  scopeAll?: boolean;
-}
 
 export async function getDpwhProjects(query: DpwhQuery = {}) {
   const params = new URLSearchParams();

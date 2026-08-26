@@ -1,4 +1,6 @@
-export const hotlines = [
+import { Hotlines } from "@/types/sources";
+
+export const hotlines: Hotlines[] = [
   {
     "name": "National Emergency",
     "dial": ["911"],

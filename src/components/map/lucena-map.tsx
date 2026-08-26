@@ -5,21 +5,7 @@ import axios from "axios";
 import { CircleMarker, GeoJSON, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { LatLngBoundsExpression } from "leaflet";
-
-interface BoundaryData {
-  displayName: string;
-  center: { latitude: number; longitude: number };
-  bounds: {
-    south: number;
-    north: number;
-    west: number;
-    east: number;
-  };
-  boundary: {
-    type: "Polygon" | "MultiPolygon";
-    coordinates: unknown;
-  };
-}
+import { BoundaryData } from "@/types/components";
 
 function FitBounds({ data }: { data: BoundaryData }) {
   const map = useMap();

@@ -1,8 +1,4 @@
-interface PageHeaderProps {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-}
+import { PageHeaderProps } from "@/types/components";
 
 export function PageHeader({ eyebrow, title, description }: PageHeaderProps) {
   return (

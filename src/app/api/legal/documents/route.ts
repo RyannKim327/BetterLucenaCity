@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  LEGAL_DOC_TYPES,
   legalDisclaimer,
   legalDocuments,
   isLegalDocType,
-  type LegalDocType,
 } from "@/lib/data/legal-documents";
+import { LEGAL_DOC_TYPES, LegalDocType } from "@/types/sources";
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;

@@ -1,9 +1,4 @@
-export interface Announcement {
-  id: string;
-  title: string;
-  date: string;
-  excerpt: string;
-}
+import { Announcement } from "@/types/sources";
 
 export const announcements: Announcement[] = [
   {
@@ -29,9 +24,3 @@ export const announcements: Announcement[] = [
   },
 ];
 
-export const emergencyHotlines = [
-  { name: "Emergency (National)", number: "911" },
-  { name: "City Disaster Risk Reduction", number: "(042) XXX-XXXX" },
-  { name: "Police Station", number: "(042) XXX-XXXX" },
-  { name: "Fire Station", number: "(042) XXX-XXXX" },
-] as const;

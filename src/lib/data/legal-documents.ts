@@ -1,24 +1,5 @@
-export const LEGAL_DOC_TYPES = [
-  { id: "national_law", label: "National Law" },
-  { id: "city_ordinance", label: "City Ordinance" },
-  { id: "city_resolution", label: "City Resolution" },
-  { id: "executive_order", label: "Executive Order" },
-  { id: "memorandum", label: "Memorandum" },
-] as const;
+import { LEGAL_DOC_TYPES, LegalDocType, LegalDocument } from "@/types/sources";
 
-export type LegalDocType = (typeof LEGAL_DOC_TYPES)[number]["id"];
-
-export interface LegalDocument {
-  id: string;
-  type: LegalDocType;
-  number: string;
-  title: string;
-  date: string | null;
-  summary: string;
-  sourceUrl?: string;
-  sourceName?: string;
-  verification: "verified" | "sample";
-}
 
 export const legalDisclaimer =
   "City-level entries below are schema samples pending verification against the official records of the Sangguniang Panlungsod of Lucena. National laws listed are verifiable public statutes.";
