@@ -2,18 +2,11 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { announcements } from "@/lib/data/announcements";
+import { formatDate } from "@/lib/functions";
 
 export const metadata: Metadata = {
   title: "Announcements",
 };
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-PH", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export default async function AnnouncementsPage() {
   return (

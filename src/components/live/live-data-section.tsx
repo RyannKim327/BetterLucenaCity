@@ -117,9 +117,6 @@ export function LiveDataSection() {
       <h2 id="live-data-heading" className="text-2xl font-semibold tracking-tight">
         Live Civic Data
       </h2>
-      {/*<p className="mt-1 text-on-surface-variant">
-        Real-time feeds from national agencies, served through our own API.
-      </p> */}
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Panel title="Weather · Lucena City">
