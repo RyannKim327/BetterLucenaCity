@@ -1,10 +1,10 @@
-interface Contributors {
+interface Contributor {
   username: string
   position: "Head Maintainer" | "Maintainer" | "Data Contributor" | "Tester"
   img?: string
 }
 
-export const contributors: Contributors[] = [
+export const contributors: Contributor[] = [
   {
     username: "RyannKim327",
     position: "Head Maintainer",
