@@ -8,7 +8,7 @@ export default function Contributors() {
         <h2 id="about-heading" className="text-2xl font-semibold tracking-tight">Contributors</h2>
       </div>
       <div className="flex flex-col md:flex-row flex-wrap gap-4">
-        {contributors.map((contrib, i: number) => {
+        {contributors.slice(0, 8).map((contrib, i: number) => {
           return (
             <Card
               key={`${i}. ${contrib.username}`}
