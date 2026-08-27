@@ -1,6 +1,6 @@
 interface Contributors {
   username: string
-  position: "Head Maintainer" | "Maintainer" | "Contributor"
+  position: "Head Maintainer" | "Maintainer" | "Data Contributor" | "Tester"
   img?: string
 }
 
