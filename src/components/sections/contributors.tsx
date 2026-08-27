@@ -17,8 +17,12 @@ export default function Contributors() {
             <Card
               key={`${i}. ${contrib.username}`}
               className="flex flex-col w-[calc(25%-1rem)] gap-2">
-              <img className="rounded-lg" src={contrib.img ?? ""} alt="" />
-              <p className="mt-4 text-xs uppercase tracking-wider text-secondary">{contrib.position}</p>
+              {contrib.img ?
+                <img className="rounded-lg" src={contrib.img ?? ""} alt="User Profile" />
+                :
+                <div className="flex items-center justify-center aspect-square w-full">User Profile</div>
+              }
+              <p className=" mt-4 text-xs uppercase tracking-wider text-secondary">{contrib.position}</p>
               <p className="text-base font-semibold">{contrib.username}</p>
             </Card>
           )
