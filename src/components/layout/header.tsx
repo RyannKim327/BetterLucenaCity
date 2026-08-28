@@ -20,7 +20,7 @@ export function Header() {
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
             <Image
-              src="/better-lucena-logo.svg"
+              src="/lucena-land-logo.svg"
               alt="Better Lucena City logo — map of Lucena with sunrise and fisheries"
               width={36}
               height={36}
