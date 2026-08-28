@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { emergencyHotlines } from "@/lib/data/announcements";
 import { navLinks, site } from "@/lib/data/site";
 import { hotlines } from "@/lib/data/hotlines";
 
@@ -51,9 +52,10 @@ export function Footer() {
       </div>
 
       <div className="border-t border-outline-variant/40 py-4">
-        <p className="mx-auto max-w-6xl px-4 text-xs text-on-surface-variant sm:px-6">
-          © {new Date().getFullYear()} {site.name} · {site.tagline}
-        </p>
+        <div className="flex flex-wrap justify-between mx-auto max-w-6xl px-4 text-xs text-on-surface-variant sm:px-6">
+          <p>© {new Date().getFullYear()} {site.name} · {site.tagline}</p>
+          <Link href="/contribute">Be one of us? Be a contributor?</Link>
+        </div>
       </div>
     </footer >
   );

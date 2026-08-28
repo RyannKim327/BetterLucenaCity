@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { contributors } from "@/lib/data/contributors";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Contributors() {
@@ -18,7 +19,9 @@ export default function Contributors() {
               key={`${i}. ${contrib.username}`}
               className="flex flex-col w-[calc(25%-1rem)] gap-2">
               {contrib.img ?
-                <img className="rounded-lg" src={contrib.img ?? ""} alt="User Profile" />
+                <div className="relative aspect-square w-full overflow-hidden rounded-lg">
+                  <Image className="object-cover" src={contrib.img} alt="User Profile" fill sizes="(max-width: 768px) 50vw, 25vw" />
+                </div>
                 :
                 <div className="flex items-center justify-center aspect-square w-full">User Profile</div>
               }

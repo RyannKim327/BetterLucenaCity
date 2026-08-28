@@ -19,8 +19,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run Lint
-      run: npm run lint
+    - name: Run Build and Tests
+      run: npm run gh-test
 
   opencode:
     runs-on: ubuntu-latest
