@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { emergencyHotlines } from "@/lib/data/announcements";
 import { navLinks, site } from "@/lib/data/site";
 import { hotlines } from "@/lib/data/hotlines";
 

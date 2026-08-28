@@ -67,14 +67,5 @@ export async function POST(request: Request) {
     );
   }
 
-  console.log("[contribute] new submission", {
-    userId: user.id,
-    email: user.email,
-    category,
-    title,
-    source: body.source ?? null,
-    details,
-  });
-
   return NextResponse.json({ ok: true }, { status: 201 });
 }
