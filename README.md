@@ -14,6 +14,7 @@ Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 - [Tech Stack](#tech-stack)
 - [Design Philosophy](#design-philosophy)
 - [Database Schema](#database-schema)
+- [Supabase Configuration](#supabase-configuration)
 - [File Structure](#file-structure)
 - [Getting Started](#getting-started)
 - [Data Sources](#data-sources)
@@ -76,6 +77,37 @@ The application uses Supabase (PostgreSQL) to store contributor profiles. The sc
 - Row Level Security (RLS) is enabled on `users`.
 - Policy: any authenticated user can read all profiles.
 - Policy: a user can update only their own profile (`auth.uid() = id`).
+
+## Supabase Configuration
+
+The app uses [Supabase](https://supabase.com) for its PostgreSQL database and authentication (contributor profiles). Two sets of credentials are needed: server-side (secret) and public (browser-safe) keys.
+
+### Environment Variables
+
+Create a `.env` file in the project root with the following variables (do **not** commit it — it is gitignored):
+
+```env
+# Server-side (secret) — used by server components and route handlers
+NEXT_SUPABASE_PROJECT_URL=
+NEXT_SUPABASE_PASSWORD=
+NEXT_SUPABASE_PUBLISHABLE_KEY=
+
+# Public (browser-safe) — exposed to the client, prefixed with NEXT_PUBLIC_
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
+
+| Variable | Scope | Purpose |
+|----------|-------|---------|
+| `NEXT_SUPABASE_PROJECT_URL` | Server | Supabase project URL for server-side client |
+| `NEXT_SUPABASE_PASSWORD` | Server | Database / service role password for server-side access |
+| `NEXT_SUPABASE_PUBLISHABLE_KEY` | Server | Supabase publishable key for server-side client |
+| `NEXT_PUBLIC_SUPABASE_URL` | Public | Supabase project URL exposed to the browser |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public | Supabase anon key exposed to the browser (safe by RLS) |
+
+> **Note:** The `NEXT_PUBLIC_*` values are embedded in the client bundle and must remain safe to expose. Keep all data protected with Row Level Security (RLS) — see [Database Schema](#database-schema).
+
+Apply the SQL migrations in `supabase/migrations/` to set up the `users` table and RLS policies before running the app.
 
 ## File Structure
 
