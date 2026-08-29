@@ -1,6 +1,6 @@
 # BetterLucenaCity
 
-![Better Lucena City](public/better-lucena-city.png)
+![Better Lucena City](public/better-lucena-city-banner.png)
 
 **Transparent. Accessible. Para sa mamamayan.**
 
