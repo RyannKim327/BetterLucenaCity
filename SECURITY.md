@@ -11,14 +11,14 @@ This project is in early development. Only the latest version on `main` receives
 
 ## Reporting a Vulnerability
 
-We take security seriously at BetterGov.ph Lucena City. Salamat for helping keep this civic portal safe.
+We take security seriously at Better Lucena City. Salamat for helping keep this civic portal safe.
 If you discover a security vulnerability, please report it responsibly.
 
 ### How to Report
 
 **Do NOT open a public GitHub issue for security vulnerabilities.**
 
-Instead, please email: **security@bettergov.ph**
+Instead, please email: **weryses19@gmail.com**
 
 Include in your report:
 
@@ -99,7 +99,7 @@ Out of scope:
 
 ## Contact
 
-For security concerns: **security@bettergov.ph**
+For security concerns: **weryses19@gmail.com**
 
 For general inquiries: Open a GitHub issue in this repository.
 
