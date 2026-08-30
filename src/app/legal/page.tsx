@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
-import {
-  legalDisclaimer,
-  legalDocuments,
-  isLegalDocType,
-} from "@/lib/data/legal-documents";
 import { formatDate } from "@/lib/functions";
-import { LEGAL_DOC_TYPES } from "@/types/sources";
+import { internalApiUrl } from "@/lib/sources/shared";
+import type { LegalDocument } from "@/types/sources";
 
 export const metadata: Metadata = {
   title: "Laws & Ordinances",
@@ -17,20 +13,68 @@ export const metadata: Metadata = {
 const chipBase =
   "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors";
 
+interface LegalType {
+  id: string;
+  label: string;
+}
+
+interface DocumentsResponse {
+  locality: string;
+  disclaimer: string;
+  total: number;
+  totalByType: Record<string, number>;
+  types: LegalType[];
+  documents: LegalDocument[];
+}
+
+async function getTypes(): Promise<LegalType[]> {
+  try {
+    const res = await fetch(internalApiUrl("/api/legal/types"), {
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    return (await res.json()) as LegalType[];
+  } catch {
+    return [];
+  }
+}
+
+async function getDocuments(type?: string): Promise<DocumentsResponse> {
+  try {
+    const params = new URLSearchParams();
+    if (type) params.set("type", type);
+    const res = await fetch(
+      internalApiUrl(`/api/legal/documents?${params.toString()}`),
+      { cache: "no-store" }
+    );
+    if (!res.ok) {
+      return { locality: "", disclaimer: "", total: 0, totalByType: {}, types: [], documents: [] };
+    }
+    return (await res.json()) as DocumentsResponse;
+  } catch {
+    return { locality: "", disclaimer: "", total: 0, totalByType: {}, types: [], documents: [] };
+  }
+}
+
 export default async function LegalPage({
   searchParams,
 }: {
   searchParams: Promise<{ type?: string }>;
 }) {
   const { type } = await searchParams;
-  const activeType = type && isLegalDocType(type) ? type : null;
+  const activeType = type ?? null;
 
-  const documents = activeType
-    ? legalDocuments.filter((d) => d.type === activeType)
-    : legalDocuments;
+  const [documentsData, types] = await Promise.all([
+    getDocuments(activeType ?? undefined),
+    getTypes(),
+  ]);
+
+  const documents = documentsData.documents;
+  const totalByType = documentsData.totalByType;
+  const allCount = Object.values(totalByType).reduce((sum, n) => sum + n, 0);
 
   const labelOf = (id: string) =>
-    LEGAL_DOC_TYPES.find((t) => t.id === id)?.label ?? id;
+    types.find((t) => t.id === id)?.label ?? id;
 
   return (
     <div>
@@ -49,10 +93,10 @@ export default async function LegalPage({
               : "border-outline-variant text-on-surface-variant hover:bg-primary/8"
               }`}
           >
-            All ({legalDocuments.length})
+            All ({allCount})
           </Link>
-          {LEGAL_DOC_TYPES.map((t) => {
-            const count = legalDocuments.filter((d) => d.type === t.id).length;
+          {types.map((t) => {
+            const count = totalByType[t.id] ?? 0;
             const active = activeType === t.id;
             return (
               <Link
@@ -112,9 +156,11 @@ export default async function LegalPage({
           ))}
         </ul>
 
-        <p className="mt-8 max-w-3xl rounded-card bg-surface-container p-4 text-xs leading-relaxed text-on-surface-variant shadow-elevation-1">
-          {legalDisclaimer}
-        </p>
+        {documentsData.disclaimer && (
+          <p className="mt-8 max-w-3xl rounded-card bg-surface-container p-4 text-xs leading-relaxed text-on-surface-variant shadow-elevation-1">
+            {documentsData.disclaimer}
+          </p>
+        )}
       </section>
     </div>
   );

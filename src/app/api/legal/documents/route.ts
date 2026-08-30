@@ -48,7 +48,6 @@ export async function GET(request: NextRequest) {
     disclaimer: legalDisclaimer,
     total: documents.length,
     totalByType: countsByType,
-    types: LEGAL_DOC_TYPES,
     documents,
   });
 }
