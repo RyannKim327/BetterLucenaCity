@@ -17,8 +17,13 @@ interface AnnouncementInterface {
 }
 
 async function getAnnouncements() {
-  const { data } = await axios.get<AnnouncementInterface[]>(internalApiUrl("/api/announcements"))
-  return data
+  try {
+    const { data } = await axios.get<AnnouncementInterface[]>(internalApiUrl("api/announcements"))
+    return data
+  } catch (e) {
+    console.error(e)
+    return []
+  }
 }
 
 export default async function AnnouncementsPage() {
