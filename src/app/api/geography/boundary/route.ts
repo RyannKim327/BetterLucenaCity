@@ -1,24 +1,11 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 import { cached } from "@/lib/cache";
+import type { NominatimLookupResponse } from "@/types/map";
 
 const LUCENA_OSM_RELATION = "R11124741";
 
 export const revalidate = 86_400;
-
-interface NominatimLookupResponse {
-  place_id: number;
-  osm_type: string;
-  osm_id: number;
-  lat: string;
-  lon: string;
-  display_name: string;
-  boundingbox: [string, string, string, string];
-  geojson: {
-    type: "Polygon" | "MultiPolygon";
-    coordinates: unknown;
-  };
-}
 
 export async function GET() {
   try {

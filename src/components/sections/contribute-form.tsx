@@ -2,21 +2,11 @@
 
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
-
-type Category =
-  | "Announcement"
-  | "Service Information"
-  | "Budget / Project"
-  | "Transparency Data"
-  | "Other";
+import type { ContributeCategory, ContributeFormProps } from "@/types/contribute";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-interface ContributeFormProps {
-  user: { name: string; email: string };
-}
-
-const CATEGORIES: Category[] = [
+const CATEGORIES: ContributeCategory[] = [
   "Announcement",
   "Service Information",
   "Budget / Project",

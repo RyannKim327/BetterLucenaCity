@@ -1,6 +1,6 @@
 import { formatPeso } from "@/lib/functions";
 import { getNationalBudget } from "@/lib/sources/budget";
-import { NationalBudgetData } from "@/types/sources";
+import { NationalBudgetData } from "@/types/budget";
 
 function Unavailable() {
   return (

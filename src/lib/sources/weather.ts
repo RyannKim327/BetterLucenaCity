@@ -1,4 +1,4 @@
-import { OpenMeteoResponse } from "@/types/sources";
+import { OpenMeteoResponse } from "@/types/live-data";
 import { LUCENA, fetchJson } from "./shared";
 
 const WMO_CODES: Record<number, { label: string; icon: string }> = {

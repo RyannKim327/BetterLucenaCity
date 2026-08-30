@@ -4,7 +4,7 @@ import {
   legalDocuments,
   isLegalDocType,
 } from "@/lib/data/legal-documents";
-import { LEGAL_DOC_TYPES, LegalDocType } from "@/types/sources";
+import { LEGAL_DOC_TYPES, LegalDocType } from "@/types/legal";
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;

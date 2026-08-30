@@ -1,4 +1,4 @@
-import { DpwhQuery, DpwhResponse } from "@/types/sources";
+import { DpwhQuery, DpwhResponse } from "@/types/live-data";
 import { LUCENA, fetchJson } from "./shared";
 
 export async function getDpwhProjects(query: DpwhQuery = {}) {

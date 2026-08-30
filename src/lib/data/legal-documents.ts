@@ -1,4 +1,4 @@
-import { LEGAL_DOC_TYPES, LegalDocType, LegalDocument } from "@/types/sources";
+import { LEGAL_DOC_TYPES, LegalDocType, LegalDocument } from "@/types/legal";
 
 
 export const legalDisclaimer =

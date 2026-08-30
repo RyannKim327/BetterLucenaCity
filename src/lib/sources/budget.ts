@@ -1,4 +1,4 @@
-import { GaaNationalResponse, GaaSearchResponse, NationalBudgetData } from "@/types/sources";
+import { GaaNationalResponse, GaaSearchResponse, NationalBudgetData } from "@/types/budget";
 import { LUCENA, fetchJson } from "./shared";
 
 const BASE_URL = "https://budget.bettergov.ph/api/v1";

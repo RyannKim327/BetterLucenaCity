@@ -1,4 +1,4 @@
-import { Hotlines } from "@/types/sources";
+import { Hotlines } from "@/types/hotlines";
 
 export const hotlines: Hotlines[] = [
   {

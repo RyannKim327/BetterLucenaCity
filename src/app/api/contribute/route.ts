@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-
-interface ContributePayload {
-  category?: string;
-  title?: string;
-  source?: string;
-  details?: string;
-  consent?: boolean;
-}
+import type { ContributePayload } from "@/types/contribute";
 
 const VALID_CATEGORIES = [
   "Announcement",

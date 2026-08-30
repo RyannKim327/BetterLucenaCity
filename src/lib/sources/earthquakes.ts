@@ -1,4 +1,4 @@
-import { EarthquakeResponse } from "@/types/sources";
+import { EarthquakeResponse } from "@/types/live-data";
 import { LUCENA, fetchJson } from "./shared";
 
 export async function getEarthquakes(radiusKm = 200) {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { DpwhData, EarthquakeData, PanelState, WeatherData } from "@/types/components";
+import { DpwhData, EarthquakeData, PanelState, WeatherData } from "@/types/live-data";
 import { formatPeso } from "@/lib/functions";
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {

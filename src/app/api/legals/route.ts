@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { LEGAL_DOC_TYPES } from "@/types/sources";
+import { LEGAL_DOC_TYPES } from "@/types/legal";
 import { isLegalDocType } from "@/lib/data/legal-documents";
-import type { LegalDocument } from "@/types/sources";
+import type { LegalDocument } from "@/types/legal";
 
 export const dynamic = "force-dynamic";
 

@@ -1,4 +1,4 @@
-import { PageHeaderProps } from "@/types/components";
+import { PageHeaderProps } from "@/types/ui";
 
 export function PageHeader({ eyebrow, title, description }: PageHeaderProps) {
   return (
