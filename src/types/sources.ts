@@ -148,7 +148,8 @@ export interface LegalDocument {
   summary: string;
   sourceUrl?: string;
   sourceName?: string;
-  verification: "verified" | "sample";
+  /** Derived: only "verified" once a user has approved the document. */
+  verification?: boolean;
 }
 
 

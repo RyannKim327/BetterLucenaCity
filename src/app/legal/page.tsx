@@ -44,7 +44,7 @@ async function getDocuments(type?: string): Promise<DocumentsResponse> {
     const params = new URLSearchParams();
     if (type) params.set("type", type);
     const { data } = await axios.get<DocumentsResponse>(
-      internalApiUrl(`/api/legal/documents?${params.toString()}`),
+      internalApiUrl(`/api/legals?${params.toString()}`),
       { headers: { Accept: "application/json" } }
     );
     return data;
@@ -118,15 +118,13 @@ export default async function LegalPage({
                   <span className="inline-flex items-center rounded-full bg-secondary-container px-3 py-1 text-xs font-medium text-on-secondary-container">
                     {labelOf(doc.type)}
                   </span>
-                  {doc.verification === "sample" ? (
-                    <span className="inline-flex items-center rounded-full border border-outline px-3 py-1 text-xs text-on-surface-variant">
-                      Sample · unverified
-                    </span>
-                  ) : (
+                  {doc.verification ? (
                     <span className="inline-flex items-center rounded-full bg-primary-container px-3 py-1 text-xs font-medium text-on-primary-container">
                       Verified
                     </span>
-                  )}
+                  ) : <span className="inline-flex items-center rounded-full border border-outline px-3 py-1 text-xs text-on-surface-variant">
+                    Unverified
+                  </span>}
                   <time dateTime={doc.date ?? undefined} className="text-xs text-on-surface-variant">
                     {formatDate(doc.date as string)}
                   </time>
@@ -159,6 +157,6 @@ export default async function LegalPage({
           </p>
         )}
       </section>
-    </div>
+    </div >
   );
 }

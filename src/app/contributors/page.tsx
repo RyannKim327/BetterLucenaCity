@@ -19,6 +19,7 @@ async function fetchUser() {
     });
     return data
   } catch (e) {
+    console.error(e)
     return []
   }
 }
