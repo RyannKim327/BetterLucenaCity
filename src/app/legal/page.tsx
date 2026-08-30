@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { formatDate } from "@/lib/functions";
 import { internalApiUrl } from "@/lib/sources/shared";
+import axios from "axios";
 import type { LegalDocument } from "@/types/sources";
 
 export const metadata: Metadata = {
@@ -29,11 +30,10 @@ interface DocumentsResponse {
 
 async function getTypes(): Promise<LegalType[]> {
   try {
-    const res = await fetch(internalApiUrl("/api/legal/types"), {
-      cache: "no-store",
+    const { data } = await axios.get<LegalType[]>(internalApiUrl("/api/legal/types"), {
+      headers: { Accept: "application/json" },
     });
-    if (!res.ok) return [];
-    return (await res.json()) as LegalType[];
+    return data;
   } catch {
     return [];
   }
@@ -43,14 +43,11 @@ async function getDocuments(type?: string): Promise<DocumentsResponse> {
   try {
     const params = new URLSearchParams();
     if (type) params.set("type", type);
-    const res = await fetch(
+    const { data } = await axios.get<DocumentsResponse>(
       internalApiUrl(`/api/legal/documents?${params.toString()}`),
-      { cache: "no-store" }
+      { headers: { Accept: "application/json" } }
     );
-    if (!res.ok) {
-      return { locality: "", disclaimer: "", total: 0, totalByType: {}, types: [], documents: [] };
-    }
-    return (await res.json()) as DocumentsResponse;
+    return data;
   } catch {
     return { locality: "", disclaimer: "", total: 0, totalByType: {}, types: [], documents: [] };
   }

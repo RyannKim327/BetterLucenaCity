@@ -1,10 +1,31 @@
 import { PageHeader } from "@/components/layout/page-header"
 import { Card } from "@/components/ui/card"
-import { contributors } from "@/lib/data/contributors"
+import { internalApiUrl } from "@/lib/sources/shared"
+import axios from "axios"
+// import { contributors } from "@/lib/data/contributors"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Contributors() {
+interface Contributors {
+  username: string
+  avatar_url: string
+  user_type: string
+}
+
+async function fetchUser() {
+  try {
+    const { data } = await axios.get<Contributors[]>(internalApiUrl("/api/contribute/members"), {
+      headers: { Accept: "application/json" },
+    });
+    return data
+  } catch (e) {
+    return []
+  }
+}
+
+export default async function Contributors() {
+  const [contributors] = await Promise.all([fetchUser()])
+
   return (
     <div>
       <PageHeader
@@ -24,14 +45,14 @@ export default function Contributors() {
               <Card
                 key={`${i}. ${contrib.username}`}
                 className="flex flex-col w-[calc(25%-1rem)] gap-2">
-                {contrib.img ?
+                {contrib.avatar_url ?
                   <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-                    <Image className="object-cover" src={contrib.img} alt="User Profile" fill sizes="(max-width: 768px) 50vw, 25vw" />
+                    <Image className="object-cover" src={contrib.avatar_url} alt="User Profile" fill sizes="(max-width: 768px) 50vw, 25vw" />
                   </div>
                   :
                   <div className="flex items-center justify-center aspect-square w-full">User Profile</div>
                 }
-                <p className="mt-4 text-xs uppercase tracking-wider text-secondary">{contrib.position}</p>
+                <p className="mt-4 text-xs uppercase tracking-wider text-secondary">{contrib.user_type}</p>
                 <p className="text-base font-semibold">{contrib.username}</p>
               </Card>
             )
