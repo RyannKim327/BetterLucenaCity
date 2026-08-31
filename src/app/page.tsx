@@ -16,7 +16,6 @@ export default function Home() {
       <ServicesSection />
       <AnnouncementSection />
       <LiveDataSection />
-      <Contributors />
-    </div >
+    </div>
   );
 }

@@ -53,7 +53,7 @@ export function Footer() {
       <div className="border-t border-outline-variant/40 py-4">
         <div className="flex flex-wrap justify-between mx-auto max-w-6xl px-4 text-xs text-on-surface-variant sm:px-6">
           <p>© {new Date().getFullYear()} {site.name} · {site.tagline}</p>
-          <Link href="/contribute">Be one of us? Be a contributor?</Link>
+          <Link href="/contributors">Be one of us? Be a contributor?</Link>
         </div>
       </div>
     </footer >
