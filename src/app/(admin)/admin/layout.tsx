@@ -16,9 +16,7 @@ export default async function AdminContainer({ children }: AdminContainerInterfa
   // TODO: auth
   const allowed = await CheckPermission(user?.id as string, "admin")
 
-  if (!allowed) {
-    redirect("/")
-  }
+  if (!allowed) return redirect("/")
 
   return (
     <div className="flex flex-col mx-auto max-w-6xl gap-4 px-4 py-16 sm:px-6">
