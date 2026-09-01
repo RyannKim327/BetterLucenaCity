@@ -60,7 +60,7 @@ export default async function ContributePage() {
 
   const displayName =
     (user.user_metadata?.username as string | undefined) ??
-    (user.user_metadata?.user_name as string | undeined) ??
+    (user.user_metadata?.user_name as string | undefined) ??
     (user.user_metadata?.full_name as string | undefined) ??
     (user.user_metadata?.name as string | undefined) ??
     user.email?.split("@")[0] ??
