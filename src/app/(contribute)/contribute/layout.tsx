@@ -3,6 +3,8 @@ import { Card } from "@/components/ui/card";
 import { AuthButtons } from "@/components/sections/auth-buttons";
 import { createClient } from "@/lib/supabase/server";
 import { ReactNode } from "react";
+import CheckPermission from "@/lib/roles";
+import { redirect } from "next/navigation";
 
 interface ContributeInterface {
   children: ReactNode
@@ -13,6 +15,10 @@ export default async function ContributorContainer({ children }: ContributeInter
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const allowed = await CheckPermission(user?.id as string, "collect")
+
+  if (!allowed) return redirect("/")
 
   if (!user) {
     return (

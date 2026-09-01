@@ -1,3 +1,4 @@
+import CheckPermission from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
@@ -13,9 +14,9 @@ export default async function AdminContainer({ children }: AdminContainerInterfa
   } = await supabase.auth.getUser();
 
   // TODO: auth
-  const isAdmin = true
+  const allowed = await CheckPermission(user?.id as string, "admin")
 
-  if (!isAdmin) {
+  if (!allowed) {
     redirect("/")
   }
 
