@@ -106,6 +106,32 @@ Everyone starts by **registering / signing in** at [`/contribute`](/contribute) 
 
 To request a role, sign in, then **message a Maintainer or the Head Maintainer via the website contact / private discussion** with: (a) which role you want, and (b) a short note on your research experience. For privacy and to avoid public pressure, please do not request data-related roles via a public GitHub Issue. Maintainers assign roles via the `user_type` enum (`Data Collaborator`, `Data Validator`, `Tester`, `Maintainer`, `Head Maintainer`). Roles can be expanded as the community grows.
 
+### Privacy & Public Credit — Username and Email
+
+- **We use `username` for privacy.** Inside the app and in any public credit, you are identified by your chosen `username` (from `users.username`), not your legal name. This limits exposure while still letting the community give credit.
+- **Public credit is opt-in/opt-out.** When your contribution is validated and published, you may choose whether your `username` appears publicly on **`/contributors`** to acknowledge those who help maintain the platform. If you prefer not to be listed, you can remain private — your contribution still counts, but only the Head Maintainer and assigned Validator see your identity in the private thread. You can change this preference from your profile.
+- **Email is never public.** The email you sign in with is **not displayed anywhere** (not on `/contributors`, not in threads, not to validators). It is used **only to send system notifications** about your submissions (e.g., “received,” “needs more documents,” “published”) **via the Head Maintainer’s email account**. As of now, only the Head Maintainer’s account sends these notifications — **validators do not email contributors directly**; all validator-to-source communication stays in the private on-website discussion. No marketing or unrelated emails are sent.
+
+### Reporting Harassment — RA 11313 (Anti-Bastos Law) via `/report`
+
+This project enforces **RA 11313 (Safe Spaces Act / Anti-Bastos Law)** and our [Code of Conduct](CODE_OF_CONDUCT.md). We **must not disgrace, demean, or judge people** for who they are — regardless of gender, identity, appearance, beliefs, or background. Everyone must work **professionally and ethically**.
+
+**If you feel harassed by another contributor (including a validator or maintainer):**
+- **Do not post a public GitHub Issue.** Instead, file a report via the website at **`/report`** (available from the header/help links while signed in).
+- **Include screenshot or proof** (image, thread export, link, timestamp) of the harassment so it can be investigated fairly. Reports without evidence are still received but may take longer to resolve.
+- Your report is **private** — visible only to Head Maintainers / Project Administrators acting as investigators, not to the public or to the accused.
+
+**Investigation & ethics:**
+- Head Maintainers and Project Administrators **must be non-biased** and **investigate before judging**. We review the private thread, evidence, and statements from both sides without favoring any political party, seniority, or validator status.
+- We uphold professional, ethical conduct and respect the privacy and dignity of both reporter and respondent.
+
+**Consequences & legal use:**
+- Depending on findings, sanctions range from warning to **disqualification from the contributor role or permanent ban from the system** (see Code of Conduct *Enforcement Guidelines*).
+- If you wish to pursue a legal case under RA 11313, the platform **may provide the report and relevant private thread records as evidence** with proper consent/legal process. This is disclosed for transparency.
+- Retaliation for good-faith reporting is itself a violation.
+
+This reporting duty is part of both the **Code of Conduct** and **Contribution Policy**.
+
 ## Getting Started
 
 1. Fork the repository and clone your fork:

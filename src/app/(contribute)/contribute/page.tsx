@@ -20,7 +20,7 @@ export default async function ContributePage() {
     "";
 
   return (
-    <div className="-mx-4 -my-16 sm:-mx-6">
+    <div>
       <PageHeader
         eyebrow="Pakikibahagi · Transparency"
         title="Contribute — beyond code"
@@ -141,9 +141,16 @@ export default async function ContributePage() {
           </Card>
 
           <Card className="bg-surface-container">
-            <h3 className="text-sm font-semibold">Privacy &amp; bayanihan</h3>
+            <h3 className="text-sm font-semibold">Privacy, respect &amp; anti-harassment</h3>
             <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
               Keep reports factual, non-partisan, and free of personal opinions. Redact private personal data (IDs, private addresses, personal phone numbers) before submitting. In the spirit of <em>malasakit</em>, we publish only what serves public transparency.
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+              You are credited by <span className="font-medium text-on-surface">username only</span> — opt in/out on <Link href="/contributors" className="font-medium text-primary hover:underline">/contributors</Link>. Email is never public; it&apos;s used only for system notifications via the Head Maintainer&apos;s account (validators never email you directly).
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+              We follow <span className="font-medium text-on-surface">RA 11313 (Anti-Bastos Law)</span> — we do not disgrace or judge people for who they are. Work professionally and ethically. If harassed, report privately at{" "}
+              <Link href="/report" className="font-medium text-primary hover:underline">/report</Link> with screenshot/proof. Head Maintainers investigate without bias before judging; sanctions range to ban/disqualification, and records may be used as legal evidence with your consent.
             </p>
           </Card>
         </div>

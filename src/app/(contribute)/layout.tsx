@@ -32,6 +32,9 @@ export default async function ContributorContainer({ children }: ContributeInter
               <span className="font-medium text-on-surface">Data Collaborator</span> or{" "}
               <span className="font-medium text-on-surface">Data Validator</span> role.
             </p>
+            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+              Privacy: you&apos;ll appear publicly by <span className="font-medium text-on-surface">username only</span> (opt in/out on <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">/contributors</code>). Your email is never shown — it&apos;s used only for system notifications via the Head Maintainer&apos;s account; validators never email you directly.
+            </p>
             <div className="mt-6">
               <AuthButtons
                 redirectTo="/contribute"
@@ -40,7 +43,7 @@ export default async function ContributorContainer({ children }: ContributeInter
             </div>
             <p className="mt-4 text-xs leading-relaxed text-on-surface-variant">
               Want to be a Data Validator? You&apos;ll need proven research skills and a strictly non-partisan stance
-              (see guidelines →). Ask a Maintainer after signing in.
+              (see guidelines →). Ask a Maintainer after signing in. Harassment? Report privately at <span className="font-medium text-on-surface">/report</span> with proof — RA 11313.
             </p>
           </Card>
 
@@ -77,9 +80,10 @@ export default async function ContributorContainer({ children }: ContributeInter
     );
   }
 
-  return (
+  return children;
+  {/*(
     <div className="flex flex-col mx-auto max-w-6xl gap-4 px-4 py-16 sm:px-6">
-      {children}
-    </div>
-  )
+      { children }
+    </div >
+  ) */}
 }

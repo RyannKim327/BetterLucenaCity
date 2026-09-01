@@ -1,4 +1,4 @@
-# Contributor Covenant Code of Conduct
+# Contributor Covenant Code of Conduct — BetterGov.ph Lucena City
 
 ## Our Pledge
 
@@ -33,13 +33,41 @@ Community leaders are responsible for clarifying and enforcing our standards of 
 
 Community leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, and will communicate reasons for moderation decisions when appropriate.
 
+## Privacy — Username, Email & Public Credit
+
+To protect contributor privacy, the platform **identifies contributors by `username` only**. Your `username` may be shown publicly on `/contributors` to give credit to those who help maintain the platform, but you may **opt in or opt out** of public listing (see `CONTRIBUTING.md` — *Privacy & Public Credit*). We never display your email, full name, or other PII on public pages.
+
+**Email use disclosure:** The email you provide at sign-in is **never displayed publicly** and is **not shared with validators or other contributors**. It is used **solely to send system notifications** (e.g., your submission was received, validated, or needs more documents) **from the system via the Head Maintainer’s email account**. Validators do **not** email you directly; all data discussions stay in the private on-website thread (Source ↔ Validator ↔ Head Maintainer). Currently, notifications are sent from the Head Maintainer’s account only — no validator-to-contributor email is sent. You will not receive unsolicited or personal emails from validators.
+
 ## Scope
 
-This Code of Conduct applies within all project spaces, including the repository, issue tracker, pull requests, and any chat or discussion channels, and also applies when an individual is officially representing the community in public spaces.
+This Code of Conduct applies within all project spaces, including the repository, issue tracker, pull requests, in-app private discussions (`/contribute` threads), `/report` harassment reports, and also applies when an individual is officially representing the community in public spaces.
+
+## Reporting Harassment — RA 11313 (Safe Spaces Act / Anti-Bastos Law) & `/report`
+
+We strictly follow **Republic Act No. 11313 — the Safe Spaces Act (Anti-Bastos Law)**. We do **not disgrace, demean, or judge anyone** for who they are — gender, identity, appearance, beliefs, or background. All interactions must remain **professional and ethical**.
+
+If you feel harassed, threatened, or discriminated against by another contributor (including a validator or maintainer) — whether through sexual harassment, sexist/derogatory remarks, stalking, online shaming, or any gender-based or identity-based harassment covered by RA 11313 — **you must report it via the in-app `/report` section**, not via public GitHub Issues or social media.
+
+**How to report:**
+- Go to **`/report`** (available from the header or `/contribute` help links) while signed in.
+- Include: what happened, when/where (which private thread or page), and **screenshot or other proof** (chat export, image, link). Evidence is required for fair investigation.
+- You may remain identifiable only to the Head Maintainer and designated investigators; your report is **not** shown to the accused or posted publicly.
+
+**How we handle it:**
+- Head Maintainers / Project Administrators act as **non-biased investigators**. We **investigate before judging** — we review the thread, evidence, and both sides, and we do not favor any political party, senior contributor, or validator.
+- We work **professionally and ethically**, with respect for privacy and dignity of both reporter and respondent.
+- Findings and actions are communicated privately.
+
+**Outcomes:**
+- Depending on severity, consequences range from formal warning to **disqualification from the contributor role or permanent ban from the system** (see *Enforcement Guidelines* below).
+- If the harassed person wishes to pursue a case under RA 11313, the platform **may provide the private thread and report records as evidence** (with proper consent and legal process), while still redacting unrelated personal data.
+
+Retaliation against anyone who reports in good faith is itself a violation and will be sanctioned.
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at **conduct@bettergov.ph**. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via **`/report` on the website** (preferred for data-related harassment, privacy-preserving and with evidence upload) or to the community leaders responsible for enforcement at **conduct@bettergov.ph**. All complaints will be reviewed and investigated promptly, fairly, and with non-bias.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 
