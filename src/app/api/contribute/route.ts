@@ -7,6 +7,8 @@ const VALID_CATEGORIES = [
   "Service Information",
   "Budget / Project",
   "Transparency Data",
+  "Data Verification / Correction",
+  "Report / Document",
   "Other",
 ];
 
@@ -53,9 +55,24 @@ export async function POST(request: Request) {
     );
   }
 
+  if (
+    body.supportingDocument &&
+    body.supportingDocument.trim().length > 0 &&
+    /^https?:\/\//.test(body.supportingDocument.trim()) &&
+    !/^https?:\/\/.+/.test(body.supportingDocument.trim())
+  ) {
+    return NextResponse.json(
+      { error: "Supporting document link must be a valid URL." },
+      { status: 400 },
+    );
+  }
+
+  // Encourage reliable source + supporting document for transparency reports.
+  // We keep it soft-validation here — the Data Validator will hold submissions
+  // without verifiable reference until validated. See CONTRIBUTING.md.
   if (!body.consent) {
     return NextResponse.json(
-      { error: "Consent is required to submit a contribution." },
+      { error: "Consent is required — confirm the report is from a reliable source and includes supporting documents where possible." },
       { status: 400 },
     );
   }

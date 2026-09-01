@@ -194,9 +194,15 @@ Official service details, hotline numbers, and records are verified before publi
 
 Salamat sa pag-contribute! See [CONTRIBUTING.md](CONTRIBUTING.md) for how to get started, our code style rules, and data accuracy guidelines.
 
-- Report bugs and data inaccuracies (with sources!) via [Issues](../../issues)
+> **Beyond code:** This project lives on trustworthy public information. You can contribute by **gathering, verifying, validating, and sharing** data — no coding needed. Anyone is welcome to submit a report via [`/contribute`](/contribute) **as long as it is valid, from a reliable source, and includes supporting documents** (link, PDF, photo, or reference no.) whenever possible.
+
+- **Data & transparency reports** — submit via the private in-app `/contribute` form (sign-in required) — **do not use GitHub Issues** for data. See [CONTRIBUTING.md — Contributing Data & Reports](CONTRIBUTING.md#contributing-data--reports-no-code-needed).
+- **Corrections & large datasets → private 3-way discussion on the website (not GitHub)** — these submissions open a private thread between the **Source** (you), the **Data Validator**, and the **Head Maintainer** (admin) where questions, supporting documents, and the final decision stay contained. Kept off GitHub Issues to protect contributor privacy and mental health.
+- **Want to do more? Register for a role** — after signing in you may request to become a **Data Collaborator** (regular data gatherer) or **Data Validator** (reviews submissions before publication). Validators must have research knowledge to prevent false information and must remain **strictly non-partisan** — no cherry-picking data to favor or oppose any political party. See [CONTRIBUTING.md — Data Validator requirements](CONTRIBUTING.md#create-an-account--data-gathering--validator-roles).
+- Report **code bugs** via [Issues](../../issues) — for **data inaccuracies**, use the private [`/contribute`](../../contribute) form (with sources + supporting documents) so the discussion stays between you, the Validator, and the Head Maintainer for privacy
 - Please review our [Code of Conduct](CODE_OF_CONDUCT.md)
 - Security vulnerabilities: see [SECURITY.md](SECURITY.md) — do not open public issues for them
+- Discussion Board: To welcome all contributors, please read this [Discussion](https://github.com/RyannKim327/BetterLucenaCity/discussions/19) for more details.
 
 ## License
 

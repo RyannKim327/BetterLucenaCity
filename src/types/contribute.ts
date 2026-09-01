@@ -3,6 +3,8 @@ export type ContributeCategory =
   | "Service Information"
   | "Budget / Project"
   | "Transparency Data"
+  | "Data Verification / Correction"
+  | "Report / Document"
   | "Other";
 
 export interface ContributeFormProps {
@@ -13,6 +15,7 @@ export interface ContributePayload {
   category?: string;
   title?: string;
   source?: string;
+  supportingDocument?: string;
   details?: string;
   consent?: boolean;
 }

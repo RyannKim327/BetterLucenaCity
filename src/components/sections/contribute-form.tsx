@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, ShieldCheck, FileText } from "lucide-react";
 import type { ContributeCategory, ContributeFormProps } from "@/types/contribute";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -11,6 +11,8 @@ const CATEGORIES: ContributeCategory[] = [
   "Service Information",
   "Budget / Project",
   "Transparency Data",
+  "Data Verification / Correction",
+  "Report / Document",
   "Other",
 ];
 
@@ -18,6 +20,7 @@ const fieldClass =
   "mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/60 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
 
 const labelClass = "block text-sm font-medium text-on-surface";
+const hintClass = "mt-1.5 text-xs leading-relaxed text-on-surface-variant";
 
 export function ContributeForm({ user }: ContributeFormProps) {
   const [status, setStatus] = useState<Status>("idle");
@@ -35,6 +38,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
       category: String(data.get("category") ?? "").trim(),
       title: String(data.get("title") ?? "").trim(),
       source: String(data.get("source") ?? "").trim(),
+      supportingDocument: String(data.get("supportingDocument") ?? "").trim(),
       details: String(data.get("details") ?? "").trim(),
       consent: data.get("consent") === "on",
     };
@@ -65,8 +69,9 @@ export function ContributeForm({ user }: ContributeFormProps) {
         <CheckCircle2 className="mx-auto h-12 w-12 text-primary" />
         <h2 className="mt-4 text-lg font-semibold">Salamat po! (Thank you!)</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-on-surface-variant">
-          Your contribution has been received. Our team will review the source and
-          publish verified information soon.
+          Your report has been received. Our Data Validators will review the source and supporting documents and
+          publish verified information soon. We prioritize accuracy over speed — we&apos;ll follow up if more proof is
+          needed.
         </p>
         <button
           type="button"
@@ -81,6 +86,18 @@ export function ContributeForm({ user }: ContributeFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      {/* Intro banner — emphasizes non-code contributions */}
+      <div className="rounded-xl border border-primary/20 bg-primary-container/30 px-4 py-3">
+        <p className="flex items-start gap-2 text-sm leading-relaxed text-on-surface">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+          <span>
+            <span className="font-medium">Anyone can contribute — no coding required.</span> We welcome{" "}
+            <span className="font-medium">data gathering, verification, validation, and transparency reports</span>.
+            Please make sure your submission is <span className="font-medium">valid, from a reliable source, and includes supporting documents</span> whenever possible (link, PDF, photo, or reference no.).
+          </span>
+        </p>
+      </div>
+
       <div>
         <label className={labelClass}>Submitting as</label>
         <p className="mt-1.5 rounded-xl border border-outline-variant/60 bg-surface-container px-3.5 py-2.5 text-sm text-on-surface-variant">
@@ -103,6 +120,10 @@ export function ContributeForm({ user }: ContributeFormProps) {
             </option>
           ))}
         </select>
+        <p className={hintClass}>
+          Choose <em>Data Verification / Correction</em> to flag outdated info, or <em>Report / Document</em> for
+          ordinances, budgets, and project reports.
+        </p>
       </div>
 
       <div>
@@ -115,7 +136,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
           type="text"
           required
           maxLength={160}
-          placeholder="Short summary of the information"
+          placeholder="e.g., Correction: Business permit fee for sari-sari store is ₱500 (not ₱800)"
           className={fieldClass}
         />
       </div>
@@ -128,9 +149,33 @@ export function ContributeForm({ user }: ContributeFormProps) {
           id="source"
           name="source"
           type="url"
-          placeholder="https://lucena.gov.ph/..."
+          placeholder="https://lucena.gov.ph/... or official FB post URL"
           className={fieldClass}
         />
+        <p className={hintClass}>
+          Primary source preferred: lucena.gov.ph, City Hall bulletin, DBM/DPWH/PSA/DILG portals, published
+          ordinance, or FOI/COA report. News articles should include the primary document they cite.
+        </p>
+      </div>
+
+      <div>
+        <label htmlFor="supportingDocument" className={labelClass}>
+          Supporting document
+        </label>
+        <div className="relative">
+          <FileText className="pointer-events-none absolute left-3 top-[1.35rem] h-4 w-4 text-on-surface-variant/60" />
+          <input
+            id="supportingDocument"
+            name="supportingDocument"
+            type="text"
+            placeholder="URL to PDF/photo/scan, or describe: 'Ordinance No. 2026-04, issued 2026-03-10 by Sangguniang Panlungsod'"
+            className={`${fieldClass} pl-9`}
+          />
+        </div>
+        <p className={hintClass}>
+          Link a document or describe it: reference number, date issued, issuing office, and where it can be verified.
+          Photos/scans should show date &amp; venue. Redact private personal data before linking.
+        </p>
       </div>
 
       <div>
@@ -142,12 +187,15 @@ export function ContributeForm({ user }: ContributeFormProps) {
           name="details"
           required
           rows={5}
-          placeholder="Share what you know and why it matters to Lucena."
+          placeholder="Share what you know, why it matters, and how you verified it. For corrections: state the current (wrong) value, the correct value, and your source."
           className={`${fieldClass} resize-y`}
         />
+        <p className={hintClass}>
+          Be factual, non-partisan, and specific. If you visited an office, note the date and person/office that confirmed it.
+        </p>
       </div>
 
-      <label className="flex items-start gap-3 text-sm text-on-surface-variant">
+      <label className="flex items-start gap-3 rounded-xl border border-outline-variant/30 bg-surface-container px-3.5 py-3 text-sm text-on-surface-variant">
         <input
           type="checkbox"
           name="consent"
@@ -155,8 +203,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
           className="mt-0.5 h-4 w-4 rounded border-outline text-primary focus:ring-primary/30"
         />
         <span>
-          I confirm this information comes from a reliable source and may be
-          reviewed and published by the BetterGov.ph team.
+          I confirm this information is <span className="font-medium text-on-surface">valid and from a reliable source</span>, with supporting documents linked or described where possible. I understand it will be reviewed and validated before publication, and held if no verifiable reference can be checked.
         </span>
       </label>
 

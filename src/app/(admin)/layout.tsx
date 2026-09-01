@@ -14,8 +14,8 @@ export default function AdminContainer({ children }: AdminContainerInterface) {
   }
 
   return (
-    <>
+    <div className="flex flex-col mx-auto max-w-6xl gap-4 px-4 py-16 sm:px-6">
       {children}
-    </>
+    </div>
   )
 }
