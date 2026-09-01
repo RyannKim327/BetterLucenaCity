@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2, ShieldCheck, FileText } from "lucide-react";
+import { CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
 import type { ContributeCategory, ContributeFormProps } from "@/types/contribute";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -38,7 +38,6 @@ export function ContributeForm({ user }: ContributeFormProps) {
       category: String(data.get("category") ?? "").trim(),
       title: String(data.get("title") ?? "").trim(),
       source: String(data.get("source") ?? "").trim(),
-      supportingDocument: String(data.get("supportingDocument") ?? "").trim(),
       details: String(data.get("details") ?? "").trim(),
       consent: data.get("consent") === "on",
     };
@@ -93,7 +92,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
           <span>
             <span className="font-medium">Anyone can contribute — no coding required.</span> We welcome{" "}
             <span className="font-medium">data gathering, verification, validation, and transparency reports</span>.
-            Please make sure your submission is <span className="font-medium">valid, from a reliable source, and includes supporting documents</span> whenever possible (link, PDF, photo, or reference no.).
+            Please make sure your submission is <span className="font-medium">valid, from a reliable source, with source/reference link</span> where possible.
           </span>
         </p>
       </div>
@@ -154,27 +153,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
         />
         <p className={hintClass}>
           Primary source preferred: lucena.gov.ph, City Hall bulletin, DBM/DPWH/PSA/DILG portals, published
-          ordinance, or FOI/COA report. News articles should include the primary document they cite.
-        </p>
-      </div>
-
-      <div>
-        <label htmlFor="supportingDocument" className={labelClass}>
-          Supporting document
-        </label>
-        <div className="relative">
-          <FileText className="pointer-events-none absolute left-3 top-[1.35rem] h-4 w-4 text-on-surface-variant/60" />
-          <input
-            id="supportingDocument"
-            name="supportingDocument"
-            type="text"
-            placeholder="URL to PDF/photo/scan, or describe: 'Ordinance No. 2026-04, issued 2026-03-10 by Sangguniang Panlungsod'"
-            className={`${fieldClass} pl-9`}
-          />
-        </div>
-        <p className={hintClass}>
-          Link a document or describe it: reference number, date issued, issuing office, and where it can be verified.
-          Photos/scans should show date &amp; venue. Redact private personal data before linking.
+          ordinance, or FOI/COA report. Include the primary reference link — validators check this directly.
         </p>
       </div>
 
@@ -203,7 +182,7 @@ export function ContributeForm({ user }: ContributeFormProps) {
           className="mt-0.5 h-4 w-4 rounded border-outline text-primary focus:ring-primary/30"
         />
         <span>
-          I confirm this information is <span className="font-medium text-on-surface">valid and from a reliable source</span>, with supporting documents linked or described where possible. I understand it will be reviewed and validated before publication, and held if no verifiable reference can be checked.
+          I confirm this information is <span className="font-medium text-on-surface">valid and from a reliable source</span>, with source/reference link where possible. I understand it will be reviewed and validated before publication, and held if no verifiable reference can be checked.
         </span>
       </label>
 
