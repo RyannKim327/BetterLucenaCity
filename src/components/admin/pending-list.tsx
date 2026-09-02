@@ -46,10 +46,13 @@ export function PendingList() {
         body: JSON.stringify({ id, approved }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? "Failed");
+      if (!res.ok) throw new Error(json.error ?? "Failed to approve");
       setUsers((prev) => prev.filter((u) => u.id !== id));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error");
+      const message =
+        e instanceof Error ? e.message : typeof e === "string" ? e : "Error";
+      setError(message);
+      console.error(e);
     } finally {
       setActing(null);
     }

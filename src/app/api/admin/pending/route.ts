@@ -8,7 +8,14 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: "Not signed in" }, { status: 401 });
 
   const allowed = await CheckPermission(user.id, "admin");
-  if (!allowed) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!allowed)
+    return NextResponse.json(
+      {
+        error:
+          "Forbidden — you must be an approved Head Maintainer or Maintainer. If this is the first admin, set your user_type to 'Head Maintainer' and approved=true manually in Supabase Studio.",
+      },
+      { status: 403 }
+    );
 
   const { data, error } = await supabase
     .from("users")
