@@ -1,15 +1,18 @@
 import type { NextConfig } from "next";
+import withPWA from "@ducanh2912/next-pwa";
 
-import { default as withPWA } from "next-pwa"
-
-withPWA({
+const withPWAConfig = withPWA({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
   register: true,
-  skipWaiting: true
-})
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+});
 
 const nextConfig: NextConfig = {
+  // Required for Next 16 + @ducanh2912/next-pwa to silence webpack/turbopack warning
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -19,9 +22,9 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
-      }
+      },
     ],
   },
 };
 
-export default withPWA(nextConfig);
+export default withPWAConfig(nextConfig);

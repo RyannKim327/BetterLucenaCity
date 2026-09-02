@@ -6,7 +6,7 @@ import type { LegalDocument } from "@/types/legal";
 
 export const dynamic = "force-dynamic";
 
-export const legalDisclaimer =
+const legalDisclaimer =
   "City-level entries below are compiled from official public records and published session reports of the Sangguniang Panlungsod of Lucena. National laws listed are verifiable public statutes. Where a document's official text is not yet available online, the entry is marked 'pending verification' pending confirmation against the records of the Sangguniang Panlungsod.";
 
 interface LegalRow {
