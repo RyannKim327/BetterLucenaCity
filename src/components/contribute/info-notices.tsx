@@ -132,14 +132,14 @@ export function InfoNotices() {
       <Modal open={active === "validator"} onClose={() => setActive(null)} title="Register for Data Gathering & Validator roles">
         <p>You may request:</p>
         <ul className="mt-2 space-y-2">
-          <li>• <span className="font-medium text-on-surface">Data Collaborator</span> — for anyone who regularly gathers and submits public reports. No formal credentials needed; reliability is what matters.</li>
+          <li>• <span className="font-medium text-on-surface">Data Collaborator</span> — for anyone who regularly gathers and submits public reports. No formal credentials needed; reliability is what matters. <span className="font-medium">Strictly non-partisan</span> — must submit all verifiable data equally regardless of party, family, or candidate; no cherry-picking or hiding.</li>
           <li>• <span className="font-medium text-on-surface">Data Validator</span> — for reviewers who approve submissions before publication.</li>
         </ul>
         <div className="mt-3 rounded-xl bg-surface-container px-3 py-2.5">
-          <p className="text-xs font-semibold text-on-surface">Validator must have:</p>
+          <p className="text-xs font-semibold text-on-surface">Both Data Collaborator & Validator must be non-partisan:</p>
           <ul className="mt-1.5 space-y-1.5 text-xs">
-            <li>• <span className="font-medium">Research knowledge</span> — can trace primary sources, check reference no./seal/date, cross-reference, and spot altered/AI-generated documents.</li>
-            <li>• <span className="font-medium">Non-partisan impartiality</span> — must not cherry-pick or suppress data to favor any political party, family, or candidate.</li>
+            <li>• <span className="font-medium">Non-partisan impartiality</span> — must not cherry-pick, suppress, or spin data to favor any political party, family, or candidate. All verifiable public-interest reports are treated equally.</li>
+            <li>• <span className="font-medium">Research knowledge (Validator required, Collaborator encouraged)</span> — can trace primary sources, check reference no./seal/date, cross-reference, and spot altered/AI-generated documents.</li>
             <li>• Willingness to disclose conflicts, recuse when involved, and correct published entries when new evidence appears.</li>
           </ul>
         </div>

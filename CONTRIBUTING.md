@@ -94,7 +94,7 @@ Larger or higher-risk contributions (correcting already-published data, multi-ro
 
 Everyone starts by **registering / signing in** at [`/contribute`](/contribute) (Google or GitHub via Supabase Auth). On first sign-in a profile row is created in `users`. You can then request a community role:
 
-- **Data Collaborator** — for residents who regularly gather public information, submit reports, or transcribe ordinances. No formal credentials needed; reliability and accurate sourcing are the only requirements.
+- **Data Collaborator** — for residents who regularly gather public information, submit reports, or transcribe ordinances. No formal credentials needed; reliability and accurate sourcing are the core requirements. **Strictly non-partisan** — collaborators must gather and submit all verifiable public-interest data equally regardless of party/family/candidate; cherry-picking, hiding, or spinning data by political affiliation is not allowed and is grounds for removal.
 - **Data Validator** — for members who **review and approve** community submissions before publication. Because validators are gatekeepers against false information, they must meet higher criteria:
 
 > **Data Validator requirements — please read before requesting the role:**

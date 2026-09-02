@@ -3,8 +3,8 @@ import { Card } from "@/components/ui/card";
 import { AuthButtons } from "@/components/sections/auth-buttons";
 import { createClient } from "@/lib/supabase/server";
 import { ReactNode } from "react";
-import CheckPermission from "@/lib/roles";
-import { redirect } from "next/navigation";
+import CheckPermission, { getUserProfile } from "@/lib/roles";
+import { RoleSelector, PendingApproval } from "@/components/contribute/role-selector";
 
 interface ContributeInterface {
   children: ReactNode
@@ -17,10 +17,80 @@ export default async function ContributorContainer({ children }: ContributeInter
   } = await supabase.auth.getUser();
 
   if (user) {
-    // TODO: To manage the user credentials
-    // If not available, it will redirect to the login/registration
-    const allowed = await CheckPermission(user?.id as string, "collect")
-    if (!allowed) return redirect("/")
+    const profile = await getUserProfile(user.id);
+
+    const displayName =
+      (user.user_metadata?.username as string | undefined) ??
+      (user.user_metadata?.user_name as string | undefined) ??
+      (user.user_metadata?.full_name as string | undefined) ??
+      (user.user_metadata?.name as string | undefined) ??
+      user.email?.split("@")[0] ??
+      "";
+
+    // 1) user_type is null -> let them choose a role (approved stays false)
+    if (!profile || !profile.user_type || profile.user_type.trim() === "") {
+      return (
+        <div>
+          <PageHeader
+            eyebrow="Pakikibahagi"
+            title="Choose a role"
+            description="Pick the role you want — your account will be created with approved = false (pending review) until a Maintainer approves you."
+          />
+          <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+            <RoleSelector email={user.email} displayName={displayName} />
+            <p className="mt-6 text-center text-xs leading-relaxed text-on-surface-variant">
+              After requesting a role, a Head Maintainer / Maintainer will review it. We keep <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved = false</code> by default so we can vet who the contributors are.
+            </p>
+          </section>
+        </div>
+      );
+    }
+
+    // 2) has a role but not yet approved -> pending screen + allow re-select
+    if (profile.approved !== true) {
+      return (
+        <div>
+          <PageHeader
+            eyebrow="Pakikibahagi"
+            title="Pending approval"
+            description="Your role request is awaiting review by a Maintainer."
+          />
+          <section className="mx-auto max-w-3xl space-y-6 px-4 py-12 sm:px-6">
+            <PendingApproval role={profile.user_type} email={user.email ?? undefined} />
+            <RoleSelector email={user.email} displayName={displayName} />
+            <p className="text-center text-xs leading-relaxed text-on-surface-variant">
+              Changed your mind? Pick a different role above — you&apos;ll stay pending (approved = false) until re-approved.
+            </p>
+          </section>
+        </div>
+      );
+    }
+
+    // 3) approved contributor -> check permission for /contribute (collect)
+    const allowed = await CheckPermission(user?.id as string, "collect");
+    if (!allowed) {
+      // approved but role doesn't have 'collect' (e.g., Tester) -> show friendly message instead of hard redirect
+      return (
+        <div>
+          <PageHeader
+            eyebrow="Pakikibahagi"
+            title="Role verified — limited access"
+            description={`Your role ${profile.user_type} (approved) does not include contribution access. Ask a Maintainer to upgrade your role if needed.`}
+          />
+          <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+            <Card>
+              <p className="text-sm leading-relaxed text-on-surface-variant">
+                You are signed in as {displayName ? `${displayName} · ` : ""}{user.email} with role{" "}
+                <span className="font-medium text-on-surface">{profile.user_type}</span> (approved). This role has no <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">collect</code> permission.
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+                Contact a Maintainer via the private discussion to request <strong>Data Collaborator</strong> or <strong>Data Validator</strong> access.
+              </p>
+            </Card>
+          </section>
+        </div>
+      );
+    }
     return children;
   }
 
@@ -72,10 +142,10 @@ export default async function ContributorContainer({ children }: ContributeInter
           </Card>
 
           <Card className="h-fit border-primary/20 bg-primary-container/20">
-            <h2 className="text-sm font-semibold">Data Validators — requirements</h2>
+            <h2 className="text-sm font-semibold">Data Collaborators & Validators — requirements</h2>
             <ul className="mt-2 space-y-2 text-xs leading-relaxed text-on-surface-variant">
-              <li>• <span className="font-medium text-on-surface">Research knowledge required</span> — must know how to trace primary sources, check reference numbers/seals/dates, and cross-reference to prevent false information.</li>
-              <li>• <span className="font-medium text-on-surface">Strictly non-partisan</span> — cannot selectively approve or hide data to favor a political party, family, or candidate. All verifiable public-interest data is treated equally.</li>
+              <li>• <span className="font-medium text-on-surface">Strictly non-partisan (both roles)</span> — cannot selectively gather, approve, or hide data to favor a political party, family, or candidate. All verifiable public-interest data is treated equally — whether it praises or criticizes any administration.</li>
+              <li>• <span className="font-medium text-on-surface">Research knowledge required for Validators (encouraged for Collaborators)</span> — must know how to trace primary sources, check reference numbers/seals/dates, and cross-reference to prevent false information.</li>
               <li>• Discuss directly with the Source in-thread for corrections &amp; large datasets; the Head Maintainer is the final arbiter.</li>
               <li>• Disclose conflicts of interest and recuse when you are the author/subject of a report.</li>
             </ul>
