@@ -1,5 +1,6 @@
 import { LUCENA } from "@/lib/sources/shared";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function AboutSection() {
   return (
@@ -38,11 +39,11 @@ export default function AboutSection() {
           <span>{LUCENA.annualPopulationChange}</span>
           <span className="text-xs">2020 → 2024</span>
         </Card>
-        <Card className="flex flex-col gap-2 w-full md:w-[calc(25%-1rem)] h-full">
+        <Card className="flex flex-col gap-2 w-full md:w-[calc(25%-1rem)] h-full group hover:border hover:border-solid hover:border-primary">
           <p
             className="text-xs uppercase tracking-wider text-secondary">Barangay</p>
           <span>{LUCENA.barangays.length} Barangays</span>
-          <span className="text-xs text-transparent">. </span>
+          <Link href="barangays" className="hover:underline group-hover:text-primary text-xs">See more →</Link>
         </Card>
         <Card className="flex flex-col gap-2 w-full md:w-[calc(25%-1rem)] h-full">
           <p
