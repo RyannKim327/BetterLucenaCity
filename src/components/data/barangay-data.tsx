@@ -23,24 +23,25 @@ interface BrgyInfo {
   year: number;
 }
 
-async function searchBarangayInfo(brgy: string): Promise<BrgyInfo | null> {
+async function searchBarangayInfo(brgy: string): Promise<BrgyInfo[] | null> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("barangay_information")
     .select("name, population, year")
     .eq("name", brgy)
-    .maybeSingle();
+    .order("year", { ascending: false })
+    .limit(3)
 
   if (error) {
     console.error("Failed to fetch barangay info:", error);
     return null;
   }
-  return data as BrgyInfo | null;
+  return data;
 }
 
 export default function BarangayData() {
   const [brgy, setBrgy] = useState(0);
-  const [info, setInfo] = useState<BrgyInfo | null>(null);
+  const [info, setInfo] = useState<BrgyInfo[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   const selected = barangayInfo[brgy];
@@ -51,7 +52,7 @@ export default function BarangayData() {
     setInfo(null);
     searchBarangayInfo(selected.name).then((data) => {
       if (!cancelled) {
-        setInfo(data);
+        setInfo(data as BrgyInfo[]);
         setLoading(false);
       }
     });
@@ -82,7 +83,7 @@ export default function BarangayData() {
           );
         })}
       </div>
-      <Card className="w-full md:w-[calc(50%-0.5rem)] md:sticky md:top-4 h-fit overflow-hidden">
+      <Card className="w-full md:w-[calc(50%-0.5rem)] max-h-[70dvh] md:h-dvh md:sticky md:top-4 h-fit overflow-hidden overflow-y-auto">
         <BarangayMap key={selected.name} data={selected} />
         <div className="pt-4 space-y-3">
           <h3 className="text-lg font-semibold">{selected.name}</h3>
@@ -102,22 +103,21 @@ export default function BarangayData() {
           </div>
 
           <div className="rounded-xl border border-outline-variant/30 p-4">
-            <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Barangay info (Supabase)</p>
+            <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Barangay info</p>
             {loading ? (
               <p className="text-sm text-on-surface-variant">Loading population…</p>
-            ) : info ? (
-              <div className="space-y-1 text-sm">
-                <p>
-                  <span className="text-on-surface-variant">Name:</span> {info.name}
-                </p>
-                <p>
-                  <span className="text-on-surface-variant">Population:</span> {info.population.toLocaleString()}
-                </p>
-                <p>
-                  <span className="text-on-surface-variant">Year:</span> {info.year}
-                </p>
-              </div>
-            ) : (
+            ) : info ? info.map((d, i: number) => {
+              return (
+                <div key={`${i}. ${d.name}`} className="space-y-1 text-sm grid grid-cols-2">
+                  <p>
+                    <span className="text-on-surface-variant">Population:</span> {d.population}
+                  </p>
+                  <p>
+                    <span className="text-on-surface-variant">Year:</span> {d.year}
+                  </p>
+                </div>
+              )
+            }) : (
               <p className="text-sm text-on-surface-variant">No population record yet for {selected.name}.</p>
             )}
           </div>
