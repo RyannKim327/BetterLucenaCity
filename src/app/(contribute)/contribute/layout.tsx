@@ -66,8 +66,8 @@ export default async function ContributorContainer({ children }: ContributeInter
       );
     }
 
-    // 3) approved contributor -> check permission for /contribute (collect)
-    const allowed = await CheckPermission(user?.id as string, "collect");
+    // 3) approved contributor -> check permission for /contribute (contribute)
+    const allowed = await CheckPermission(user?.id as string, "contribute");
     if (!allowed) {
       // approved but role doesn't have 'collect' (e.g., Tester) -> show friendly message instead of hard redirect
       return (
