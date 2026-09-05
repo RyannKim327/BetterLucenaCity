@@ -15,7 +15,8 @@ const transparencyAreas = [
     title: "Budget & Spending",
     description:
       "Annual budget allocations, appropriations, and summaries of city expenditures.",
-    status: "Coming soon",
+    status: "View information",
+    href: "transparency/local-budget"
   },
   {
     title: "National Budget",
@@ -28,7 +29,8 @@ const transparencyAreas = [
     title: "Procurement",
     description:
       "Public bidding notices, awarded contracts, and supplier information.",
-    status: "Coming soon",
+    status: "View biddings",
+    href: "procurement"
   },
   {
     title: "Ordinances & Resolutions",
@@ -41,7 +43,8 @@ const transparencyAreas = [
     title: "Full Disclosure Policy",
     description:
       "DILG-mandated disclosure documents posted for public viewing.",
-    status: "Coming soon",
+    status: "Read the policy",
+    href: "/legal/fdp"
   },
 ];
 
