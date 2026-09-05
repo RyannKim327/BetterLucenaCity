@@ -55,7 +55,7 @@ export function LegalList({ activeType }: { activeType: string | null }) {
         if (cancelled) return;
         if (!("error" in res.data)) setTypes(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
 
     return () => {
       cancelled = true;
@@ -63,10 +63,9 @@ export function LegalList({ activeType }: { activeType: string | null }) {
   }, [activeType]);
 
   if (failed) return <Failed />;
-
   if (!data) return <Loading />;
 
-  const documents = data.documents;
+  const documents = data.documents.filter((d) => d.verification === true);
   const totalByType = data.totalByType;
   const allCount = Object.values(totalByType).reduce((sum, n) => sum + n, 0);
 

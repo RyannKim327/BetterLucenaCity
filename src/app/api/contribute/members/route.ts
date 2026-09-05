@@ -7,9 +7,10 @@ export async function GET() {
   // until a Maintainer approves them (so we can vet who the contributors are).
   const { data, error } = await supa
     .from("users")
-    .select("username, avatar_url, user_type")
+    .select("username, avatar_url, user_type, show_picture")
     .eq("approved", true)
     .not("user_type", "is", null)
+    .not("show_contributor", "is", false)
     .order("date_added", { ascending: true })
 
   if (error) {

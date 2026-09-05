@@ -21,6 +21,7 @@ export async function GET() {
     .from("users")
     .select("id, username, email, avatar_url, user_type, approved, date_added")
     .eq("approved", false)
+    .not("user_type", "is", null)
     .order("date_added", { ascending: true });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

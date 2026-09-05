@@ -43,7 +43,7 @@ export async function NationalBudgetSection() {
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <div className="rounded-card border border-outline-variant/40 bg-surface-container-low p-5 shadow-elevation-1">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-            National appropriations by fiscal year
+            National appropriations by fiscal year for Lucena City
           </h3>
           <ul className="mt-4 space-y-2">
             {years.reverse().map((total) => (

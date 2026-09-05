@@ -38,6 +38,11 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
+  -- Normalize empty string -> NULL (defensive; PostgREST may send "" for nullable enum)
+  IF NEW.user_type::text = '' THEN
+    NEW.user_type := NULL;
+  END IF;
+
   -- Block self-approval: unapproved -> approved true only if maintainer
   IF COALESCE(OLD.approved, false) = false AND NEW.approved = true THEN
     IF NOT public.is_maintainer() THEN
@@ -46,9 +51,10 @@ BEGIN
   END IF;
 
   -- Block self-elevation to Maintainer / Head Maintainer when not already that role
+  -- FIX: cast enum to text before COALESCE to avoid 22P02 invalid input value for enum user_type: ""
   IF OLD.id = auth.uid()
-     AND NEW.user_type IN ('Head Maintainer', 'Maintainer')
-     AND COALESCE(OLD.user_type, '') NOT IN ('Head Maintainer', 'Maintainer') THEN
+     AND NEW.user_type::text IN ('Head Maintainer', 'Maintainer')
+     AND COALESCE(OLD.user_type::text, '') NOT IN ('Head Maintainer', 'Maintainer') THEN
     IF NOT public.is_maintainer() THEN
       NEW.user_type := OLD.user_type;
     END IF;

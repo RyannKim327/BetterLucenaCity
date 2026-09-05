@@ -52,13 +52,14 @@ export function ContributorsGrid({ limit = 8 }: { limit?: number }) {
         >
           {contrib.avatar_url ? (
             <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-              <Image
-                className="object-cover"
-                src={contrib.avatar_url}
-                alt="User Profile"
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-              />
+              {contrib.show_picture ?
+                <Image
+                  className="object-cover"
+                  src={contrib.avatar_url}
+                  alt="User Profile"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                /> : <span className="h-full w-full flex items-center justify-center"> No Profile Indicated</span>}
             </div>
           ) : (
             <div className="flex items-center justify-center aspect-square w-full">User Profile</div>

@@ -16,6 +16,7 @@ export interface ButtonProps {
 export interface CardProps {
   children: ReactNode;
   className?: string;
+  hover?: boolean
 }
 
 export interface AuthButtonsProps {
