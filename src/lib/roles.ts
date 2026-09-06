@@ -1,15 +1,15 @@
 import { createClient } from "./supabase/server";
 
 export const allRoles = [
-  "admin", "maintainer", "contribute", "discuss", "report"
-] as const
+  "admin", "maintainer", "contribute", "discussion", "report"
+]
 
 export const roles: Record<string, string[]> = {
   "head_maintainer": ["ALL"],
-  "maintainer": ["maintainer", "contribute", "discuss", "report"],
-  "data_collaborator": ["contribute", "discuss", "report", "validate"],
-  "data_validator": ["discuss", "report", "validate"],
-  "tester": ["discuss", "report"]
+  "maintainer": ["maintainer", "contribute", "discussion", "report"],
+  "data_collaborator": ["contribute", "discussion", "report", "validate"],
+  "data_validator": ["discussion", "report", "validate"],
+  "tester": ["discussion", "report"]
 } as const
 
 export interface UserProfile {
