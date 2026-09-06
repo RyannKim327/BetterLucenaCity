@@ -91,9 +91,9 @@ export async function GET() {
     .not("approved_by", "is", null)
     .order("date_added", { ascending: false })
 
-  if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? "No announcements found" }, { status: error ? 500 : 200 })
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  return NextResponse.json(data)
+  return NextResponse.json(data ?? [])
 }

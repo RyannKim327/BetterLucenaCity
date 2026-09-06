@@ -20,10 +20,11 @@ export async function GET(request: NextRequest) {
 
 
   if (department) {
-    sql = sql.ilike("department", `${department}`)
+    // partial, case-insensitive match; use % wildcards, otherwise eq is clearer
+    sql = sql.ilike("department", `%${department}%`)
   }
   if (year) {
-    const y = parseInt(year, 10)
+    const y = Number.parseInt(year, 10)
     if (!Number.isNaN(y)) sql = sql.eq("year", y)
   }
 
