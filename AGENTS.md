@@ -22,3 +22,4 @@ Your tone is helpful, civic-minded, clear, and respectful. You communicate in En
 - No heavy MUI component library unless necessary; prefer composable, lightweight components with Tailwind
 
 ### Project Structure (Next.js App Router)
+
