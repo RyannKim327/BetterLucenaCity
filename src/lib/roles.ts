@@ -9,7 +9,7 @@ export const roles: Record<string, string[]> = {
   "maintainer": ["maintainer", "contribute", "discussion", "report"],
   "data_collaborator": ["contribute", "discussion", "report", "validate"],
   "data_validator": ["discussion", "report", "validate"],
-  "tester": ["discussion", "report"]
+  "tester": ["contribute", "discussion", "report"]
 } as const
 
 export interface UserProfile {
