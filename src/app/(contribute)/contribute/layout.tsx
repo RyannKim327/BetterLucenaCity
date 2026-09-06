@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ReactNode } from "react";
 import CheckPermission, { getUserProfile } from "@/lib/roles";
 import { RoleSelector, PendingApproval } from "@/components/contribute/role-selector";
+import Forbidden from "@/app/forbidden";
 
 interface ContributeInterface {
   children: ReactNode
@@ -68,29 +69,7 @@ export default async function ContributorContainer({ children }: ContributeInter
 
     // 3) approved contributor -> check permission for /contribute (contribute)
     const allowed = await CheckPermission(user?.id as string, "contribute");
-    if (!allowed) {
-      // approved but role doesn't have 'collect' (e.g., Tester) -> show friendly message instead of hard redirect
-      return (
-        <div>
-          <PageHeader
-            eyebrow="Pakikibahagi"
-            title="Role verified — limited access"
-            description={`Your role ${profile.user_type} (approved) does not include contribution access. Ask a Maintainer to upgrade your role if needed.`}
-          />
-          <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-            <Card>
-              <p className="text-sm leading-relaxed text-on-surface-variant">
-                You are signed in as {displayName ? `${displayName} · ` : ""}{user.email} with role{" "}
-                <span className="font-medium text-on-surface">{profile.user_type}</span> (approved). This role has no <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">collect</code> permission.
-              </p>
-              <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-                Contact a Maintainer via the private discussion to request <strong>Data Collaborator</strong> or <strong>Data Validator</strong> access.
-              </p>
-            </Card>
-          </section>
-        </div>
-      );
-    }
+    if (!allowed) return <Forbidden />
     return children;
   }
 

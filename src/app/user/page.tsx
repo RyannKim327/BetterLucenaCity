@@ -22,6 +22,7 @@ export default async function UserInformation() {
               <Link href={r} key={`${i}. ${r}`}>{r[0].toUpperCase()}{r.substring(1)}</Link>
             )
           })}
+          <Link href="/user/settings">Settings</Link>
         </div>
       </section>
     </div>
