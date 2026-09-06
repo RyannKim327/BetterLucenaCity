@@ -7,7 +7,7 @@ export const allRoles = [
 export const roles: Record<string, string[]> = {
   "head_maintainer": ["ALL"],
   "maintainer": ["maintainer", "contribute", "discussion", "report"],
-  "data_collaborator": ["contribute", "discussion", "report", "validate"],
+  "data_collaborator": ["contribute", "discussion", "report"],
   "data_validator": ["discussion", "report", "validate"],
   "tester": ["contribute", "discussion", "report"]
 } as const

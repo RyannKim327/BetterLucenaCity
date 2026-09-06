@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { CheckCircle2, Loader2, Upload, FileJson, Table as TableIcon, AlertCircle } from "lucide-react";
+import { DataSourceInput } from "@/components/ui/data-source-input";
+import { Loader2, Upload, FileJson, Table as TableIcon, AlertCircle } from "lucide-react";
 
 type ParsedRow = Record<string, string>;
 
@@ -59,12 +61,15 @@ function parseJSON(text: string): { headers: string[]; rows: ParsedRow[] } {
 }
 
 export function TransparencyPanel({ userEmail }: { userEmail: string }) {
+  const router = useRouter();
   const [headers, setHeaders] = useState<string[]>([]);
   const [rows, setRows] = useState<ParsedRow[]>([]);
   const [fileName, setFileName] = useState<string>("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [source, setSource] = useState("");
+  const [dataSource, setDataSource] = useState<string[]>([]);
+  const [department, setDepartment] = useState("");
+  const [year, setYear] = useState<string>(String(new Date().getFullYear()));
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [rawCount, setRawCount] = useState<number>(0);
@@ -106,25 +111,31 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
   }
 
   async function handleUpload() {
-    if (!title.trim() || headers.length === 0 || rows.length === 0) {
-      setErrorMsg("Provide a title and a valid file with preview data.");
+    if (!title.trim() || !department.trim() || !year.trim() || headers.length === 0 || rows.length === 0) {
+      setErrorMsg("Provide a title, department, year and a valid file with preview data.");
+      setStatus("error");
+      return;
+    }
+    const parsedYear = parseInt(year, 10)
+    if (Number.isNaN(parsedYear) || parsedYear < 1900 || parsedYear > 2100) {
+      setErrorMsg("Provide a valid year (e.g., 2026).");
       setStatus("error");
       return;
     }
     setStatus("submitting");
     setErrorMsg("");
     const payload = {
-      category: "Transparency Data",
       title: title.trim(),
-      source: source.trim(),
-      details: `${description.trim()}\n\nSource/Reference: ${source.trim()}\nFile: ${fileName} (${rows.length} rows, ${headers.length} cols)\nExtracted dataset preview (first 5 rows): ${JSON.stringify(rows.slice(0, 5))}\nTotal rows: ${rows.length}\nHeaders: ${headers.join(", ")}\nFull data attached as JSON payload for database insertion.`,
-      consent: true,
-      // Extra field for backend to store structured data (not saved as file, only extracted data)
-      extractedData: { fileName, headers, rowCount: rows.length, rows },
+      content: description.trim(),
+      department: department.trim(),
+      year: parsedYear,
+      data: rows,
+      data_source: dataSource,
+      // keep file meta separate from reference links — store in discussion? For table, data_source is the reference string[] only
     };
 
     try {
-      const res = await fetch("/api/contribute", {
+      const res = await fetch("/api/budget/local", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -133,8 +144,16 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Upload failed.");
       }
+      const result = (await res.json().catch(() => ({}))) as { discussionId?: string; id?: number | string };
       setStatus("success");
-      setTimeout(() => setStatus("idle"), 3000);
+      // keep success briefly showing uploading -> redirect
+      if (result.discussionId) {
+        router.push(`/discussion/${result.discussionId}`);
+      } else if (result.id) {
+        router.push("/discussion");
+      } else {
+        setTimeout(() => setStatus("idle"), 2000);
+      }
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Unexpected error.");
@@ -174,7 +193,31 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g., Q1 2026 Procurement Awards — Lucena City"
+                placeholder="e.g., Q1 2026 Budget Utilization — Lucena City"
+                className="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-on-surface">
+                Department / Office <span className="text-secondary">*</span>
+              </label>
+              <input
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="e.g., City Budget Office"
+                className="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+              />
+              <p className="mt-1 text-xs text-on-surface-variant">Local budget is grouped by department (for DB filtering).</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-on-surface">
+                Year <span className="text-secondary">*</span>
+              </label>
+              <input
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                placeholder="2026"
+                inputMode="numeric"
                 className="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
             </div>
@@ -188,13 +231,14 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
                 className="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 resize-y"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-on-surface">Source / Reference link</label>
-              <input
-                value={source}
-                onChange={(e) => setSource(e.target.value)}
-                placeholder="https://lucena.gov.ph/transparency/..."
-                className="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            <div className="sm:col-span-2">
+              <DataSourceInput
+                value={dataSource}
+                onChange={setDataSource}
+                label="Reference links — data_source (string[])"
+                hint="Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link. These are the reference links for validation."
+                placeholder="https://google.com, https://lucena.gov.ph/transparency/..."
+                id="t-data-source"
               />
             </div>
             <div>
@@ -223,9 +267,14 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
               <AlertCircle className="h-4 w-4" /> {errorMsg}
             </p>
           )}
+          {status === "submitting" && (
+            <p className="mt-4 flex items-center gap-2 rounded-xl bg-primary-container/40 px-4 py-3 text-sm text-on-primary-container">
+              <Loader2 className="h-4 w-4 animate-spin" /> Uploading… creating record and discussion thread
+            </p>
+          )}
           {status === "success" && (
             <p className="mt-4 flex items-center gap-2 rounded-xl bg-primary-container/40 px-4 py-3 text-sm text-on-primary-container">
-              <CheckCircle2 className="h-4 w-4" /> Dataset submitted! Validator will review the extracted data.
+              <Loader2 className="h-4 w-4 animate-spin" /> Uploading… Redirecting to discussion/[id]
             </p>
           )}
         </Card>
@@ -299,7 +348,7 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
                   )}
                 </button>
                 <span className="self-center text-xs text-on-surface-variant">
-                  Submits {rows.length} rows via <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">/api/contribute</code> as structured data.
+                  Submits {rows.length} rows via <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">/api/budget/local</code> → <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">local_budget</code> + discussion thread.
                 </span>
               </div>
             </>

@@ -14,12 +14,16 @@ export default async function DiscussionLayout({ children }: DiscussionInterface
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
-    // TODO: To manage the user credentials
-    // If not available, it will redirect to the login/registration
-    const allowed = await CheckPermission(user?.id as string, "discussion")
-    if (!allowed) return <Forbidden />
-    return children;
-  }
-  return <Forbidden />
+  if (!user) return <Forbidden />
+
+  const canContribute = await CheckPermission(user.id, "contribute")
+  const canValidate = await CheckPermission(user.id, "validate")
+
+  if (!canContribute && !canValidate) return <Forbidden />
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      {children}
+    </div>
+  )
 }

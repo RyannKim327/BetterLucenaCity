@@ -48,7 +48,9 @@ export default function BarangayData() {
 
   useEffect(() => {
     let cancelled = false;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional loading state reset on barangay change
     setLoading(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setInfo(null);
     searchBarangayInfo(selected.name).then((data) => {
       if (!cancelled) {

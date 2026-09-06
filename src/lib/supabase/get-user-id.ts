@@ -1,8 +1,8 @@
-import { createClient } from "./client"
+import { createClient } from "./server"
 
 export async function GetUserID() {
-  const supabase = createClient()
-  const { data: user } = await supabase.auth.getUser()
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  return user.user?.id
+  return user?.id ?? null
 }

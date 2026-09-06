@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { MarkdownEditor } from "@/components/ui/markdown-editor";
-import { CheckCircle2, Loader2, Megaphone } from "lucide-react";
+import { DataSourceInput } from "@/components/ui/data-source-input";
+import { Loader2, Megaphone } from "lucide-react";
 
 const fieldClass =
   "mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
@@ -11,9 +13,11 @@ const labelClass = "block text-sm font-medium text-on-surface";
 const hintClass = "mt-1.5 text-xs leading-relaxed text-on-surface-variant";
 
 export function AnnouncementForm({ userEmail }: { userEmail: string }) {
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [content, setContent] = useState("");
+  const [dataSource, setDataSource] = useState<string[]>([]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,6 +29,7 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
     const contentValue = content.trim();
     const date = String(data.get("date") ?? "").trim();
     const source = String(data.get("source") ?? "").trim();
+    const dataSourceFromInput = dataSource.length > 0 ? dataSource : (source ? [source] : [])
 
     if (!title || !contentValue) {
       setStatus("error");
@@ -33,15 +38,15 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
     }
 
     const payload = {
-      category: "Announcement",
       title,
-      source,
-      details: `Announcement: ${title}\nDate: ${date || "—"}\nContent (markdown): ${contentValue}`,
-      consent: true,
+      content: contentValue,
+      date_added: date || null,
+      source: dataSourceFromInput[0] ?? source,
+      data_source: dataSourceFromInput,
     };
 
     try {
-      const res = await fetch("/api/contribute", {
+      const res = await fetch("/api/announcements", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -50,9 +55,16 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Failed to submit.");
       }
+      const result = (await res.json().catch(() => ({}))) as { discussionId?: string; id?: number | string };
       setStatus("success");
       form.reset();
       setContent("");
+      setDataSource([]);
+      if (result.discussionId) {
+        router.push(`/discussion/${result.discussionId}`);
+      } else if (result.id) {
+        router.push("/discussion");
+      }
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Unexpected error.");
@@ -63,18 +75,11 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
         <Card className="text-center">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-primary" />
-          <h2 className="mt-4 text-lg font-semibold">Salamat po!</h2>
+          <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary" />
+          <h2 className="mt-4 text-lg font-semibold">Uploading… Redirecting to discussion</h2>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-on-surface-variant">
-            Your announcement has been received and will be reviewed by a Validator before publication.
+            Your announcement has been received. Redirecting you to <code className="rounded bg-surface-container px-1 py-0.5 text-xs">/discussion/[id]</code> for validation.
           </p>
-          <button
-            type="button"
-            onClick={() => setStatus("idle")}
-            className="mt-6 inline-flex h-11 items-center justify-center rounded-full border border-outline px-6 text-sm font-medium text-primary hover:bg-primary/8"
-          >
-            Submit another
-          </button>
         </Card>
       </div>
     );
@@ -123,10 +128,19 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
           </div>
 
           <div>
-            <label htmlFor="a-source" className={labelClass}>Source / Reference link</label>
+            <label htmlFor="a-source" className={labelClass}>Source / Reference link (single)</label>
             <input id="a-source" name="source" type="url" placeholder="https://lucena.gov.ph/... or official FB post" className={fieldClass} />
-            <p className={hintClass}>Primary source or official reference link for validation.</p>
+            <p className={hintClass}>Primary source — or use data_source below for multiple. Single URL will be added to data_source automatically.</p>
           </div>
+
+          <DataSourceInput
+            value={dataSource}
+            onChange={setDataSource}
+            label="Reference links — data_source (string[])"
+            hint="Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link."
+            placeholder="https://google.com, https://facebook.com/official-post"
+            id="a-data-source"
+          />
 
           <label className="flex items-start gap-3 rounded-xl border border-outline-variant/30 bg-surface-container px-3.5 py-3 text-sm text-on-surface-variant">
             <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 rounded border-outline text-primary focus:ring-primary/30" />
@@ -144,12 +158,17 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
           >
             {status === "submitting" ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" /> Submitting…
+                <Loader2 className="h-4 w-4 animate-spin" /> Uploading…
               </>
             ) : (
               "Submit announcement"
             )}
           </button>
+          {status === "submitting" && (
+            <p className="mt-3 flex items-center justify-center gap-2 text-xs text-on-surface-variant">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" /> Uploading… creating record and discussion thread
+            </p>
+          )}
         </form>
       </Card>
     </div>

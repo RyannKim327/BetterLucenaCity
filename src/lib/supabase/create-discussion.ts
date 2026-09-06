@@ -1,26 +1,32 @@
-import { createClient } from "./client"
+import { createClient as createServerClient } from "./server"
 
-type discussionType = "announcements" | "legals" | "local_budget" | "procurement"
+export type discussionType = "announcements" | "legals" | "local_budget" | "procurement"
 
-interface discussion {
+export interface DiscussionInsert {
   user_id: string
   title: string
   content: string
-  data_source: Record<string, any> | number[] | string[]
-  reference_id: string
+  data_source: string[]
+  reference_id: number
   type: discussionType
 }
 
-export default async function CreateDiscussion(discuss: discussionType, data: discussion) {
-  const supabase = createClient()
+export default async function CreateDiscussion(data: DiscussionInsert) {
+  const supabase = await createServerClient()
+
+  const normalized = {
+    ...data,
+    data_source: data.data_source ?? [],
+  }
+  const payload = { id: crypto.randomUUID(), ...normalized } as DiscussionInsert & { id: string }
 
   const { data: disData, error } = await supabase
-    .from(discuss)
-    .insert(data)
+    .from("discussion")
+    .insert(payload)
     .select("id")
     .single()
 
-  if (error) return error
+  if (error) throw error
 
-  return disData.id
+  return disData.id as string
 }
