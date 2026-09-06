@@ -5,7 +5,8 @@ export async function GET() {
   const supa = await createClient()
   const { data, error } = await supa
     .from("announcements")
-    .select("*")
+    .select("id, title, content, date_added")
+    .not("approved_by", "is", null)
     .order("date_added", { ascending: false })
 
   if (error || !data) {
