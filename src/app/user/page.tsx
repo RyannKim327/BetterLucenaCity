@@ -114,47 +114,6 @@ export default async function UserInformation() {
             </div>
           </div>
         </div>
-
-        {/* Accessible sections */}
-        <div className="mt-8">
-          <h3 className="text-sm font-semibold text-on-surface">Accessible sections</h3>
-          <p className="mt-1 text-sm text-on-surface-variant">
-            Links are filtered by your role. Contact a Maintainer if you need additional access.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {role.length > 0 ? (
-              role.map((r: string) => {
-                // Map internal perm to actual route
-                const hrefMap: Record<string, string> = {
-                  admin: "/admin",
-                  maintainer: "/admin",
-                  contribute: "/contribute",
-                  discussion: "/discussion",
-                  report: "/report",
-                };
-                const href = hrefMap[r] ?? `/${r}`;
-                return (
-                  <Link
-                    key={r}
-                    href={href}
-                    className="inline-flex h-9 items-center rounded-full bg-surface-container-high px-4 text-sm text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors"
-                  >
-                    {r[0].toUpperCase()}
-                    {r.substring(1)}
-                  </Link>
-                );
-              })
-            ) : (
-              <span className="text-sm text-on-surface-variant">No role-assigned sections yet.</span>
-            )}
-            <Link
-              href="/user/settings"
-              className="inline-flex h-9 items-center rounded-full bg-secondary-container px-4 text-sm font-medium text-on-secondary-container"
-            >
-              Settings
-            </Link>
-          </div>
-        </div>
       </section>
     </div>
   );

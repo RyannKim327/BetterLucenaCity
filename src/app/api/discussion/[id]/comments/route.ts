@@ -49,9 +49,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const canContribute = await CheckPermission(user.id, "contribute")
   if (!canValidate && !canContribute) return NextResponse.json({ error: "Forbidden — need contribute or validate" }, { status: 403 })
 
-  const { data: discussion, error: dErr } = await supabase.from("discussion").select("id, user_id, is_open").eq("id", id).maybeSingle()
+  const { data: discussion, error: dErr } = await supabase.from("discussion").select("id, user_id, is_open, approved_by, archive_by").eq("id", id).maybeSingle()
   if (dErr || !discussion) return NextResponse.json({ error: "Discussion not found" }, { status: 404 })
-  if (discussion.is_open === false) return NextResponse.json({ error: "Thread is closed" }, { status: 403 })
+  if (discussion.is_open === false || discussion.approved_by || discussion.archive_by) {
+    const reason = discussion.approved_by ? "Thread is approved and permanently closed" : discussion.archive_by ? "Thread is archived (temporarily closed)" : "Thread is closed"
+    return NextResponse.json({ error: reason }, { status: 403 })
+  }
   if (!canValidate && discussion.user_id !== user.id) return NextResponse.json({ error: "Forbidden — you can only comment on your own threads" }, { status: 403 })
 
   let body: { comment?: string; reply?: number | null }

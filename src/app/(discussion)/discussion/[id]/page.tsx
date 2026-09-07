@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/functions"
 import Link from "next/link"
 import { CommentForm } from "@/components/discussion/comment-form"
 import { TableIcon } from "lucide-react"
+import { DiscussionStatusActions } from "@/components/discussion/discussion-status-actions"
 
 interface PageProps { params: Promise<{ id: string }> }
 
@@ -19,6 +20,8 @@ interface DiscussionRow {
   date_added: string | null
   is_open: boolean | null
   data_source: string[] | null
+  approved_by: string | null
+  archive_by: string | null
 }
 
 function renderDataSource(urls: string[] | null) {
@@ -51,7 +54,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
 
   const { data: discussion, error } = await supabase
     .from("discussion")
-    .select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source")
+    .select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by")
     .eq("id", id).maybeSingle()
 
   if (error || !discussion) {
@@ -103,7 +106,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
     .eq("discussion_id", row.id)
     .order("date_added", { ascending: true })
 
-  let commentUserMap = new Map<string, string>()
+  const commentUserMap = new Map<string, string>()
   let authorName: string | null = null
   if (isModerator) {
     const ids = new Set<string>([row.user_id])
@@ -120,6 +123,9 @@ export default async function DiscussionDetail({ params }: PageProps) {
 
   const userBadge = isModerator && authorName ? authorName : row.user_id.slice(0, 8)
 
+  const status: "open" | "approved" | "archived" = row.approved_by ? "approved" : row.archive_by ? "archived" : "open"
+  const isValidator = canValidate
+
   return (
     <div className="space-y-6">
       <Link href="/discussion" className="inline-flex text-sm font-medium text-primary hover:underline">← Back to threads</Link>
@@ -128,9 +134,14 @@ export default async function DiscussionDetail({ params }: PageProps) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-secondary-container px-3 py-1 text-xs font-medium text-on-secondary-container">{row.type}</span>
           <span className={`rounded-full px-3 py-1 text-xs font-medium ${row.is_open === false ? "bg-outline-variant text-on-surface-variant" : "bg-primary-container text-on-primary-container"}`}>{row.is_open === false ? "Closed" : "Open"}</span>
+          {status === "approved" && <span className="rounded-full bg-tertiary-container px-3 py-1 text-xs font-medium text-on-tertiary-container">Approved · permanently closed</span>}
+          {status === "archived" && <span className="rounded-full bg-secondary-container px-3 py-1 text-xs font-medium text-on-secondary-container">Archived · temporarily closed</span>}
+          {status === "open" && <span className="rounded-full bg-primary-container px-3 py-1 text-xs font-medium text-on-primary-container">Open</span>}
           <span className="text-xs text-on-surface-variant">ref #{row.reference_id}</span>
           {row.date_added && <time className="text-xs text-on-surface-variant">{formatDate(row.date_added)}</time>}
         </div>
+        {row.approved_by && <p className="mt-2 text-xs text-on-surface-variant">Approved by <span className="font-medium text-on-surface">{row.approved_by.slice(0, 8)}</span> — thread closed permanently</p>}
+        {row.archive_by && !row.approved_by && <p className="mt-2 text-xs text-on-surface-variant">Archived by <span className="font-medium text-on-surface">{row.archive_by.slice(0, 8)}</span> — temporarily closed, validator may unarchive</p>}
         <h1 className="mt-3 text-xl font-semibold leading-snug">{row.title}</h1>
         <p className="mt-1 text-xs text-on-surface-variant">by {userBadge} {row.user_id === user.id ? "(you)" : ""} {canValidate ? "· validator view" : ""}</p>
         <div className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-on-surface">{row.content}</div>
@@ -141,6 +152,11 @@ export default async function DiscussionDetail({ params }: PageProps) {
             Use the comma or “Add link” input. Each URL must be valid like https://google.com.
           </p>
         </div>
+        {isValidator && (
+          <div className="mt-6">
+            <DiscussionStatusActions discussionId={row.id} isOpen={row.is_open} approvedBy={row.approved_by} archiveBy={row.archive_by} />
+          </div>
+        )}
       </Card>
 
       <Card>
@@ -274,7 +290,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
       </Card>
 
       <Card>
-        <h2 className="text-sm font-semibold">Comments</h2>
+        <h2 className="text-sm font-semibold">Comments {row.is_open === false && <span className="font-normal text-on-surface-variant">— {status === "approved" ? "permanently closed (approved)" : status === "archived" ? "temporarily closed (archived)" : "closed"}</span>}</h2>
         {!comments || comments.length === 0 ? (
           <p className="mt-3 text-sm text-on-surface-variant">No comments yet. Validators and the owner can discuss sources, seals, dates, etc.</p>
         ) : (
@@ -298,7 +314,10 @@ export default async function DiscussionDetail({ params }: PageProps) {
         )}
 
         {row.is_open === false ? (
-          <p className="mt-4 rounded-xl bg-outline-variant/20 px-4 py-3 text-sm text-on-surface-variant">This thread is closed — no new comments.</p>
+          <p className="mt-4 rounded-xl bg-outline-variant/20 px-4 py-3 text-sm text-on-surface-variant">
+            {status === "approved" ? "This thread was approved and is permanently closed — no new comments." : status === "archived" ? "This thread is archived (temporarily closed) — unarchive to allow comments again." : "This thread is closed — no new comments."}
+            {isValidator && status === "archived" && " You can unarchive above to reopen."}
+          </p>
         ) : (
           <CommentForm discussionId={row.id} />
         )}

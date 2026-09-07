@@ -103,11 +103,11 @@ export function ProfileMenu() {
       setProfile(
         data
           ? {
-              user_type: data.user_type,
-              approved: data.approved,
-              username: data.username ?? null,
-              avatar_url: data.avatar_url ?? null,
-            }
+            user_type: data.user_type,
+            approved: data.approved,
+            username: data.username ?? null,
+            avatar_url: data.avatar_url ?? null,
+          }
           : null
       );
       setLoading(false);
@@ -165,6 +165,8 @@ export function ProfileMenu() {
   };
 
   const isAuthenticated = !!user;
+
+  if (!isAuthenticated) return <></>
 
   return (
     <div ref={rootRef} className="relative">
