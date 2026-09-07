@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navLinks, site } from "@/lib/data/site";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ProfileMenu } from "./profile-menu";
 import Hotlines from "./hotlines";
 
 export function Header() {
@@ -57,6 +58,7 @@ export function Header() {
             </nav>
 
             <ThemeToggle />
+            <ProfileMenu />
 
             <button
               type="button"

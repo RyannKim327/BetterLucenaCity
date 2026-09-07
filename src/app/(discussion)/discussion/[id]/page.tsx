@@ -200,8 +200,8 @@ export default async function DiscussionDetail({ params }: PageProps) {
                       {budget.year ? `${budget.year}` : null}
                     </p>
                   )}
-                  <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low p-3">
-                    <div className="flex items-center justify-between gap-2">
+                  <details className="rounded-xl border border-outline-variant/30 bg-surface-container-low p-3">
+                    <summary className="flex items-center justify-between gap-2 cursor-pointer text-xs font-medium text-on-surface-variant">
                       <div className="flex items-center gap-2">
                         <TableIcon className="h-5 w-5 text-primary" />
                         <h3 className="text-sm font-semibold">Preview (extracted data)</h3>
@@ -211,7 +211,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
                           {rawCount} rows · {headers.length} cols
                         </span>
                       )}
-                    </div>
+                    </summary>
 
                     {headers.length === 0 ? (
                       <p className="mt-4 rounded-xl border border-dashed border-outline-variant bg-surface-container px-4 py-8 text-center text-sm text-on-surface-variant">
@@ -254,7 +254,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
                         </p>
                       </>
                     )}
-                  </div>
+                  </details>
                   <details className="rounded-xl bg-surface-container p-3">
                     <summary className="cursor-pointer text-xs font-medium text-on-surface-variant">Raw JSON (linked record)</summary>
                     <pre className="mt-2 overflow-auto rounded-xl bg-surface-container-low p-3 text-xs leading-relaxed">{JSON.stringify(linked, null, 2)}</pre>
