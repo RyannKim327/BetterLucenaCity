@@ -30,6 +30,11 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/report" className="text-sm text-on-surface hover:text-primary">
+                Report
+              </Link>
+            </li>
           </ul>
         </nav>
 

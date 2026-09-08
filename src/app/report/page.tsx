@@ -1,99 +1,205 @@
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
+import CheckPermission from "@/lib/roles";
+import { report_types } from "@/lib/report-types";
+import { ReportTabs, ReportTabKey } from "@/components/report/report-tabs";
+import { ReportForm } from "@/components/report/report-form";
+import { ReportList, ReportRow } from "@/components/report/report-list";
 import Link from "next/link";
 
-export default function ReportPage() {
+export const dynamic = "force-dynamic";
+
+interface Props {
+  searchParams?: Promise<{ tab?: string }>;
+}
+
+export default async function ReportPage({ searchParams }: Props) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isAuthenticated = !!user;
+
+  let canSeeAll = false;
+  if (isAuthenticated && user) {
+    try {
+      canSeeAll = await CheckPermission(user.id, "maintainer");
+    } catch {
+      canSeeAll = false;
+    }
+    // also allow admin explicitly (redundant via ALL but keep)
+    if (!canSeeAll) {
+      try {
+        canSeeAll = await CheckPermission(user.id, "admin");
+      } catch {
+        canSeeAll = false;
+      }
+    }
+  }
+
+  const sp = searchParams ? await searchParams : {};
+  const rawTab = (sp.tab ?? "all").toLowerCase();
+  const allowed: ReportTabKey[] = ["all", "pending", "done"];
+  const tab: ReportTabKey = (allowed as string[]).includes(rawTab) ? (rawTab as ReportTabKey) : "all";
+
+  let rowsAll: ReportRow[] = [];
+  let fetchError: string | null = null;
+
+  if (isAuthenticated && user) {
+    // Build query — maintainers/admins see all, others see own
+    let query = supabase.from("report").select("id, user_id, title, content, type, report_source, unauth_email, done");
+    if (!canSeeAll) {
+      query = query.eq("user_id", user.id);
+    }
+    // Try ordering by id; table has no date column — id (uuid) ordering is arbitrary but stable.
+    // If RLS or missing table, handle error gracefully.
+    const { data, error } = await query;
+    if (error) {
+      fetchError = error.message;
+    } else {
+      rowsAll = (data ?? []) as ReportRow[];
+    }
+  }
+
+  const counts = {
+    all: rowsAll.length,
+    pending: rowsAll.filter((r) => r.done !== true).length,
+    done: rowsAll.filter((r) => r.done === true).length,
+  };
+
+  const rows = rowsAll.filter((r) => {
+    if (tab === "all") return true;
+    if (tab === "pending") return r.done !== true;
+    if (tab === "done") return r.done === true;
+    return true;
+  });
+
+  const publicTypes = Object.entries(report_types).filter(([, v]) => v.public);
+  const privateTypes = Object.entries(report_types).filter(([, v]) => !v.public);
+
   return (
     <div>
       <PageHeader
         eyebrow="Kaligtasan · Safe Spaces"
-        title="Report harassment"
-        description="If you feel harassed, discriminated against, or your personal data is misused by another contributor — including a validator or maintainer — report it here in private. We enforce RA 11313 (Safe Spaces Act / Bawal Bastos Law), RA 10173 (Data Privacy Act of 2012), and other anti-discrimination laws, and investigate professionally and without bias before judging."
+        title="Report center"
+        description="File a report or track your submissions. Public types (Data Misinformation, Security Concerns) are available to everyone — including guests. System Vulnerability, Racism, and Personal Bias reports require sign-in. Head Maintainers and Maintainers can review all reports; contributors see only their own."
       />
-      <section className="mx-auto grid max-w-6xl gap-6 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.9fr]">
-        <Card>
-          <h2 className="text-base font-semibold">How to file a report</h2>
-          <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            This form is <span className="font-medium text-on-surface">private</span> — visible only to the Head Maintainer and designated investigators, not to the public, the accused, or validators.{" "}
-            <span className="font-medium text-on-surface">Do not use a public GitHub Issue</span> for harassment reports.
-          </p>
-          <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-on-surface-variant">
-            <li>
-              Sign in (your <span className="font-medium text-on-surface">username</span> is used for privacy; your email is never shown publicly).
-            </li>
-            <li>Describe what happened, when/where (which private thread or page), and who was involved.</li>
-            <li>
-              Attach <span className="font-medium text-on-surface">screenshot or proof</span> — image, thread export, link, timestamp. Evidence is required for fair investigation.
-            </li>
-            <li>Submit. You will receive a system notification via the Head Maintainer&apos;s email account — validators do not email you directly.</li>
-          </ol>
 
-          <div className="mt-6 rounded-xl border border-outline-variant bg-surface-container px-4 py-3">
-            <p className="text-sm font-medium">Placeholder — report form coming next</p>
-            <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
-              For now, please email{" "}
-              <a href="mailto:weryses19@gmail.com" className="font-medium text-primary hover:underline">
-                weryses19@gmail.com
-              </a>{" "}
-              with subject <code className="rounded bg-surface-container-low px-1 py-0.5 text-xs">[REPORT] RA 11313 / RA 10173 — your username</code> and attach your screenshot/proof. Or contact the Head Maintainer privately via the website.
-            </p>
-            <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
-              All reports are handled under RA 10173 — your email, attachments, and identity are kept confidential and shared only with investigators on a need-to-know basis.
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-              This page will directly store reports in-app with evidence upload (coming soon).
-            </p>
-          </div>
-
-          <h3 className="mt-8 text-sm font-semibold">How we handle it</h3>
-          <ul className="mt-2 space-y-2 text-sm leading-relaxed text-on-surface-variant">
-            <li>• Head Maintainers / Project Administrators investigate — <span className="font-medium text-on-surface">non-biased, investigate before judging</span>, no favor to any party, seniority, or validator status.</li>
-            <li>• We must not disgrace or judge people for who they are — we work <span className="font-medium text-on-surface">professionally and ethically</span>.</li>
-            <li>• Both reporter and respondent privacy is respected during the review.</li>
-          </ul>
-
-          <h3 className="mt-6 text-sm font-semibold">Legal basis</h3>
-          <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
-            <li>• <span className="font-medium text-on-surface">RA 10173 — Data Privacy Act of 2012</span>: protects your personal information. Reports, usernames, and evidence are kept confidential; personal data is processed only with consent and lawful purpose, and never disclosed publicly.</li>
-            <li>• <span className="font-medium text-on-surface">RA 11313 — Safe Spaces Act (Bawal Bastos Law)</span>: penalizes gender-based sexual harassment in streets, workplaces, online spaces, and educational institutions — including unwanted sexual remarks, misogynistic/transphobic slurs, and persistent unwanted advances.</li>
-            <li>• <span className="font-medium text-on-surface">RA 7877 — Anti-Sexual Harassment Act of 1995</span>: covers work, education, or training-related sexual harassment where authority/influence is abused.</li>
-            <li>• <span className="font-medium text-on-surface">RA 9710 — Magna Carta of Women</span> & <span className="font-medium text-on-surface">RA 9262 — Anti-VAWC Act</span>: guarantee gender equality and protect women and children from discrimination and violence.</li>
-            <li>• <span className="font-medium text-on-surface">RA 7277 as amended by RA 10524 (Magna Carta for Persons with Disability), RA 10911 (Anti-Age Discrimination in Employment Act), RA 11166 (Philippine HIV and AIDS Policy Act)</span> & <span className="font-medium text-on-surface">Art. XIII Sec. 1, 1987 Constitution</span>: prohibit discrimination on the basis of disability, age, health status, ethnicity, religion, or other protected status.</li>
-          </ul>
-          <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
-            This alignment means harassment that is sexual, gender-based, or discriminatory — in any form — is treated as a serious violation on the platform.
-          </p>
-
-          <h3 className="mt-6 text-sm font-semibold">Consequences & evidence</h3>
-          <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            Depending on severity: formal warning to <span className="font-medium text-on-surface">disqualification or permanent ban from the system</span>. If you wish to file a case under RA 11313, RA 7877, RA 10173, or any applicable anti-discrimination law, the platform may — with your <span className="font-medium text-on-surface">explicit consent and proper legal process</span> — provide the report and relevant private thread records as evidence, handled in strict compliance with RA 10173.
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-            Retaliation for good-faith reporting is itself a violation. See{" "}
-            <Link href="/contribute" className="font-medium text-primary hover:underline">CONTRIBUTING.md</Link> and{" "}
-            <Link href="/contributors" className="font-medium text-primary hover:underline">CODE_OF_CONDUCT.md</Link>.
-          </p>
-        </Card>
-
+      <section className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1.7fr_0.95fr]">
+        {/* LEFT — list with tabs */}
         <div className="space-y-6">
+          <Card>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 className="text-base font-semibold">{canSeeAll ? "All reports" : isAuthenticated ? "Your reports" : "Reports"}</h2>
+                <p className="mt-1 max-w-xl text-sm leading-relaxed text-on-surface-variant">
+                  {canSeeAll
+                    ? "You have maintainer access — you can see every report (including guest submissions) and mark them as pending or done."
+                    : isAuthenticated
+                      ? "You see only the reports you created. Maintainers can see all reports."
+                      : "Sign in to file private reports and to track the reports you submit. Guests can file public reports but cannot browse lists."}
+                </p>
+              </div>
+              <span className={`rounded-full px-3 py-1 text-xs font-semibold ${canSeeAll ? "bg-primary-container text-on-primary-container" : "bg-surface-container text-on-surface-variant"}`}>
+                {canSeeAll ? "Maintainer view" : isAuthenticated ? "Contributor view" : "Guest view"}
+              </span>
+            </div>
+
+            {!isAuthenticated ? (
+              <div className="mt-6 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-4">
+                <p className="text-sm font-medium">Sign in to track reports</p>
+                <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
+                  Guests can still file <span className="font-medium text-on-surface">public</span> reports below (Data Misinformation, Security Concerns) but lists are hidden.{" "}
+                  After signing in you can file all five types and see Pending / Done tabs for your own reports.
+                </p>
+                <p className="mt-3 text-xs text-on-surface-variant">
+                  Public types: {publicTypes.map(([, v]) => v.name).join(", ")} · Authenticated-only: {privateTypes.map(([, v]) => v.name).join(", ")}
+                </p>
+                <Link href="/contribute" className="mt-3 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary/90">
+                  Sign in / Contribute
+                </Link>
+              </div>
+            ) : fetchError ? (
+              <div className="mt-6 rounded-xl border border-secondary/30 bg-secondary-container/30 px-4 py-3">
+                <p className="text-sm font-medium text-on-secondary-container">Failed to load reports</p>
+                <p className="mt-1 text-xs leading-relaxed text-on-secondary-container">{fetchError}</p>
+                <p className="mt-2 text-xs text-on-secondary-container">If the report table has not been migrated yet, this view will be empty until data exists.</p>
+              </div>
+            ) : (
+              <div className="mt-6">
+                <ReportTabs counts={counts} current={tab} />
+                <ReportList reports={rows} canSeeAll={canSeeAll} currentTab={tab} />
+
+                <div className="mt-6 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <h3 className="text-sm font-semibold">How visibility works</h3>
+                  <ul className="mt-2 space-y-1 text-xs leading-relaxed text-on-surface-variant">
+                    <li>• <span className="font-medium text-on-surface">Maintainers & Head Maintainers</span> — see all reports (user + guest), use Pending/Done to triage.</li>
+                    <li>• <span className="font-medium text-on-surface">Data Collaborator / Data Validator / Tester</span> — see only reports where <code className="rounded bg-surface-container-low px-1 py-0.5">user_id = you</code>; pending = <code>done = false</code>, done = <code>done = true</code>.</li>
+                    <li>• <span className="font-medium text-on-surface">Guests</span> — can submit only <code>public: true</code> types ({publicTypes.map(([k]) => k).join(", ")}); no list access.</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+          </Card>
+
+          {/* Legal / handling — kept from original but compact */}
+          <Card>
+            <h3 className="text-sm font-semibold">How we handle it</h3>
+            <ul className="mt-2 space-y-2 text-sm leading-relaxed text-on-surface-variant">
+              <li>• Head Maintainers / Project Administrators investigate — <span className="font-medium text-on-surface">non-biased, investigate before judging</span>, no favor to any party.</li>
+              <li>• We do not disgrace or judge people for who they are — we work <span className="font-medium text-on-surface">professionally and ethically</span>.</li>
+              <li>• Both reporter and respondent privacy is respected during review.</li>
+            </ul>
+
+            <h3 className="mt-6 text-sm font-semibold">Legal basis</h3>
+            <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
+              <li>• <span className="font-medium text-on-surface">RA 10173 — Data Privacy Act</span>: personal data is confidential; shared only with investigators on need-to-know.</li>
+              <li>• <span className="font-medium text-on-surface">RA 11313 — Safe Spaces Act (Bawal Bastos)</span>: penalizes gender-based harassment online/offline.</li>
+              <li>• <span className="font-medium text-on-surface">RA 7877 / RA 9710 / RA 9262</span>: work & gender protections.</li>
+              <li>• <span className="font-medium text-on-surface">RA 7277/10524, RA 10911, RA 11166 & Art. XIII Sec.1, 1987 Constitution</span>: anti-discrimination.</li>
+            </ul>
+            <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
+              Consequences range from warning to ban. With <span className="font-medium text-on-surface">explicit consent</span> and lawful process, records may be provided as evidence under RA 10173.
+            </p>
+          </Card>
+        </div>
+
+        {/* RIGHT — form + info */}
+        <div className="space-y-6">
+          <ReportForm isAuthenticated={isAuthenticated} />
+
           <Card>
             <h3 className="text-sm font-semibold">Privacy — RA 10173 compliance</h3>
             <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-              You are credited by <span className="font-medium text-on-surface">username only</span>. You may opt in or out of public listing on{" "}
-              <Link href="/contributors" className="font-medium text-primary hover:underline">/contributors</Link>.
+              You are credited by <span className="font-medium text-on-surface">username only</span>. Opt in/out on <Link href="/contributors" className="font-medium text-primary hover:underline">/contributors</Link>.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-              Your email is <span className="font-medium text-on-surface">never displayed</span> and is used <span className="font-medium text-on-surface">only for system notifications</span> sent via the Head Maintainer&apos;s account. Validators do not email you directly — all follow-ups stay in the private website discussion.
+              Your email is <span className="font-medium text-on-surface">never displayed</span> and used only for system notifications via the Head Maintainer&apos;s account.
             </p>
             <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-              In line with <span className="font-medium text-on-surface">RA 10173 (Data Privacy Act of 2012)</span>, we follow data minimization, purpose limitation, and confidentiality: we collect only what is needed to investigate, retain it only as long as necessary, and disclose it only with your consent or when required by lawful order. You have the right to access, correct, or request deletion of your personal data — contact the Head Maintainer via the private report channel.
+              We follow data minimization and confidentiality — collect only what is needed, retain only as long as necessary, disclose only with consent or lawful order.
             </p>
           </Card>
+
           <Card className="border-primary/20 bg-primary-container/20">
             <h3 className="text-sm font-semibold">Your well-being matters</h3>
             <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-              Data discussions (Source ↔ Validator ↔ Head Maintainer) are also private — never a public GitHub Issue — to protect your identity and mental health from public shaming.
+              Report threads are private — never a public GitHub Issue — to protect identity and mental health from public shaming. Do not use public issues for harassment reports.
             </p>
+          </Card>
+
+          <Card>
+            <h3 className="text-sm font-semibold">Fallback contact</h3>
+            <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
+              If the form is unavailable, email{" "}
+              <a href="mailto:weryses19@gmail.com" className="font-medium text-primary hover:underline">
+                weryses19@gmail.com
+              </a>{" "}
+              with subject <code className="rounded bg-surface-container px-1 py-0.5 text-xs">[REPORT] RA — your username</code> and attach proof.
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">See also <Link href="/contribute" className="font-medium text-primary hover:underline">CONTRIBUTING</Link> and <Link href="/contributors" className="font-medium text-primary hover:underline">CODE OF CONDUCT</Link>.</p>
           </Card>
         </div>
       </section>
