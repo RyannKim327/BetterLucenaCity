@@ -1,5 +1,5 @@
+import Forbidden from "@/app/forbidden";
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 interface UserLayoutInterface {
@@ -12,7 +12,7 @@ export default async function UserLayout({ children }: UserLayoutInterface) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/")
+  if (!user) <Forbidden />
 
   return children
 }

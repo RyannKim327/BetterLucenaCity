@@ -19,7 +19,7 @@ import { createClient } from "@/lib/supabase/client";
 
 // Client-safe duplicate of lib/roles.ts (which imports next/headers via supabase/server).
 // Keep in sync with src/lib/roles.ts
-const allRoles = ["admin", "maintainer", "contribute", "discussion", "report"] as const;
+const allRoles = ["admin", "contribute", "discussion", "report"] as const;
 const roles: Record<string, readonly string[]> = {
   head_maintainer: ["ALL"],
   maintainer: ["maintainer", "contribute", "discussion", "report"],
@@ -49,6 +49,7 @@ const DEFAULT_LINKS: DropdownLink[] = [
 
 const ROLE_LINKS: DropdownLink[] = [
   { href: "/admin", label: "Admin Dashboard", Icon: LayoutDashboard, perm: "admin" },
+  { href: "/maintainer", label: "Maintainer Dashboard", Icon: LayoutDashboard, perm: "maintainer" },
   { href: "/contribute", label: "Contribute", Icon: FilePenLine, perm: "contribute" },
   { href: "/discussion", label: "Discussions", Icon: MessageSquare, perm: "discussion" },
   { href: "/report", label: "Report", Icon: Flag, perm: "report" },

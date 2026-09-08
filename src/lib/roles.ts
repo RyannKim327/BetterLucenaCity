@@ -26,9 +26,12 @@ export async function getUserProfile(id: string): Promise<UserProfile | null> {
 
 export default async function CheckPermission(id: string, permission: string) {
   const supabase = await createClient();
-  const { data } = await supabase.from("users").select("user_type, approved").eq("id", id).maybeSingle();
+  const { data } = await supabase.from("users").select("user_type, approved, restricted").eq("id", id).maybeSingle();
 
   if (!data) return false;
+
+  // TODO: To add restriction permission for all restricted users
+  if (data.restricted) return false
 
   // Must be approved before any permission is granted.
   // Default (approved = false or null) means pending — no access.
