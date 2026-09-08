@@ -65,9 +65,19 @@ If you feel harassed, threatened, or discriminated against by another contributo
 
 Retaliation against anyone who reports in good faith is itself a violation and will be sanctioned.
 
+## Moderation — Restrict / Unrestrict & Role Governance
+
+Moderation is **least-privilege and verified**:
+
+- **Who can moderate:** Only `Head Maintainer` (via `/admin/users`) and `Maintainer` (via `/maintainer/users`) can restrict. Only Head Maintainers can unrestrict or change roles (`Tester → Maintainer` etc., never to `Head Maintainer`).
+- **Search & transparency:** Both dashboards provide username/email search (`GET /api/*/users?q=`). Maintainer view **hides Head Maintainers** entirely.
+- **Verification:** Every restrict/unrestrict requires an amber `Modal` confirmation (target card + consequence: `restricted=true` revokes all permissions via `CheckPermission`). Server re-validates, DB trigger `enforce_restricted` is final.
+- **Safeguards:** No self-restrict/self-role-change; cannot restrict a Head Maintainer as Maintainer; Head assignment is blocked in UI/API/DB; all actions are audit-logged via `users` row updates.
+- **Non-partisan:** Restriction is for conduct/security (harassment, RA 11313, spam, false data), never for political view. Validators/Maintainers must treat all verifiable public-interest data equally.
+
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via **`/report` on the website** (preferred for data-related harassment, privacy-preserving and with evidence upload) or to the community leaders responsible for enforcement at **conduct@bettergov.ph**. All complaints will be reviewed and investigated promptly, fairly, and with non-bias.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via **`/report` on the website** (preferred for data-related harassment, privacy-preserving and with evidence upload) or to the community leaders responsible for enforcement at **conduct@bettergov.ph**. All complaints will be reviewed and investigated promptly, fairly, and with non-bias. Validated violations may result in **restriction** (`users.restricted=true`) via the dashboards above, with the verification flow and appeal via contact with a Head Maintainer.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 

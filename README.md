@@ -30,6 +30,7 @@ Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 - **Live civic data** — server-proxied feeds for weather (Open-Meteo), earthquakes (Phivolcs), and DPWH infrastructure projects
 - **Interactive map** — Leaflet map of Lucena City with boundary data
 - **Contributor portal** — authenticated community member profiles with role-based access
+- **User management & moderation** — Head Maintainer and Maintainer dashboards with search (username/email), verified restrict/unrestrict flows, and admin-only role changes
 
 ## Tech Stack
 
@@ -51,19 +52,23 @@ BetterLucenaCity is built around a few civic-minded principles:
 
 ## Database Schema
 
-The application uses Supabase (PostgreSQL) to store contributor profiles. The schema is defined via SQL migrations.
+The application uses Supabase (PostgreSQL) to store contributor profiles. The schema is defined via SQL migrations in `supabase/migrations/`.
 
 ### `users` table
 
-| Column | Type | Constraints |
-|--------|------|-------------|
+| Column | Type | Constraints / Notes |
+|--------|------|---------------------|
 | `id` | `uuid` | Primary key, FK → `auth.users(id)` ON DELETE CASCADE |
 | `email` | `varchar` | Unique, NOT NULL |
 | `first_name` | `varchar` | — |
 | `last_name` | `varchar` | — |
 | `username` | `varchar` | Unique, NOT NULL |
 | `avatar_url` | `text` | — |
-| `user_type` | `user_type` (enum) | — |
+| `user_type` | `user_type` (enum) | Nullable until role requested |
+| `approved` | `boolean` | Default `false` — pending until Maintainer/Head Maintainer approves |
+| `restricted` | `boolean` | Default `false` — when `true`, `CheckPermission()` denies all permissions |
+| `show_contributor` | `boolean` | Default `false` — opt-in to public `/contributors` listing |
+| `show_picture` | `boolean` | Default `false` — opt-in to show avatar publicly |
 | `date_added` | `timestamptz` | Default `now()` |
 
 ### `user_type` enum
@@ -72,11 +77,116 @@ The application uses Supabase (PostgreSQL) to store contributor profiles. The sc
 'Head Maintainer' | 'Maintainer' | 'Data Collaborator' | 'Data Validator' | 'Tester'
 ```
 
-### Security
+### Entity Relationship (Mermaid)
 
-- Row Level Security (RLS) is enabled on `users`.
-- Policy: any authenticated user can read all profiles.
-- Policy: a user can update only their own profile (`auth.uid() = id`).
+```mermaid
+erDiagram
+    auth_users ||--|| users : "id PK/FK CASCADE"
+    users ||--o{ discussion : "id -> discussion.user_id"
+    users ||--o{ discussion_comments : "id -> discussion_comments.user_id"
+    users ||--o{ discussion : "id -> discussion.approved_by"
+    users ||--o{ discussion : "id -> discussion.archive_by"
+    users ||--o{ ordinances : "id -> ordinances user audit (via RLS)"
+    users ||--o{ announcement : "id -> announcement approved_by"
+
+    auth_users {
+        uuid id PK
+        varchar email
+        jsonb raw_user_meta_data
+    }
+    users {
+        uuid id PK
+        varchar email UK
+        varchar username UK
+        varchar first_name
+        varchar last_name
+        text avatar_url
+        enum user_type
+        boolean approved
+        boolean restricted
+        boolean show_contributor
+        boolean show_picture
+        timestamptz date_added
+    }
+    discussion {
+        uuid id PK
+        uuid user_id FK
+        varchar title
+        text content
+        jsonb data_source
+        varchar type
+        int reference_id
+        uuid approved_by FK
+        uuid archive_by FK
+        timestamptz date_added
+    }
+    discussion_comments {
+        int id PK
+        uuid discussion_id FK
+        uuid user_id FK
+        varchar comment
+        int reply FK
+        timestamptz date_added
+    }
+    announcement {
+        int id PK
+        varchar title
+        text content
+        timestamp date_added
+    }
+    ordinances {
+        int id PK
+        varchar title
+        text content
+        varchar reference
+        timestamptz proclamation_date
+    }
+```
+
+### Security & Governance (RLS, Triggers, Permissions)
+
+- **Row Level Security (RLS)** enabled on `users`.
+  - `Users can read all profiles` — `FOR SELECT USING (true)` (any user can read directory; public credit respects `show_contributor`/`show_picture`).
+  - `Users can update own profile` — `USING (auth.uid() = id) WITH CHECK (auth.uid() = id)`.
+  - `Maintainers can update any profile` — `USING (is_maintainer()) WITH CHECK (is_maintainer())`, where `is_maintainer()` checks `user_type IN ('Head Maintainer','Maintainer') AND approved = true`.
+
+- **Triggers**
+  - `enforce_approved_before_update` (`enforce_approved()`) — blocks self-approval (`approved false → true` only if `is_maintainer()`) and self-elevation to `Maintainer`/`Head Maintainer`.
+  - `enforce_restricted_before_update` (`enforce_restricted()`) — restricts: `false→true` requires `is_maintainer()` and blocks restricting a `Head Maintainer` unless caller is Head Maintainer; unrestrict `true→false` requires `is_head_maintainer()`; also blocks non-head assigning or changing `Head Maintainer` role.
+
+- **Application-level permission** (`src/lib/roles.ts:CheckPermission`): denies if `restricted = true` or `approved != true`, then maps `user_type` to permissions:
+
+  | user_type | permissions |
+  |-----------|-------------|
+  | Head Maintainer | `ALL` |
+  | Maintainer | `maintainer`, `contribute`, `discussion`, `report` |
+  | Data Collaborator | `contribute`, `discussion`, `report` |
+  | Data Validator | `discussion`, `report`, `validate` |
+  | Tester | `contribute`, `discussion`, `report`, `validate` |
+
+### User Management Policy (Admin vs Maintainer)
+
+| Capability | Head Maintainer (`/admin`) | Maintainer (`/maintainer`) |
+|------------|----------------------------|----------------------------|
+| View pending | ✅ via `/api/admin/pending` + `/admin` | ✅ via same |
+| Search users (email/username) | ✅ `GET /api/admin/users?q=` | ✅ `GET /api/maintainer/users?q=` (Head Maintainers hidden) |
+| Restrict user | ✅ `POST /api/admin/restrict` with confirm modal | ✅ `POST /api/maintainer/restrict` (only `restricted:true`) with confirm modal |
+| Unrestrict user | ✅ `POST /api/admin/restrict` (`restricted:false`) | ❌ blocked — 403, message “Contact a Head Maintainer” |
+| Change role (Tester→Maintainer etc.) | ✅ `POST /api/admin/change-role` — allowed `Maintainer`, `Data Collaborator`, `Data Validator`, `Tester` (Head Maintainer protected) with UI dropdown | ❌ no UI |
+| Restrict Head Maintainer | ✅ allowed (with caution) | ❌ blocked by API + DB trigger |
+| Self-restrict / self-role-change | ❌ blocked | ❌ blocked |
+| Verification | Modal with target card + amber warning + Cancel/Confirm, re-checked server-side + DB trigger | Same |
+
+### Navigation Structure
+
+```
+/admin           → Pending contributors (approve)
+/admin/users     → User management (search, restrict/unrestrict, change role)
+/maintainer      → Pending contributors (approve)
+/maintainer/users→ User management (search, restrict-only, Head Maintainers hidden)
+```
+
+`src/components/admin/dashboard-nav.tsx` provides pill tabs (`Pending` / `Users`) with active `bg-primary` state, used in both `src/app/(admin)/admin/layout.tsx` and `src/app/(maintainer)/maintainer/layout.tsx`.
 
 ## Supabase Configuration
 
@@ -114,48 +224,54 @@ Apply the SQL migrations in `supabase/migrations/` to set up the `users` table a
 ```
 src/
   app/                      # Next.js App Router pages and API routes
-    api/                    # Route handlers proxying external data sources
-      budget/national/
-      contribute/
-      dpwh/projects/
-      earthquakes/
-      geography/boundary/
-      legal/documents/
-      weather/
+    api/                    # Route handlers
+      admin/
+        pending/            # GET pending users (approved=false)
+        approve/            # POST approve user
+        users/              # GET search users (admin, Head only)
+        restrict/           # POST restrict/unrestrict (Head only, with verification)
+        change-role/        # POST change user_type (Head only, no Head assignment)
+      maintainer/
+        users/              # GET search users (Maintainer+, hides Head Maintainers)
+        restrict/           # POST restrict-only (Maintainer)
+      budget/national/ local/ | dpwh/projects/ | earthquakes/ | geography/boundary/ | legal/documents/ | weather/ | announcements/ | discussion/
     auth/callback/          # Supabase auth callback
-    announcements/          # Announcements page
-    contact/                # Contact page
-    contribute/             # Contributor form page
-    contributors/           # Contributors listing page
-    legal/                  # Legal documents / ordinances page
-    services/               # Services directory page
-    transparency/           # Transparency dashboard page
-    layout.tsx              # Root layout
-    page.tsx                # Home page
-    globals.css             # Tailwind + design tokens
-    middleware.ts           # Auth/session middleware
+    (admin)/admin/          # Head Maintainer dashboard
+      layout.tsx            # CheckPermission(admin) + DashboardNav
+      page.tsx              # Pending
+      users/page.tsx        # UserManagement variant=admin
+    (maintainer)/maintainer/# Maintainer dashboard
+      layout.tsx            # CheckPermission(maintainer) + DashboardNav
+      page.tsx              # Pending
+      users/page.tsx        # UserManagement variant=maintainer
+    (contribute)/contribute/# Contributor flow (role select → pending → contribute)
+    (discussion)/discussion/# Private 3-way threads
+    announcements/ | contact/ | contributors/ | legal/ | services/ | transparency/ | barangays/ | report/
+    layout.tsx | page.tsx | globals.css | middleware.ts
   components/
-    layout/                 # Header, footer, hotlines, page headers
-    live/                   # Live civic data client components
-    map/                    # Leaflet map components
-    sections/               # Home page sections (hero, about, services, etc.)
-    theme/                  # Theme provider + toggle
-    transparency/           # National budget section
-    ui/                     # Reusable primitives (Card, Button)
+    admin/
+      pending-list.tsx     # Approve queue
+      user-management.tsx  # Search + restrict/unrestrict + role change + confirm Modal
+      dashboard-nav.tsx    # Pill tabs for /admin & /maintainer (Pending ↔ Users)
+    layout/                # Header, footer, hotlines, page headers, profile-menu
+    live/                  # Live civic data client components
+    map/                   # Leaflet map components
+    sections/              # Home page sections
+    theme/                 # Theme provider + toggle
+    transparency/          # National budget section
+    ui/                    # Card, Button, Modal
   lib/
-    data/                   # Local site content and sample data
-    sources/                # Server-side clients for external APIs
-    supabase/               # Supabase client/server helpers
-    cache.ts                # Revalidation cache helpers
-    functions.ts            # Shared utilities
-  types/                    # TypeScript type declarations
-public/
-  better-lucena-city.png    # Brand logo
-  better-lucena-city.svg
-  lucena-seal.svg           # Official city seal
-  lucena-land-logo.svg
+    data/                  # Local site content and sample data
+    sources/               # Server-side clients for external APIs
+    supabase/              # client/server, get-user-id
+    roles.ts               # roles map, CheckPermission (respects restricted/approved)
+    role-options.ts        # SELF_SELECT_ROLES
+    cache.ts | functions.ts
+  types/                   # TypeScript declarations
+public/  # logos, seals, PWA assets
 supabase/
-  migrations/               # SQL schema migrations
+  migrations/              # SQL schema + RLS + triggers (enforce_approved, enforce_restricted)
+  config.toml
 ```
 
 ## Getting Started

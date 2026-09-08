@@ -104,7 +104,24 @@ Everyone starts by **registering / signing in** at [`/contribute`](/contribute) 
 > 4. **No conflicts of interest** — disclose any affiliation with an LGU office, contractor, or campaign. If you authored or are the subject of a report, recuse yourself from validating it.
 > 5. **Commitment to correction** — validators must be willing to revert a published entry when new primary evidence shows it was wrong, with a transparent correction note.
 
-To request a role, sign in, then **message a Maintainer or the Head Maintainer via the website contact / private discussion** with: (a) which role you want, and (b) a short note on your research experience. For privacy and to avoid public pressure, please do not request data-related roles via a public GitHub Issue. Maintainers assign roles via the `user_type` enum (`Data Collaborator`, `Data Validator`, `Tester`, `Maintainer`, `Head Maintainer`). Roles can be expanded as the community grows.
+To request a role, sign in, then **pick on `/contribute`** from `SELF_SELECT_ROLES` (`Data Collaborator`, `Data Validator`, `Tester`) — your request is stored as `user_type` + `approved=false` pending. For `Maintainer` elevation (e.g., `Tester → Maintainer`), a **Head Maintainer must use the Admin dashboard** (`/admin/users` → Change role dropdown + Update). Head Maintainer assignment is never exposed in the UI and is blocked by API (`POST /api/admin/change-role`) and DB trigger `enforce_restricted` — it must be done manually via Supabase Studio if bootstrapping the first admin.
+
+### User Management, Restriction & Role Governance (Admin vs Maintainer)
+
+The platform enforces a **least-privilege moderation model** backed by RLS + triggers + `CheckPermission()`.
+
+| Area | Head Maintainer (`/admin`) | Maintainer (`/maintainer`) |
+|------|-----------------------------|----------------------------|
+| Dashboard nav | `DashboardNav` tabs: **Pending** (`/admin`) + **Users** (`/admin/users`) | **Pending** (`/maintainer`) + **Users** (`/maintainer/users`) |
+| Search | `GET /api/admin/users?q=` — searches `username`/`email` (ILIKE), 200 limit | `GET /api/maintainer/users?q=` — same, but **Head Maintainers are filtered out** server + client |
+| Restrict | `POST /api/admin/restrict` `{id, restricted:true}` — amber `Modal` verification (target card + “revoke all permissions” warning) → `users.restricted=true` → `CheckPermission` denies `ALL` | `POST /api/maintainer/restrict` — restrict **only** (same Modal). Unrestrict attempts → `403` |
+| Unrestrict | `POST /api/admin/restrict` `{id, restricted:false}` — Modal “Unrestrict user?” | **Blocked** — must contact Head Maintainer; DB trigger `is_head_maintainer()` enforces |
+| Change role | `POST /api/admin/change-role` — allowed `Maintainer`, `Data Collaborator`, `Data Validator`, `Tester` via dropdown. Head Maintainer protected (cannot assign or change Head). | No UI |
+| Safeguards | No self-restrict/self-role-change; RLS `is_maintainer()` / `is_head_maintainer()`; triggers raise `42501` on violation; Modal requires explicit Confirm | Same + cannot restrict Head Maintainers |
+
+**Verification flow:** Clicking **Restrict** / **Unrestrict** opens `src/components/ui/modal.tsx` (backdrop, Esc close). The modal shows an amber alert (`AlertTriangle`), target user card (username/email/ID), consequence text, and **Cancel** vs **Confirm Restrict/Unrestrict** buttons (with `Loader2` while `acting`). The action is re-validated server-side (permission + target exists + self-check) and at DB level (`enforce_restricted`).
+
+Maintainers assign roles via the `user_type` enum (`Data Collaborator`, `Data Validator`, `Tester`, `Maintainer`, `Head Maintainer`). Self-elevation is blocked by `enforce_approved` trigger. Roles can be expanded as the community grows.
 
 ### Privacy & Public Credit — Username and Email
 
@@ -160,53 +177,60 @@ This reporting duty is part of both the **Code of Conduct** and **Contribution P
    npm run build
    ```
 
+## Database & Roles — Quick Reference (Mermaid)
+
+```mermaid
+erDiagram
+    auth_users ||--|| users : "FK id"
+    users ||--o{ discussion : "user_id"
+    users ||--o{ discussion_comments : "user_id"
+    users ||--o{ discussion : "approved_by / archive_by"
+    users {
+        uuid id PK
+        varchar email UK
+        varchar username UK
+        varchar first_name
+        varchar last_name
+        text avatar_url
+        enum user_type
+        boolean approved
+        boolean restricted
+        boolean show_contributor
+        boolean show_picture
+        timestamptz date_added
+    }
+    discussion {
+        uuid id PK
+        uuid user_id FK
+        varchar title
+        text content
+        jsonb data_source
+        uuid approved_by FK
+        uuid archive_by FK
+    }
+```
+
+- `CheckPermission()` (`src/lib/roles.ts`) denies if `restricted=true` or `approved≠true`, then checks `roles[user_type]` map (Head Maintainer = `ALL`).
+- RLS: `is_maintainer()` (Head/Maintainer + approved) can update any profile; `is_head_maintainer()` controls unrestrict & Head role assignment via `enforce_restricted` trigger.
+
 ## Project Structure
 
 ```
 src/
-  app/                      # Next.js App Router pages and API routes
-    api/                    # Route handlers proxying external data sources
-      budget/national/
-      contribute/
-      dpwh/projects/
-      earthquakes/
-      geography/boundary/
-      legal/documents/
-      weather/
-    auth/callback/          # Supabase auth callback
-    announcements/          # Announcements page
-    contact/                # Contact page
-    contribute/             # Contributor form page
-    contributors/           # Contributors listing page
-    legal/                  # Legal documents / ordinances page
-    services/               # Services directory page
-    transparency/           # Transparency dashboard page
-    layout.tsx              # Root layout
-    page.tsx                # Home page
-    globals.css             # Tailwind + design tokens
-    middleware.ts           # Auth/session middleware
+  app/
+    api/
+      admin/pending, approve, users, restrict, change-role
+      maintainer/users, restrict
+      budget/national, local | dpwh/projects | earthquakes | geography/boundary | legal/documents | weather | announcements | discussion
+    (admin)/admin/layout.tsx + DashboardNav + page.tsx + users/page.tsx
+    (maintainer)/maintainer/layout.tsx + DashboardNav + page.tsx + users/page.tsx
+    (contribute)/contribute | (discussion)/discussion | announcements | contact | contributors | legal | services | transparency | barangays | report
   components/
-    layout/                 # Header, footer, hotlines, page headers
-    live/                   # Live civic data client components
-    map/                    # Leaflet map components
-    sections/               # Home page sections (hero, about, services, etc.)
-    theme/                  # Theme provider + toggle
-    transparency/           # National budget section
-    ui/                     # Reusable primitives (Card, Button)
-  lib/
-    data/                   # Local site content and sample data
-    sources/                # Server-side clients for external APIs
-    supabase/               # Supabase client/server helpers
-    cache.ts                # Revalidation cache helpers
-    functions.ts            # Shared utilities
-  types/                    # TypeScript type declarations
-public/
-  better-lucena-city.png    # Brand logo
-  better-lucena-city.svg
-  lucena-seal.svg           # Official city seal
-  lucena-land-logo.svg
-supabase/
-  migrations/               # SQL schema migrations
+    admin/pending-list.tsx, user-management.tsx (search + restrict Modal + role change), dashboard-nav.tsx
+    layout/header, footer, profile-menu | live | map | sections | theme | transparency | ui/Card, Button, Modal
+  lib/roles.ts, role-options.ts, supabase/*, sources/*, data/*
+  types/
+supabase/migrations/  # users schema, RLS (is_maintainer), enforce_approved, enforce_restricted (is_head_maintainer), discussion, ordinances, announcements
 ```
 
 ## Ground Rules
