@@ -16,6 +16,7 @@ import {
   Pencil,
   Columns2,
 } from "lucide-react";
+import { markdownToHtml } from "@/lib/markdown";
 
 interface MarkdownEditorProps {
   id?: string;
@@ -26,107 +27,10 @@ interface MarkdownEditorProps {
   rows?: number;
 }
 
-function escapeHtml(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-function renderInline(text: string): string {
-  let out = escapeHtml(text);
-  // inline code
-  out = out.replace(/`([^`]+?)`/g, '<code class="rounded bg-surface-container px-1 py-0.5 text-[12px] font-mono">$1</code>');
-  // bold ** **
-  out = out.replace(/\*\*([^*]+?)\*\*/g, "<strong>$1</strong>");
-  // highlight == ==
-  out = out.replace(/==([^=]+?)==/g, '<mark class="rounded bg-secondary-container px-1">$1</mark>');
-  // strikethrough ~~ ~~
-  out = out.replace(/~~([^~]+?)~~/g, "<s>$1</s>");
-  // italic * *  (avoid already bold)
-  out = out.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, "<em>$1</em>");
-  out = out.replace(/_([^_\n]+?)_/g, "<em>$1</em>");
-  // underline __ __
-  out = out.replace(/__([^_]+?)__/g, "<u>$1</u>");
-  // links [text](url)
-  out = out.replace(
-    /\[([^\]]+?)\]\((https?:\/\/[^\s)]+)\)/g,
-    '<a href="$2" target="_blank" rel="noreferrer" class="font-medium text-primary hover:underline">$1</a>',
-  );
-  // autolink bare urls
-  out = out.replace(
-    /(^|\s)(https?:\/\/[^\s<]+)/g,
-    '$1<a href="$2" target="_blank" rel="noreferrer" class="font-medium text-primary hover:underline">$2</a>',
-  );
-  return out;
-}
-
-function markdownToHtml(md: string): string {
-  if (!md.trim()) return '<p class="text-on-surface-variant italic">Nothing to preview — start writing markdown on the left.</p>';
-  // normalize
-  const blocks = md.split(/\n{2,}/);
-  const html: string[] = [];
-
-  for (const block of blocks) {
-    const trimmed = block.trim();
-    if (!trimmed) continue;
-
-    // fenced code
-    if (trimmed.startsWith("```")) {
-      const inner = trimmed.replace(/^```[a-z]*\n?/, "").replace(/\n?```$/, "");
-      html.push(`<pre class="overflow-auto rounded-xl bg-surface-container p-3 text-xs font-mono">${escapeHtml(inner)}</pre>`);
-      continue;
-    }
-    // heading
-    if (/^###\s+/.test(trimmed)) {
-      const t = trimmed.replace(/^###\s+/, "");
-      html.push(`<h3 class="mt-3 text-base font-semibold">${renderInline(t)}</h3>`);
-      continue;
-    }
-    if (/^##\s+/.test(trimmed)) {
-      const t = trimmed.replace(/^##\s+/, "");
-      html.push(`<h2 class="mt-3 text-lg font-semibold">${renderInline(t)}</h2>`);
-      continue;
-    }
-    if (/^#\s+/.test(trimmed)) {
-      const t = trimmed.replace(/^#\s+/, "");
-      html.push(`<h1 class="mt-3 text-xl font-bold">${renderInline(t)}</h1>`);
-      continue;
-    }
-    // blockquote
-    if (/^>\s+/.test(trimmed)) {
-      const lines = trimmed
-        .split("\n")
-        .map((l) => l.replace(/^>\s?/, ""))
-        .join("<br/>");
-      html.push(
-        `<blockquote class="mt-2 border-l-4 border-primary/30 bg-primary-container/10 px-3 py-2 text-sm italic">${renderInline(lines)}</blockquote>`,
-      );
-      continue;
-    }
-    // unordered list
-    if (/^[-*]\s+/.test(trimmed)) {
-      const items = trimmed
-        .split("\n")
-        .filter((l) => /^[-*]\s+/.test(l.trim()))
-        .map((l) => `<li>${renderInline(l.replace(/^[-*]\s+/, ""))}</li>`)
-        .join("");
-      html.push(`<ul class="mt-2 list-disc space-y-1 pl-6 text-sm">${items}</ul>`);
-      continue;
-    }
-    // ordered list
-    if (/^\d+\.\s+/.test(trimmed)) {
-      const items = trimmed
-        .split("\n")
-        .filter((l) => /^\d+\.\s+/.test(l.trim()))
-        .map((l) => `<li>${renderInline(l.replace(/^\d+\.\s+/, ""))}</li>`)
-        .join("");
-      html.push(`<ol class="mt-2 list-decimal space-y-1 pl-6 text-sm">${items}</ol>`);
-      continue;
-    }
-    // paragraph - split single newlines into <br>
-    const inline = renderInline(trimmed).replace(/\n/g, "<br/>");
-    html.push(`<p class="mt-2 text-sm leading-relaxed">${inline}</p>`);
-  }
-
-  return html.join("\n");
+const EMPTY_PREVIEW = '<p class="text-on-surface-variant italic">Nothing to preview — start writing markdown on the left.</p>';
+function toPreviewHtml(md: string): string {
+  if (!md.trim()) return EMPTY_PREVIEW;
+  return markdownToHtml(md);
 }
 
 export function MarkdownEditor({ id, name, value, onChange, placeholder, rows = 10 }: MarkdownEditorProps) {
@@ -260,7 +164,7 @@ export function MarkdownEditor({ id, name, value, onChange, placeholder, rows = 
       {mode === "preview" && (
         <>
           <div className="max-h-[360px] overflow-auto px-4 py-3">
-            <div dangerouslySetInnerHTML={{ __html: markdownToHtml(value) }} />
+            <div dangerouslySetInnerHTML={{ __html: toPreviewHtml(value) }} />
           </div>
           <input type="hidden" name={name} value={value} />
         </>
@@ -278,7 +182,7 @@ export function MarkdownEditor({ id, name, value, onChange, placeholder, rows = 
             className="w-full bg-surface-container-low px-3.5 py-3 text-sm leading-relaxed text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none resize-y min-h-[280px] border-r border-outline-variant/30"
           />
           <div className="max-h-[340px] overflow-auto bg-surface-container px-4 py-3">
-            <div dangerouslySetInnerHTML={{ __html: markdownToHtml(value) }} />
+            <div dangerouslySetInnerHTML={{ __html: toPreviewHtml(value) }} />
           </div>
         </div>
       )}
