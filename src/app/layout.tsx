@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   description: site.description,
   icons: {
-    icon: "/better-lucena-city.svg",
+    icon: "/better-lucena-city.png",
   },
 };
 
