@@ -8,9 +8,10 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  size?: "default" | "lg" | "xl";
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({ open, onClose, title, children, size = "default" }: ModalProps) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -26,6 +27,8 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   if (!open) return null;
 
+  const maxW = size === "xl" ? "max-w-4xl" : size === "lg" ? "max-w-3xl" : "max-w-2xl";
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -34,7 +37,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       aria-label={title}
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative max-h-[85vh] w-full max-w-2xl overflow-auto rounded-card border border-outline-variant/40 bg-surface-container-low p-6 shadow-elevation-3">
+      <div className={`relative max-h-[85vh] w-full ${maxW} overflow-auto rounded-card border border-outline-variant/40 bg-surface-container-low p-6 shadow-elevation-3`}>
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-base font-semibold">{title}</h3>
           <button

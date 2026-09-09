@@ -15,30 +15,22 @@ import {
   UserPlus,
 } from "lucide-react";
 
-export default function Contributors({ limit = 4 }: { limit?: number }) {
+export function ContributorsPageClient() {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <section
-        className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-16 sm:px-6"
-        aria-labelledby="contributors-heading"
-      >
+      <section className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:px-6">
         {/* Want to contribute — as modal trigger */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex flex-col gap-4 rounded-card border border-primary/20 bg-primary-container/20 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-medium uppercase tracking-widest text-secondary">
-              Pakikibahagi · Bayanihan
-            </p>
-            <h2
-              id="contributors-heading"
-              className="mt-1 text-2xl font-semibold tracking-tight md:text-3xl"
-            >
+            <h2 className="flex items-center gap-2 text-base font-semibold">
+              <HeartHandshake className="h-5 w-5 text-primary" />
               Want to contribute?
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-on-surface-variant">
-              Help make Lucena City governance more transparent — gather, verify,
-              and share information from reliable sources. No coding required.
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-on-surface-variant">
+              Join the community — gather, verify, and share public information for Lucena City.
+              No coding required. Learn what is needed and how review works before you register.
             </p>
           </div>
           <button
@@ -46,27 +38,26 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
             onClick={() => setOpen(true)}
             className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-on-primary shadow-elevation-1 transition-colors hover:bg-primary/90"
           >
-            <HeartHandshake className="h-4 w-4" />
             Want to contribute
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Publicly shown contributors */}
-        <div className="mt-2">
+        {/* Public contributors */}
+        <div>
           <div className="flex items-center justify-between gap-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
               Public contributors
             </h3>
-            <span className="text-xs text-on-surface-variant">Username only · opt-in</span>
+            <span className="text-xs text-on-surface-variant">Username only · opt-in · approved</span>
           </div>
           <div className="mt-4">
-            <ContributorsGrid limit={limit} />
+            <ContributorsGrid limit={50} />
           </div>
         </div>
 
         {/* Action buttons */}
-        <div className="mt-2 flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
           <Link
             href="/contributors"
             className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-outline bg-surface-container-low px-6 text-sm font-medium text-primary transition-colors hover:bg-surface-container"
@@ -83,26 +74,28 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
           </Link>
         </div>
 
-        <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
-          Contributors are credited by{" "}
-          <span className="font-medium text-on-surface">username only</span> (opt in/out on{" "}
-          <Link href="/contributors" className="font-medium text-primary hover:underline">
-            /contributors
+        <p className="text-xs leading-relaxed text-on-surface-variant">
+          Showing up to 50 approved public contributors (those with{" "}
+          <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">show_contributor=true</code>
+          ). Pending contributors (approved=false) are hidden until a Maintainer approves.
+          Update your preference in{" "}
+          <Link href="/user/settings" className="font-medium text-primary hover:underline">
+            Settings
           </Link>
-          ). Email is never public.
+          .
         </p>
       </section>
 
-      {/* Modal: Want to contribute details */}
+      {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)} title="Want to contribute?">
         <div className="space-y-5">
           <div className="rounded-xl border border-primary/20 bg-primary-container/20 px-4 py-3">
             <p className="flex items-start gap-2 text-sm leading-relaxed">
               <HeartHandshake className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
               <span>
-                <span className="font-semibold text-on-surface">No coding needed.</span> Gather,
-                verify, validate, and share information — hotlines, services, ordinances, budgets,
-                and advisories — from reliable sources.
+                <span className="font-semibold text-on-surface">No coding needed.</span> You can{" "}
+                <span className="font-medium text-on-surface">gather, verify, validate, and share</span>{" "}
+                information — hotlines, services, ordinances, budgets, advisories.
               </span>
             </p>
           </div>
@@ -115,12 +108,12 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
               </div>
               <ul className="mt-2 space-y-1.5 text-xs leading-relaxed">
                 <li>
-                  • <span className="font-medium text-on-surface">Gather</span> — collect public
-                  info from official sources
+                  • <span className="font-medium text-on-surface">Gather</span> — collect public info
+                  from official sources
                 </li>
                 <li>
-                  • <span className="font-medium text-on-surface">Verify</span> — flag outdated
-                  entries with correct value + source
+                  • <span className="font-medium text-on-surface">Verify</span> — flag outdated entries
+                  with correct value + source
                 </li>
                 <li>
                   • <span className="font-medium text-on-surface">Report</span> — share budget,
@@ -156,8 +149,8 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
               Routine reports → <span className="font-medium text-on-surface">Data Validator</span>{" "}
               reviews and publishes if valid.{" "}
               <span className="font-medium text-on-surface">Corrections & large datasets</span> →
-              private 3-way discussion (you · Validator · Head Maintainer) before publication. Never
-              a public GitHub Issue.
+              private 3-way discussion (you · Validator · Head Maintainer) before publication. Never a
+              public GitHub Issue.
             </p>
           </div>
 
@@ -169,15 +162,15 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
             <ul className="mt-2 space-y-1.5 text-xs leading-relaxed">
               <li>
                 • <span className="font-medium text-on-surface">Data Collaborator</span> — gather &amp;
-                submit reports. No credentials needed; strictly non-partisan.
+                submit reports. Strictly non-partisan.
               </li>
               <li>
                 • <span className="font-medium text-on-surface">Data Validator</span> — review
                 submissions. Requires research knowledge & non-partisan stance.
               </li>
               <li>
-                • <span className="font-medium text-on-surface">Tester</span> — help test features
-                &amp; report bugs.
+                • <span className="font-medium text-on-surface">Tester</span> — test features &amp;
+                report bugs.
               </li>
             </ul>
             <p className="mt-2 text-xs leading-relaxed">
@@ -186,9 +179,7 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
                 /contribute
               </Link>{" "}
               after sign-in — stored as{" "}
-              <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">
-                approved=false
-              </code>{" "}
+              <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved=false</code>{" "}
               pending approval.
             </p>
           </div>
@@ -220,18 +211,10 @@ export default function Contributors({ limit = 4 }: { limit?: number }) {
               <UserPlus className="h-4 w-4" />
               Register as contributor
             </Link>
-            <Link
-              href="/contributors"
-              onClick={() => setOpen(false)}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-outline bg-surface-container-low px-6 text-sm font-medium text-on-surface hover:bg-surface-container"
-            >
-              <Eye className="h-4 w-4" />
-              Show all contributors
-            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex h-10 items-center justify-center rounded-full px-5 text-sm font-medium text-on-surface-variant hover:bg-surface-container"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-outline bg-surface-container-low px-6 text-sm font-medium text-on-surface hover:bg-surface-container"
             >
               Close
             </button>

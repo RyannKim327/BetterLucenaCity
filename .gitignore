@@ -30,6 +30,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+
+# PWA Cache
+/public/sw.js
+/public/swe-*.js
+/public/workbox-*.js
+
 # env files (can opt-in for committing if needed)
 .env*
 
