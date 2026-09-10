@@ -282,12 +282,10 @@ export function UserManagement({ variant }: Props) {
       )}
 
       <p className="text-[11px] leading-relaxed text-on-surface-variant">
-        Search filters by <code className="rounded bg-surface-container px-1 py-0.5">username</code> and{" "}
-        <code className="rounded bg-surface-container px-1 py-0.5">email</code> using case-insensitive match. Restricted users lose all permissions (checked in{" "}
-        <code className="rounded bg-surface-container px-1 py-0.5">CheckPermission</code>).
+        Search by username or email (case-insensitive). Restricted users lose all access.{" "}
         {isAdmin
-          ? " Admins can restrict/unrestrict and change roles (excluding Head Maintainer)."
-          : " Maintainers can only restrict."}
+          ? "Admins can restrict, unrestrict, and change roles (excluding Head Maintainer)."
+          : "Maintainers can only restrict — contact a Head Maintainer to unrestrict."}
       </p>
 
       {/* Confirmation modal for restrict / unrestrict */}
@@ -305,8 +303,8 @@ export function UserManagement({ variant }: Props) {
                   <>
                     <p className="font-semibold">You are about to restrict this user. This action will revoke all permissions immediately.</p>
                     <p className="mt-1 text-xs text-amber-800">
-                      Restricted users are blocked by <code className="rounded bg-amber-100 px-1">CheckPermission</code> and lose access to Contribute/Discussion/Report.{" "}
-                      {!isAdmin && "Only a Head Maintainer (Admin) can unrestrict — this cannot be undone by Maintainers."}
+                      Restricted users lose access to contributions, discussions, and reports.{" "}
+                      {!isAdmin && "Only a Head Maintainer can unrestrict — this cannot be undone by Maintainers."}
                     </p>
                   </>
                 ) : (

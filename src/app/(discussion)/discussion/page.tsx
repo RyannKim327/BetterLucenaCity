@@ -135,10 +135,10 @@ export default async function Discussions({ searchParams }: { searchParams?: Pro
       <Card className="mt-8 border-primary/20 bg-primary-container/20">
         <h3 className="text-sm font-semibold">How it works</h3>
         <ul className="mt-2 space-y-1 text-xs leading-relaxed text-on-surface-variant">
-          <li>• Each submission from <code className="rounded bg-surface-container px-1 py-0.5">/contribute/*</code> inserts into its table (<code>legals</code>, <code>announcements</code>, <code>local_budget</code>) and creates a linked <code>discussion</code> row (type + reference_id).</li>
-          <li>• Validators see all threads; contributors see only their own. Direct URL access enforces the same owner/validate check — Forbidden otherwise.</li>
-          <li>• <span className="font-medium text-on-surface">Approve</span> (<code>approved_by</code>) = permanently closed &amp; linked record published. <span className="font-medium text-on-surface">Archive</span> (<code>archive_by</code>) = temporarily closed — any validator can unarchive to reopen. Both are nullable; only users with <code>validate</code> permission (data_validator, Head Maintainer) may set them.</li>
-          <li>• Use tabs (All / Open / Approved / Archived) to filter. Comments are blocked when closed.</li>
+          <li>• Each submission from the Contribute section creates a linked discussion thread for review.</li>
+          <li>• Validators see all threads; contributors see only their own. Direct access to a thread you don&apos;t own is not permitted.</li>
+          <li>• <span className="font-medium text-on-surface">Approved</span> = permanently closed and the linked record is published. <span className="font-medium text-on-surface">Archived</span> = temporarily closed — any validator can reopen it. Only Data Validators and Head Maintainers can approve or archive.</li>
+          <li>• Use tabs (All / Open / Approved / Archived) to filter. Comments are blocked when a thread is closed.</li>
         </ul>
       </Card>
     </div>

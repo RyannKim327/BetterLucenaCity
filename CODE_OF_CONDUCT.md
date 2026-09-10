@@ -77,7 +77,7 @@ Moderation is **least-privilege and verified**:
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via **`/report` on the website** (preferred for data-related harassment, privacy-preserving and with evidence upload) or to the community leaders responsible for enforcement at **conduct@bettergov.ph**. All complaints will be reviewed and investigated promptly, fairly, and with non-bias. Validated violations may result in **restriction** (`users.restricted=true`) via the dashboards above, with the verification flow and appeal via contact with a Head Maintainer.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via **`/report` on the website** (preferred for data-related harassment, privacy-preserving and with evidence upload) or to the community leaders responsible for enforcement via the private report form or Head Maintainer contact. All complaints will be reviewed and investigated promptly, fairly, and with non-bias. Validated violations may result in **restriction** via the dashboards above, with the verification flow and appeal via contact with a Head Maintainer.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 

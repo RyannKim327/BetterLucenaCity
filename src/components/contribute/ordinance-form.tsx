@@ -195,13 +195,13 @@ export function OrdinanceForm({ userEmail }: { userEmail: string }) {
           <div>
             <label htmlFor="o-source" className={labelClass}>Source URL (legacy single)</label>
             <input id="o-source" name="sourceUrl" type="url" placeholder="https://... official source or LawPhil link" className={fieldClass} />
-            <p className={hintClass}>Primary source preferred. Or use data_source below for multiple links. Single URL will be added to data_source automatically.</p>
+            <p className={hintClass}>Primary source preferred. Or use the reference links field below for multiple links. A single URL will be included automatically.</p>
           </div>
 
           <DataSourceInput
             value={dataSource}
             onChange={setDataSource}
-            label="Reference links — data_source (string[])"
+            label="Reference links"
             hint="Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link."
             placeholder="https://google.com, https://example.gov.ph/document.pdf"
             id="o-data-source"

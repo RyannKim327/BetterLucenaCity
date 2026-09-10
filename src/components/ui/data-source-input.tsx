@@ -34,7 +34,7 @@ interface DataSourceInputProps {
 export function DataSourceInput({
   value,
   onChange,
-  label = "Reference links — data_source",
+  label = "Reference links",
   hint = "Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link.",
   placeholder = "https://example.com/document.pdf",
   id = "data_source",
@@ -143,7 +143,7 @@ export function DataSourceInput({
       <input type="hidden" name="data_source" value={value.join(", ")} readOnly />
       {value.length > 0 && (
         <p className="mt-2 text-xs text-on-surface-variant">
-          Will be stored as <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">string[]</code> in <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">data_source</code> ({value.length} link{value.length === 1 ? "" : "s"}).
+          {value.length} reference link{value.length === 1 ? "" : "s"} added — will be included with your submission for validation.
         </p>
       )}
     </div>

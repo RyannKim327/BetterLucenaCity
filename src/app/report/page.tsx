@@ -135,9 +135,9 @@ export default async function ReportPage({ searchParams }: Props) {
                 <div className="mt-6 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
                   <h3 className="text-sm font-semibold">How visibility works</h3>
                   <ul className="mt-2 space-y-1 text-xs leading-relaxed text-on-surface-variant">
-                    <li>• <span className="font-medium text-on-surface">Maintainers & Head Maintainers</span> — see all reports (user + guest), use Pending/Done to triage.</li>
-                    <li>• <span className="font-medium text-on-surface">Data Collaborator / Data Validator / Tester</span> — see only reports where <code className="rounded bg-surface-container-low px-1 py-0.5">user_id = you</code>; pending = <code>done = false</code>, done = <code>done = true</code>.</li>
-                    <li>• <span className="font-medium text-on-surface">Guests</span> — can submit only <code>public: true</code> types ({publicTypes.map(([k]) => k).join(", ")}); no list access.</li>
+                    <li>• <span className="font-medium text-on-surface">Maintainers & Head Maintainers</span> — see all reports (including guest submissions) and triage by pending or resolved status.</li>
+                    <li>• <span className="font-medium text-on-surface">Data Collaborator / Data Validator / Tester</span> — see only reports you submitted, filtered by pending or resolved.</li>
+                    <li>• <span className="font-medium text-on-surface">Guests</span> — can submit only public report types ({publicTypes.map(([k]) => k).join(", ")}); no list access.</li>
                   </ul>
                 </div>
               </div>

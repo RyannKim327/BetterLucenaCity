@@ -51,6 +51,11 @@ export function Footer() {
                 Report
               </Link>
             </li>
+            <li>
+              <Link href="/privacy" className="text-sm text-on-surface hover:text-primary">
+                Privacy
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -72,15 +77,21 @@ export function Footer() {
       </div>
 
       <div className="border-t border-outline-variant/40 py-4">
-        <div className="flex flex-wrap justify-between mx-auto max-w-6xl px-4 text-xs text-on-surface-variant sm:px-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 mx-auto max-w-6xl px-4 text-xs text-on-surface-variant sm:px-6">
           <p>© {new Date().getFullYear()} {site.name} · {site.tagline}</p>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="font-medium text-primary hover:underline"
-          >
-            Be one of us? Be a contributor?
-          </button>
+          <div className="flex items-center gap-3">
+            <Link href="/privacy" className="font-medium text-on-surface-variant hover:text-primary hover:underline">
+              Privacy Policy
+            </Link>
+            <span className="text-outline-variant">·</span>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="font-medium text-primary hover:underline"
+            >
+              Be one of us? Be a contributor?
+            </button>
+          </div>
         </div>
       </div>
 
@@ -177,9 +188,7 @@ export function Footer() {
               <Link href="/contribute" className="font-medium text-primary hover:underline">
                 /contribute
               </Link>{" "}
-              after sign-in — stored as{" "}
-              <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved=false</code>{" "}
-              pending Maintainer approval.
+              after sign-in — your request will be pending until a Maintainer reviews and approves it.
             </p>
           </div>
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { AuthButtons } from "@/components/sections/auth-buttons";
@@ -35,12 +36,12 @@ export default async function ContributorContainer({ children }: ContributeInter
           <PageHeader
             eyebrow="Pakikibahagi"
             title="Choose a role"
-            description="Pick the role you want — your account will be created with approved = false (pending review) until a Maintainer approves you."
+            description="Pick the role you want — your account will remain pending until a Maintainer reviews and approves you."
           />
           <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
             <RoleSelector email={user.email} displayName={displayName} />
             <p className="mt-6 text-center text-xs leading-relaxed text-on-surface-variant">
-              After requesting a role, a Head Maintainer / Maintainer will review it. We keep <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved = false</code> by default so we can vet who the contributors are.
+              After requesting a role, a Head Maintainer or Maintainer will review it. New accounts are kept pending by default so we can vet contributors before granting access.
             </p>
           </section>
         </div>
@@ -60,7 +61,7 @@ export default async function ContributorContainer({ children }: ContributeInter
             <PendingApproval role={profile.user_type} email={user.email ?? undefined} />
             <RoleSelector email={user.email} displayName={displayName} />
             <p className="text-center text-xs leading-relaxed text-on-surface-variant">
-              Changed your mind? Pick a different role above — you&apos;ll stay pending (approved = false) until re-approved.
+              Changed your mind? Pick a different role above — you&apos;ll stay pending until re-approved.
             </p>
           </section>
         </div>
@@ -90,8 +91,12 @@ export default async function ContributorContainer({ children }: ContributeInter
             <span className="font-medium text-on-surface">Data Collaborator</span> or{" "}
             <span className="font-medium text-on-surface">Data Validator</span> role.
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-            Privacy: you&apos;ll appear publicly by <span className="font-medium text-on-surface">username only</span> (opt in/out on <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">/contributors</code>). Your email is never shown — it&apos;s used only for system notifications via the Head Maintainer&apos;s account; validators never email you directly.
+            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+            Privacy: you&apos;ll appear publicly by <span className="font-medium text-on-surface">username only</span> (opt in/out on{" "}
+            <Link href="/contributors" className="font-medium text-primary hover:underline">
+              /contributors
+            </Link>
+            ). Your email is never shown — it&apos;s used only for system notifications via the Head Maintainer&apos;s account; validators never email you directly.
           </p>
           <div className="mt-6">
             <AuthButtons

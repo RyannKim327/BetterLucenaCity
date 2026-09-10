@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { site } from "@/lib/data/site";
@@ -26,15 +27,28 @@ export default function ContactPage() {
             Office hours: Monday – Friday, 8:00 AM – 5:00 PM
           </p>
         </Card>
-        <Card>
-          <h2 className="text-base font-semibold">Email</h2>
-          <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            General inquiries and feedback:
-          </p>
-          <a href={`mailto:${site.email}`} className="mt-1 inline-block text-sm font-medium text-primary hover:underline">
-            {site.email}
-          </a>
-        </Card>
+        {site.email ? (
+          <Card>
+            <h2 className="text-base font-semibold">Email</h2>
+            <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
+              General inquiries and feedback:
+            </p>
+            <a href={`mailto:${site.email}`} className="mt-1 inline-block text-sm font-medium text-primary hover:underline">
+              {site.email}
+            </a>
+          </Card>
+        ) : (
+          <Card>
+            <h2 className="text-base font-semibold">Get in touch</h2>
+            <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
+              For inquiries, visit City Hall during office hours or use the hotlines below. For privacy-related
+              concerns, reach the Head Maintainer via the private report form.
+            </p>
+            <Link href="/report" className="mt-3 inline-block text-sm font-medium text-primary hover:underline">
+              Go to report form →
+            </Link>
+          </Card>
+        )}
         <Card className="md:col-span-2">
           <h2 className="text-base font-semibold">Hotlines</h2>
           <ul className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">

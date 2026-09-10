@@ -144,7 +144,7 @@ export function InfoNotices() {
           </ul>
         </div>
         <p className="mt-3 text-xs">
-          To request a role, message the Head Maintainer or a Maintainer privately via the website (not a public Issue) — include the role you want, a brief note on your research experience, and 1–2 sources you&apos;ve verified. Roles are assigned via the <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">user_type</code> enum.
+          To request a role, message the Head Maintainer or a Maintainer privately via the website (not a public Issue) — include the role you want, a brief note on your research experience, and 1–2 sources you&apos;ve verified.
         </p>
       </Modal>
 

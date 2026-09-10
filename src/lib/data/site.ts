@@ -7,7 +7,7 @@ export const site = {
     "A community-driven platform that makes Lucena's government information and public services more accessible, transparent, and easy to navigate.",
   cityHallAddress:
     "Mayao Kanluran, Lucena City, Quezon 4301, Philippines",
-  email: "info@bettergov.ph",
+  email: "",
 } as const;
 
 export const navLinks = [

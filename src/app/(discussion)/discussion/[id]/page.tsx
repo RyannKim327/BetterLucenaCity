@@ -266,7 +266,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
                           <p className="mt-2 text-xs text-on-surface-variant">Showing first 10 of {rows.length} rows.</p>
                         )}
                         <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
-                          Stored as <code className="rounded bg-surface-container px-1 py-0.5">data: jsonb</code> ({rawCount} rows). Validators should cross-check against <code className="rounded bg-surface-container px-1 py-0.5">data_source</code>.
+                          {rawCount} rows stored for review. Validators should cross-check against the reference links above.
                         </p>
                       </>
                     )}
@@ -285,7 +285,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
           <p className="mt-2 text-xs text-on-surface-variant">No linked record found (may have been removed).</p>
         )}
         <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
-          Validation: when approved, <code className="rounded bg-surface-container px-1 py-0.5">approved_by</code> is set on the linked table and the entry appears on its public page (legal, announcements, budget). Until then it&apos;s pending.
+          When a thread is approved, the linked entry is published and appears on its public page (legal documents, announcements, or budget). Until then it remains pending.
         </p>
       </Card>
 

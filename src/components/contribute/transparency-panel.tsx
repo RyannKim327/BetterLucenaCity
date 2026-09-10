@@ -235,7 +235,7 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
               <DataSourceInput
                 value={dataSource}
                 onChange={setDataSource}
-                label="Reference links — data_source (string[])"
+                label="Reference links"
                 hint="Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link. These are the reference links for validation."
                 placeholder="https://google.com, https://lucena.gov.ph/transparency/..."
                 id="t-data-source"
@@ -348,7 +348,7 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
                   )}
                 </button>
                 <span className="self-center text-xs text-on-surface-variant">
-                  Submits {rows.length} rows via <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">/api/budget/local</code> → <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">local_budget</code> + discussion thread.
+                  {rows.length} rows will be submitted for review and a discussion thread will be created.
                 </span>
               </div>
             </>

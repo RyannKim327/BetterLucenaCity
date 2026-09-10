@@ -68,7 +68,7 @@ const sitemap: SitemapNode[] = [
     href: "/contact",
     label: "Contact",
     description:
-      "Visit City Hall (Mayao Kanluran, Lucena 4301), office hours Mon–Fri 8AM–5PM, email info@bettergov.ph, emergency hotlines grid.",
+      "Visit City Hall (Mayao Kanluran, Lucena 4301), office hours Mon–Fri 8AM–5PM and emergency hotlines grid.",
     badge: "Public",
   },
   {
@@ -82,7 +82,7 @@ const sitemap: SitemapNode[] = [
     href: "/report",
     label: "Report harassment & discrimination",
     description:
-      "Private report page for harassment, gender-based harassment, discrimination, or data privacy concerns. Enforces RA 11313 (Safe Spaces Act / Bawal Bastos Law), RA 7877 (Anti-Sexual Harassment Act), RA 9710/RA 9262 (Magna Carta of Women / Anti-VAWC), and RA 10173 (Data Privacy Act of 2012) for confidentiality; plus RA 7277/RA 10524 (PWD), RA 10911 (Anti-Age Discrimination), RA 11166 (HIV Policy Act) and 1987 Constitution anti-discrimination protections. Email fallback conduct@bettergov.ph — submission is private to Head Maintainers only.",
+      "Private report page for harassment, gender-based harassment, discrimination, or data privacy concerns. Enforces RA 11313 (Safe Spaces Act / Bawal Bastos Law), RA 7877 (Anti-Sexual Harassment Act), RA 9710/RA 9262 (Magna Carta of Women / Anti-VAWC), and RA 10173 (Data Privacy Act of 2012) for confidentiality; plus RA 7277/RA 10524 (PWD), RA 10911 (Anti-Age Discrimination), RA 11166 (HIV Policy Act) and 1987 Constitution anti-discrimination protections. Submissions are private to Head Maintainers only.",
     badge: "Public · Private submission",
   },
   {
@@ -124,8 +124,8 @@ const sitemap: SitemapNode[] = [
 ];
 
 const excluded: Array<{ path: string; reason: string }> = [
-  { path: "/admin", reason: "Administrative — pending contributors (approved = false) vetting. Requires admin permission; redirects to / otherwise. Excluded from sitemap.xml and robots disallow." },
-  { path: "/discussion", reason: "Private 3-way discussion (Source ↔ Validator ↔ Head Maintainer). Requires discuss permission; redirects to / otherwise. Not indexed." },
+  { path: "/admin", reason: "Administrative — review and approval of pending contributors. Requires admin permission; redirects to / otherwise. Excluded from sitemap.xml and robots disallow." },
+  { path: "/discussion", reason: "Private 3-way discussion (Source ↔ Validator ↔ Head Maintainer). Requires discussion access; redirects to / otherwise. Not indexed." },
 ];
 
 function SitemapCard({ node, depth = 0 }: { node: SitemapNode; depth?: number }) {

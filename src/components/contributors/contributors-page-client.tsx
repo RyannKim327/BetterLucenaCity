@@ -75,10 +75,8 @@ export function ContributorsPageClient() {
         </div>
 
         <p className="text-xs leading-relaxed text-on-surface-variant">
-          Showing up to 50 approved public contributors (those with{" "}
-          <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">show_contributor=true</code>
-          ). Pending contributors (approved=false) are hidden until a Maintainer approves.
-          Update your preference in{" "}
+          Showing up to 50 approved public contributors who opted in to be listed. Pending contributors are hidden until a
+          Maintainer approves them. Update your visibility in{" "}
           <Link href="/user/settings" className="font-medium text-primary hover:underline">
             Settings
           </Link>
@@ -178,9 +176,7 @@ export function ContributorsPageClient() {
               <Link href="/contribute" className="font-medium text-primary hover:underline">
                 /contribute
               </Link>{" "}
-              after sign-in — stored as{" "}
-              <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved=false</code>{" "}
-              pending approval.
+              after sign-in — your request will remain pending until approved by a Maintainer.
             </p>
           </div>
 

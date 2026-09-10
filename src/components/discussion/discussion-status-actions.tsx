@@ -43,9 +43,8 @@ export function DiscussionStatusActions({ discussionId, isOpen, approvedBy, arch
     <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-4">
       <h3 className="text-sm font-semibold">Moderation (validator only)</h3>
       <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
-        <span className="font-medium text-on-surface">Approve</span> = close permanently &amp; publish linked record.{" "}
-        <span className="font-medium text-on-surface">Archive</span> = temporarily close (can be reopened).
-        Both set <code className="rounded bg-surface-container-low px-1 py-0.5">approved_by</code> / <code className="rounded bg-surface-container-low px-1 py-0.5">archive_by</code> to your user id.
+        <span className="font-medium text-on-surface">Approve</span> = close permanently and publish the linked record.{" "}
+        <span className="font-medium text-on-surface">Archive</span> = temporarily close — it can be reopened by a validator.
       </p>
 
       <div className="mt-3 flex flex-wrap gap-2">

@@ -130,13 +130,13 @@ export function AnnouncementForm({ userEmail }: { userEmail: string }) {
           <div>
             <label htmlFor="a-source" className={labelClass}>Source / Reference link (single)</label>
             <input id="a-source" name="source" type="url" placeholder="https://lucena.gov.ph/... or official FB post" className={fieldClass} />
-            <p className={hintClass}>Primary source — or use data_source below for multiple. Single URL will be added to data_source automatically.</p>
+            <p className={hintClass}>Primary source — or use the reference links field below for multiple links. A single URL will be included automatically.</p>
           </div>
 
           <DataSourceInput
             value={dataSource}
             onChange={setDataSource}
-            label="Reference links — data_source (string[])"
+            label="Reference links"
             hint="Add URLs like https://google.com — separate with comma ( , ) or comma+space ( , ) or use Add link."
             placeholder="https://google.com, https://facebook.com/official-post"
             id="a-data-source"

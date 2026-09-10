@@ -153,7 +153,7 @@ export default function WantToContributeSection({ limit = 4 }: { limit?: number 
               <li>• <span className="font-medium text-on-surface">Tester</span> — help test features & report bugs.</li>
             </ul>
             <p className="mt-2 text-xs leading-relaxed">
-              Request via <Link href="/contribute" className="font-medium text-primary hover:underline">/contribute</Link> after sign-in — stored as <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">approved=false</code> pending Maintainer approval.
+              Request via <Link href="/contribute" className="font-medium text-primary hover:underline">/contribute</Link> after sign-in — your request will remain pending until approved by a Maintainer.
             </p>
           </div>
 
