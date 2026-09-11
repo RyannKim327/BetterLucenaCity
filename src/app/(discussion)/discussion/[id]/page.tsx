@@ -7,6 +7,7 @@ import Link from "next/link"
 import { CommentForm } from "@/components/discussion/comment-form"
 import { TableIcon } from "lucide-react"
 import { DiscussionStatusActions } from "@/components/discussion/discussion-status-actions"
+import { LinkedDataEditor } from "@/components/discussion/linked-data-editor"
 
 interface PageProps { params: Promise<{ id: string }> }
 
@@ -161,6 +162,10 @@ export default async function DiscussionDetail({ params }: PageProps) {
 
       <Card>
         <h2 className="text-sm font-semibold">Linked record ({row.type} #{row.reference_id})</h2>
+        <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
+          {row.approved_by ? "This linked record is approved and locked — it must not be edited after it is done." : row.archive_by ? "Temporarily closed — editing is paused until unarchived." : row.user_id === user.id ? "You are the data collector — you may modify this linked data while the thread is open. Once approved it becomes permanently locked." : "Linked data is owned by the data collector and may be edited only by them while the thread is open."}
+        </p>
+        <LinkedDataEditor discussionId={row.id} type={row.type} linked={linked} isApproved={!!row.approved_by} isArchived={!!row.archive_by} isOpen={row.is_open} isOwner={row.user_id === user.id} canValidate={canValidate} />
         {linkedError ? (
           <p className="mt-2 text-xs text-secondary">Failed to load linked record: {linkedError}</p>
         ) : linked ? (
