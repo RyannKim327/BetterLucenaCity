@@ -21,15 +21,15 @@ export default function ServicesPage() {
           {services.map((service) => (
             <li key={service.slug}>
               <Card className="h-full flex flex-col">
-                <Link className="hover:text-on-primary" href={service.source ?? ""}>
+                <span>
                   <p className="text-xs uppercase tracking-wider text-secondary">{service.office}</p>
                   <h2 className="mt-2 text-base font-semibold">{service.name}</h2>
-                </Link>
+                </span>
                 <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
                   {service.description}
                 </p>
                 {service.process.length > 0 && (
-                  <div className="mt-4 overflow-hidden rounded-xl border border-outline-variant/30">
+                  <div className="mt-4 overflow-hidden overflow-x-auto rounded-xl border border-outline-variant/30">
                     <table className="w-full text-xs">
                       <thead className="bg-surface-container">
                         <tr>
@@ -51,7 +51,7 @@ export default function ServicesPage() {
                   </div>
                 )}
                 {service.source ?
-                  <Link href={service.source} className="mt-3 inline-flex w-fit rounded-full bg-primary-container px-2.5 py-1 text-xs font-medium text-on-primary-container">More info here</Link>
+                  <Link href={service.source} className="mt-3 inline-flex w-fit px-2.5 py-1 text-xs font-medium text-primary hover:underline">More info here →</Link>
                   : null}
               </Card>
             </li>
