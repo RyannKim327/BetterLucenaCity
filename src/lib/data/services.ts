@@ -8,7 +8,121 @@ export const services: Service[] = [
       "Apply for or renew business permits, secure mayor's permits, and check licensing requirements.",
     office: "Business Permits and Licensing Office",
     featured: true,
-    process: []
+    source: "https://client.ebpls-lucenacity.com/#new-application",
+    process: [
+      {
+        name: "Prepare Required Documents",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Fill Out Business Permit Application Form",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Upload the Requirements",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Inspection & Approval",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Assessment and Payment",
+        timeEstimation: "Not specified",
+        amount: "Based on Statement of Account",
+      },
+      {
+        name: "Release of Business Permit",
+        timeEstimation: "Within the overall 3–5 business day processing period",
+        amount: "Included in assessed fees",
+      },
+    ]
+  },
+  {
+    slug: "business-permit-renewal",
+    name: "Business Permit Renewal",
+    description:
+      "Renew an existing business permit via the Lucena eBPLS portal — annual renewal for established businesses, with online payment via GCash or Landbank (0211-3057-54, City Government of Lucena).",
+    office: "Business Permits and Licensing Office",
+    featured: true,
+    source: "https://client.ebpls-lucenacity.com/#renew-application",
+    process: [
+      {
+        name: "Prepare Required Documents",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Fill Out Renewal Application Form (login with BPLO credentials)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Upload the Requirements (single PDF)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Inspection & Approval (if required)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Assessment and Payment",
+        timeEstimation: "Not specified",
+        amount: "Based on Statement of Account",
+      },
+      {
+        name: "Release of Business Permit",
+        timeEstimation: "Within 3–5 business days",
+        amount: "Included in assessed fees",
+      },
+    ]
+  },
+  {
+    slug: "business-permit-change-information",
+    name: "Business Permit — Change of Information",
+    description:
+      "Update business permit details via the Lucena eBPLS portal — change of business address, change of ownership, or other amendments. Requirements vary by change type.",
+    office: "Business Permits and Licensing Office",
+    featured: false,
+    source: "https://client.ebpls-lucenacity.com/#change-information",
+    process: [
+      {
+        name: "Prepare Required Documents (varies by change type)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Fill Out Business Permit Application Form",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Upload the Requirements (single PDF)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Inspection & Approval (if required)",
+        timeEstimation: "Not specified",
+        amount: "Not specified",
+      },
+      {
+        name: "Assessment and Payment",
+        timeEstimation: "Not specified",
+        amount: "Based on Statement of Account",
+      },
+      {
+        name: "Release of Updated Business Permit",
+        timeEstimation: "Within 3–5 business days",
+        amount: "Included in assessed fees",
+      },
+    ]
   },
   {
     slug: "civil-registry",

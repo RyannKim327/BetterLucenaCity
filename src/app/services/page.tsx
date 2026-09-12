@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { services } from "@/lib/data/services";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -16,12 +17,14 @@ export default function ServicesPage() {
         description="Everything you need from City Hall, organized by office. Each listing includes where to go and what to prepare."
       />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
           {services.map((service) => (
             <li key={service.slug}>
               <Card className="h-full flex flex-col">
-                <p className="text-xs uppercase tracking-wider text-secondary">{service.office}</p>
-                <h2 className="mt-2 text-base font-semibold">{service.name}</h2>
+                <Link className="hover:text-on-primary" href={service.source ?? ""}>
+                  <p className="text-xs uppercase tracking-wider text-secondary">{service.office}</p>
+                  <h2 className="mt-2 text-base font-semibold">{service.name}</h2>
+                </Link>
                 <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
                   {service.description}
                 </p>
@@ -47,9 +50,9 @@ export default function ServicesPage() {
                     </table>
                   </div>
                 )}
-                {service.featured && (
-                  <span className="mt-3 inline-flex w-fit rounded-full bg-primary-container px-2.5 py-1 text-xs font-medium text-on-primary-container">Featured</span>
-                )}
+                {service.source ?
+                  <Link className="mt-3 inline-flex w-fit rounded-full bg-primary-container px-2.5 py-1 text-xs font-medium text-on-primary-container">Fea</Link>
+                    ? null}
               </Card>
             </li>
           ))}
