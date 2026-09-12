@@ -1,12 +1,12 @@
-import { describe, it } from "mocha";
+import { describe, it } from "node:test";
 
 describe('Users API', () => {
-  // describe('GET /api/users', () => {
-  //   it('should return a list of users', async () => {
-  //     // test here
-  //   });
-  // });
-  //
+  describe('GET /api/users', () => {
+    it('should return a list of users', async () => {
+      // test here
+    });
+  });
+
   // describe('GET /api/users/:id', () => {
   //   it('should return a user', async () => {
   //     // test here

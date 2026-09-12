@@ -1,0 +1,16 @@
+# robots.txt for BetterLucenaCity — https://betterlucenacity.org
+# Mirrors src/app/robots.ts (MetadataRoute). Static copy in public/ for CDN/crawler fallback;
+# Next.js also serves dynamic /robots.txt from src/app/robots.ts at build time.
+User-agent: *
+Allow: /
+
+# Private / role-gated — not for public indexing (kept out of sitemap.xml)
+# Note: /report is public (listing/form); /report/[id] threads are auth-gated, not blocked here
+Disallow: /admin
+Disallow: /maintainer
+Disallow: /discussion
+Disallow: /contribute
+Disallow: /user
+Disallow: /api/
+
+Sitemap: https://betterlucenacity.org/sitemap.xml

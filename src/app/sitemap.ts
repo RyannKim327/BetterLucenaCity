@@ -11,36 +11,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = getBaseUrl();
   const now = new Date();
 
-  // NOTE: Administrative and private routes are intentionally excluded:
-  //  - /admin            → admin-only (pending contributors, approved=false)
-  //  - /discussion       → private 3-way discussion (Source ↔ Validator ↔ Head Maintainer)
+  // NOTE: Only visitor-facing public URLs are included.
+  // Excluded (private / role-gated — also disallowed in robots.ts):
+  //  - /admin, /maintainer        → Head Maintainer / Maintainer only
+  //  - /discussion, /discussion/* → private 3-way (Source ↔ Validator ↔ Head Maintainer)
+  //  - /contribute, /contribute/* → requires sign-in + approved role
+  //  - /user, /user/*             → authenticated user only
+  //  - /report/[id]               → private report threads ( /report listing itself is public )
   const routes: Array<{
     path: string;
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
     priority: number;
   }> = [
-      // INFO: Primary navigation (src/lib/data/site.ts » navLinks)
+      // Primary navigation (src/lib/data/site.ts » navLinks)
       { path: "/", changeFrequency: "daily", priority: 1 },
       { path: "/services", changeFrequency: "weekly", priority: 0.9 },
       { path: "/transparency", changeFrequency: "daily", priority: 0.9 },
+      { path: "/transparency/local-budget", changeFrequency: "weekly", priority: 0.8 },
+      { path: "/transparency/procurement", changeFrequency: "weekly", priority: 0.8 },
       { path: "/legal", changeFrequency: "weekly", priority: 0.8 },
+      { path: "/legal/fdp", changeFrequency: "monthly", priority: 0.6 },
       { path: "/announcements", changeFrequency: "daily", priority: 0.8 },
       { path: "/contact", changeFrequency: "monthly", priority: 0.7 },
 
-      // INFO: Secondary public pages
+      // Secondary public pages
+      { path: "/barangays", changeFrequency: "monthly", priority: 0.6 },
+      { path: "/history", changeFrequency: "monthly", priority: 0.6 },
       { path: "/contributors", changeFrequency: "weekly", priority: 0.6 },
+      { path: "/privacy", changeFrequency: "monthly", priority: 0.3 },
       { path: "/report", changeFrequency: "monthly", priority: 0.5 },
 
-      // INFO: Contributor portal — requires sign-in + approved role with `collect` permission
-      // NOTE: Kept in sitemap so contributors can discover the portal; auth layout redirects guests to sign-in.
-      { path: "/contribute", changeFrequency: "weekly", priority: 0.7 },
-      { path: "/contribute/contacts", changeFrequency: "weekly", priority: 0.6 },
-      { path: "/contribute/services", changeFrequency: "weekly", priority: 0.6 },
-      { path: "/contribute/transparency", changeFrequency: "weekly", priority: 0.6 },
-      { path: "/contribute/announcement", changeFrequency: "weekly", priority: 0.6 },
-      { path: "/contribute/ordinances", changeFrequency: "weekly", priority: 0.6 },
-
-      // INFO: Human-readable sitemap page itself
+      // Human-readable sitemap page itself
       { path: "/sitemap", changeFrequency: "monthly", priority: 0.4 },
     ];
 
