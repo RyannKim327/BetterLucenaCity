@@ -51,8 +51,8 @@ export default function ServicesPage() {
                   </div>
                 )}
                 {service.source ?
-                  <Link className="mt-3 inline-flex w-fit rounded-full bg-primary-container px-2.5 py-1 text-xs font-medium text-on-primary-container">Fea</Link>
-                    ? null}
+                  <Link href={service.source} className="mt-3 inline-flex w-fit rounded-full bg-primary-container px-2.5 py-1 text-xs font-medium text-on-primary-container">More info here</Link>
+                  : null}
               </Card>
             </li>
           ))}
