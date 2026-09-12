@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 
 function getBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  // Always use the canonical Vercel URL — do NOT use VERCEL_URL (which is the
+  // per-deployment URL like ...-git-branch.vercel.app). Override only via NEXT_PUBLIC_SITE_URL.
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   return "https://better-lucena-city.vercel.app";
 }
 
