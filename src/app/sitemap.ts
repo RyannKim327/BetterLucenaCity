@@ -4,7 +4,7 @@ function getBaseUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   // Production fallback — update NEXT_PUBLIC_SITE_URL in env for your deployment
-  return "https://betterlucenacity.org";
+  return "https://better-lucena-city.vercel.app";
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
