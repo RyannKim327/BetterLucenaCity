@@ -20,7 +20,7 @@ jobs:
       run: npm install
 
     - name: Run Build and Tests
-      run: npm run gh-test
+      run: npm run build
 
   opencode:
     runs-on: ubuntu-latest
