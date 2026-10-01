@@ -17,5 +17,5 @@ export const navLinks = [
   { href: "/legal", label: "Ordinances" },
   { href: "/announcements", label: "Announcements" },
   { href: "/contact", label: "Hotlines" },
-  { href: "/contributors", label: "Contribute" }
+  // { href: "/contributors", label: "Contribute" }
 ] as const;

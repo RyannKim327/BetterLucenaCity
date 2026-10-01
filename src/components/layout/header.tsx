@@ -17,6 +17,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-outline-variant/40 shadow-elevation-1">
       <Hotlines />
+      <div className="flex justify-end max-w-6xl gap-2 text-xs p-1 px-2 sm:px-6">
+        <Link href="/contributors">Join Us</Link>
+        <Link href="https://bettergov.ph">BetterGov.PH</Link>
+        <Link href="/about">About Us</Link>
+      </div>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
