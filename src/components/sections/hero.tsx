@@ -6,7 +6,7 @@ export default function HeroSection() {
   return (
     <section className="bg-surface-container-low">
       <div className="flex mx-auto max-w-6xl gap-6 px-4 py-16 sm:px-6 md:py-24">
-        <div className="max-w-2xl">
+        <div className="flex flex-col justify-center max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-widest text-secondary">
             Maligayang pagdating sa
           </p>
@@ -17,14 +17,14 @@ export default function HeroSection() {
             Find city services, track public spending, and stay informed
             all in one citizen-first portal for Lucena City.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap gap-3">
             <Button href="/services">Browse Services</Button>
             <Button href="/transparency" variant="outlined">
               Transparency Portal
             </Button>
           </div>
         </div>
-        <MapClient className="w-full aspect-video" />
+        <MapClient className="hidden md:block w-full aspect-video" />
       </div>
     </section>
   )

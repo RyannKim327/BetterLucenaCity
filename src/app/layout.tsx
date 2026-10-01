@@ -18,6 +18,20 @@ export const metadata: Metadata = {
     default: `${site.name}`,
     template: `%s · ${site.name}`,
   },
+  robots: {
+    follow: true,
+    index: true
+  },
+  keywords: [
+    "Better Lucena City",
+    "Lucena City Transparency",
+    "What is Lucena City",
+    "BetterGov",
+    "BetterLucenaCity",
+    "Lucena City Services",
+    "Lucena City History",
+    "Lucena City Population"
+  ],
   description: site.description,
   icons: {
     icon: "/better-lucena-city.png",

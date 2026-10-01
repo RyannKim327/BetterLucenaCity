@@ -18,6 +18,22 @@ export default function ContactPage() {
         description="Reach out to City Hall for inquiries, feedback, or reports. Malasakit starts with listening."
       />
       <section className="mx-auto grid max-w-6xl gap-4 px-4 py-12 sm:px-6 md:grid-cols-2">
+        <Card className="md:col-span-2">
+          <h2 className="text-base font-semibold">Hotlines</h2>
+          <ul className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+            {hotlines.map((hotline) => (
+              <li key={hotline.name}>
+                <p className="text-xs uppercase tracking-wider text-on-surface-variant">{hotline.name}</p>
+                {hotline.dial.map((n: string, i: number) => {
+                  return (
+                    <a key={`${i}. ${n}`} href={`tel:${n.toString().replace(/[^+\d]/g, "")}`}><p>{n}</p></a>
+                  )
+                })}
+              </li>
+            ))}
+          </ul>
+        </Card>
+
         <Card>
           <h2 className="text-base font-semibold">Visit City Hall</h2>
           <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
@@ -49,21 +65,6 @@ export default function ContactPage() {
             </Link>
           </Card>
         )}
-        <Card className="md:col-span-2">
-          <h2 className="text-base font-semibold">Hotlines</h2>
-          <ul className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {hotlines.map((hotline) => (
-              <li key={hotline.name}>
-                <p className="text-xs uppercase tracking-wider text-on-surface-variant">{hotline.name}</p>
-                {hotline.dial.map((n: string, i: number) => {
-                  return (
-                    <a key={`${i}. ${n}`} href={`tel:${n.toString().replace(/[^+\d]/g, "")}`}><p>{n}</p></a>
-                  )
-                })}
-              </li>
-            ))}
-          </ul>
-        </Card>
       </section>
     </div>
   );
