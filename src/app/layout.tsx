@@ -22,11 +22,21 @@ export const metadata: Metadata = {
     follow: true,
     index: true
   },
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    },
+    {
+      name: "Mark Luoie Alvarez",
+      url: "https://github.com/marrrkkk"
+    }
+  ],
   keywords: [
     "Better Lucena City",
     "Lucena City Transparency",
     "What is Lucena City",
-    "BetterGov",
+    "BetterGov PH",
     "BetterLucenaCity",
     "Lucena City Services",
     "Lucena City History",

@@ -5,6 +5,7 @@ import { barangays } from "@/lib/sources/barangays";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { Menu } from "lucide-react";
 
 const BarangayMap = dynamic(() => import("@/components/map/barangay-map"), {
   ssr: false,
@@ -43,6 +44,7 @@ export default function BarangayData() {
   const [brgy, setBrgy] = useState(0);
   const [info, setInfo] = useState<BrgyInfo[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showLists, setShowLists] = useState(false)
 
   const selected = barangayInfo[brgy];
 
@@ -65,7 +67,8 @@ export default function BarangayData() {
 
   return (
     <div className="flex flex-col md:flex-row w-full gap-4">
-      <div className="flex flex-col gap-3 max-h-[70dvh] md:max-h-dvh overflow-y-auto w-full md:w-[calc(50%-0.5rem)] pr-1">
+      <div
+        className={`${showLists ? "opacity-100" : "opacity-0 h-0 md:opacity-100 md:h-auto"} flex flex-col gap-3 max-h-[70dvh] md:max-h-dvh overflow-y-auto w-full md:w-[calc(50%-0.5rem)] pr-1 transition-all delay-75`}>
         {barangayInfo.map((b, i: number) => {
           const isActive = i === brgy;
           return (
@@ -75,7 +78,10 @@ export default function BarangayData() {
             >
               <p className={`font-medium ${isActive ? "text-primary" : ""}`}>{b.name}</p>
               <button
-                onClick={() => setBrgy(i)}
+                onClick={() => {
+                  setBrgy(i)
+                  setShowLists(prev => !prev)
+                }}
                 className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${isActive ? "bg-primary text-on-primary" : "bg-surface-container-highest hover:bg-surface-container-high cursor-pointer"}`}
                 aria-pressed={isActive}
               >
@@ -85,7 +91,14 @@ export default function BarangayData() {
           );
         })}
       </div>
-      <Card className="w-full md:w-[calc(50%-0.5rem)] max-h-[70dvh] md:h-dvh md:sticky md:top-4 h-fit overflow-hidden overflow-y-auto">
+      <Card className={`${showLists ? "h-0 opacity-0 md:opacity-100 h-auto" : "opacity-100"} flex flex-col w-full md:w-[calc(50%-0.5rem)] max-h-[70dvh] md:h-dvh md:sticky md:top-4 h-fit overflow-hidden overflow-y-auto transition-all delay-75`}>
+        <span
+          onClick={() => {
+            setShowLists(prev => !prev)
+          }}
+          className="p-1 mb-2 md:hidden">
+          <Menu />
+        </span>
         <BarangayMap key={selected.name} data={selected} />
         <div className="pt-4 space-y-3">
           <h3 className="text-lg font-semibold">{selected.name}</h3>
@@ -125,6 +138,6 @@ export default function BarangayData() {
           </div>
         </div>
       </Card>
-    </div>
+    </div >
   );
 }

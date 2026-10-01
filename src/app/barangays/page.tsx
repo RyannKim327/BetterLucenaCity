@@ -1,11 +1,16 @@
 import BarangayData from "@/components/data/barangay-data";
 import { PageHeader } from "@/components/layout/page-header";
-import { Card } from "@/components/ui/card";
 import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
   title: "Barangay Information",
+  description: "Some information related to 33 Barangays of Lucena City in terms of Population based on the census",
+  keywords: [
+    "Lucena City Barangay Census",
+    "Lucena City Population",
+    "Barangays Lucena City"
+  ]
 };
 
 export default function BarangayPage() {
