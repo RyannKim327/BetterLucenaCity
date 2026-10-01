@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Menu } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const BarangayMap = dynamic(() => import("@/components/map/barangay-map"), {
   ssr: false,
@@ -39,6 +40,7 @@ async function searchBarangayInfo(brgy: string): Promise<BrgyInfo[] | null> {
   }
   return data;
 }
+
 
 export default function BarangayData() {
   const [brgy, setBrgy] = useState(0);
@@ -91,7 +93,7 @@ export default function BarangayData() {
           );
         })}
       </div>
-      <Card className={`${showLists ? "h-0 opacity-0 md:opacity-100 h-auto" : "opacity-100"} flex flex-col w-full md:w-[calc(50%-0.5rem)] max-h-[70dvh] md:h-dvh md:sticky md:top-4 h-fit overflow-hidden overflow-y-auto transition-all delay-75`}>
+      <Card className={`${showLists ? "h-0 opacity-0 md:opacity-100 md:h-auto" : "opacity-100"} flex flex-col w-full md:w-[calc(50%-0.5rem)] max-h-[70dvh] md:h-dvh md:sticky md:top-4 h-fit overflow-hidden overflow-y-auto transition-all delay-75`}>
         <span
           onClick={() => {
             setShowLists(prev => !prev)
@@ -118,26 +120,33 @@ export default function BarangayData() {
           </div>
 
           <div className="rounded-xl border border-outline-variant/30 p-4">
-            <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Barangay info</p>
+            <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Barangay population based on census</p>
             {loading ? (
               <p className="text-sm text-on-surface-variant">Loading population…</p>
-            ) : info ? info.map((d, i: number) => {
-              return (
-                <div key={`${i}. ${d.name}`} className="space-y-1 text-sm grid grid-cols-2">
-                  <p>
-                    <span className="text-on-surface-variant">Population:</span> {d.population}
-                  </p>
-                  <p>
-                    <span className="text-on-surface-variant">Year:</span> {d.year}
-                  </p>
-                </div>
-              )
-            }) : (
+            ) : info ? (
+              <span>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={info}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip contentStyle={{
+                      backgroundColor: "var(--background)",
+                      color: "var(--foreground)"
+                    }} />
+                    <Bar
+                      dataKey="population"
+                      fill="var(--foreground)"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </span>
+            ) : (
               <p className="text-sm text-on-surface-variant">No population record yet for {selected.name}.</p>
             )}
           </div>
         </div>
-      </Card>
+      </Card >
     </div >
   );
 }

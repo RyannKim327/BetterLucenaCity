@@ -11,17 +11,18 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^10.2.9",
+    "@ducanh2912/next-pwa": "^10.2.6",
     "@supabase/ssr": "^0.12.5",
     "@supabase/supabase-js": "^2.114.0",
     "axios": "^1.20.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.39.0",
     "mocha": "^12.0.1",
-    "next": "16.3.2",
+    "next": "^16.3.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-leaflet": "^5.0.0",
+    "recharts": "^3.10.1",
     "supabase": "^2.116.0"
   },
   "devDependencies": {
