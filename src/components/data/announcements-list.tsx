@@ -76,12 +76,12 @@ export function AnnouncementsList({ limit }: { limit?: number }) {
             ) : (
               <>
                 {/* Full list: markdown readable */}
-                <div className="mt-3">
+                <div className="mt-3 max-h-20 overflow-hidden">
                   <Markdown content={announcement.content} />
                 </div>
                 {Array.isArray(announcement.data_source) && announcement.data_source.length > 0 && (
                   <ul className="mt-3 space-y-1">
-                    {announcement.data_source.map((u, i) => (
+                    {announcement.data_source.slice(2).map((u, i) => (
                       <li key={`${u}-${i}`} className="truncate">
                         <a href={u} target="_blank" rel="noreferrer" className="text-xs font-medium text-primary hover:underline">
                           {u}
