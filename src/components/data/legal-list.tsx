@@ -126,7 +126,13 @@ export function LegalList({ activeType }: { activeType: string | null }) {
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-on-surface-variant">
                 {doc.summary}
               </p>
-
+              <div className="flex gap-2">
+              <Link
+                href={`legal/${doc.id}`}
+                className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
+              >
+                Read the text content →
+              </Link>
               {doc.sourceUrl && (
                 <a
                   href={doc.sourceUrl}
@@ -137,6 +143,7 @@ export function LegalList({ activeType }: { activeType: string | null }) {
                   Read full text ({doc.sourceName}) →
                 </a>
               )}
+              </div>
             </Card>
           </li>
         ))}

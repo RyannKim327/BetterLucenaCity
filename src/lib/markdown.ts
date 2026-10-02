@@ -123,6 +123,12 @@ export function markdownToHtml(md: string): string {
       html.push(`<ol class="mt-2 list-decimal space-y-1 pl-6 text-sm">${items}</ol>`);
       continue;
     }
+
+    if (/^(---+|\*\*\*+|___+)\s*$/.test(trimmed)) {
+      html.push('<hr />');
+      continue;
+    }
+
     // paragraph - split single newlines into <br>
     const inline = renderInline(trimmed).replace(/\n/g, "<br/>");
     html.push(`<p class="mt-2 text-sm leading-relaxed">${inline}</p>`);

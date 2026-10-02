@@ -21,6 +21,7 @@ interface LegalRow {
   approved_by: string | null;
   source_url: string | null;
   source_name: string | null;
+  has_content: boolean
 }
 
 function toLegalDocument(row: LegalRow): LegalDocument {
@@ -122,7 +123,7 @@ export async function POST(request: NextRequest) {
       ordinance_type: ordinance_type as never,
       reference: reference || null,
       summary,
-      content: content || summary,
+      content: content || "",
       proclamation_date: parsedDate,
       source_url: firstUrl,
       source_name: source_name || null,
@@ -162,7 +163,9 @@ export async function GET(request: NextRequest) {
   }
 
   const supa = await createClient();
-  let query = supa.from("legals").select("*");
+  let query = supa
+    .from("legals")
+    .select("*");
 
   if (type) query = query.eq("ordinance_type", type);
 

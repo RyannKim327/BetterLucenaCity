@@ -13,6 +13,7 @@ export interface LegalDocument {
   type: LegalDocType;
   number: string;
   title: string;
+  content?: string
   date: string | null;
   summary: string;
   sourceUrl?: string;
