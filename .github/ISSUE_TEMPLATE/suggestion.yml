@@ -1,0 +1,25 @@
+name: Suggestion
+
+description: Suggesting a feature/concept/design/workflows that may help for the development
+
+title: "Suggestion for development"
+
+labels: ["enhancement"]
+
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Enter your name here
+      placeholder: e.g Juan Dela Cruz
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Tell us about what you want to see in Better Lucena City
+      description: What feature you may suggest to us for Better Lucena City, and what would be the advantage of it compare to the current we have.
+    validations:
+      required: true
