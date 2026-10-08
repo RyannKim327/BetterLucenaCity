@@ -27,8 +27,8 @@ jobs:
 
       - name: Configure git identity
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "RyannKim327"
+          git config --global user.email "weryses19@gmail.com"
 
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
