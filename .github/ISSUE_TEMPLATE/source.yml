@@ -1,0 +1,25 @@
+name: Data source suggestion
+
+description: Suggesting a data source for the data collector team.
+
+title: "Suggestion of a data source to gather"
+
+labels: ["source", "enhancement"]
+
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Enter your name here
+      placeholder: e.g Juan Dela Cruz
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Tell us what source it is and the relevance of it for Better Lucena City
+      description: 
+    validations:
+      required: true
