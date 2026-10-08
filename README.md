@@ -22,7 +22,7 @@ Non-partisan. Facts-first. Built in the spirit of *bayanihan*.
 - [License](#license)
 
 ## Logo Development
-[THe Logo is developed with figma]()https://www.figma.com/design/Y3hn9jY0V5M7VaGOIE3QWO/Better-Lucena-City-Logo?node-id=0-1&m=dev&t=ztF4642Hx8EHXm4b-1
+[THe Logo is developed with figma](https://www.figma.com/design/Y3hn9jY0V5M7VaGOIE3QWO/Better-Lucena-City-Logo?node-id=0-1&m=dev&t=ztF4642Hx8EHXm4b-1
 
 ## Features
 
