@@ -42,13 +42,13 @@ export default function LucenaMap() {
     <div className="relative h-full w-full z-1">
       <MapContainer
         center={[13.9333, 121.6167]}
-        zoom={13}
+        zoom={10}
         scrollWheelZoom={false}
         className="h-full w-full"
-        attributionControl={true}
+        attributionControl={false}
       >
         <TileLayer
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 

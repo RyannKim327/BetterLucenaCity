@@ -16,7 +16,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     <div>
       <Header setVisibleNav={setVisibleNav} visibleNav={visibleNav} />
       <div className="flex flex-row w-full overflow-x-hidden">
-        <main className={` ${visibleNav ? "w-[calc(75%-1rem)]" : "flex-1"} transition-all delay-75`}>{children}</main>
+        <main className={` ${visibleNav ? "w-[calc(95%-1rem)]" : "w-full"} transition-all delay-75`}>{children}</main>
         <div className={`${visibleNav ? "flex flex-col justify-between h-[calc(85%-1rem)] w-full md:w-[calc(25%-1rem)] fixed z-10 bg-surface-container-high right-0 top-30 bottom-0" : "w-0 overflow-hidden"} transition-all delay-75`}>
           <nav aria-label="Primary" className="w-full p-2">
             <ul className="flex flex-col w-full items-center gap-1">
