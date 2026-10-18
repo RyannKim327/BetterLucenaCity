@@ -6,7 +6,7 @@ export default function AnnouncementSection() {
     <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6" aria-labelledby="announcements-heading">
       <div className="flex items-end justify-between gap-4">
         <h2 id="announcements-heading" className="text-2xl font-semibold tracking-tight">
-          Latest Announcements
+          Latest News and Announcements
         </h2>
         <Link href="/announcements" className="shrink-0 text-sm font-medium text-primary hover:underline">
           View all →

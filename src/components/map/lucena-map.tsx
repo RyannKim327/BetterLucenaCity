@@ -58,10 +58,10 @@ export default function LucenaMap() {
               key={boundary.displayName}
               data={boundary.boundary as never}
               style={{
-                color: "#00695c",
+                color: "#0066eb",
                 weight: 2.5,
                 opacity: 0.9,
-                fillColor: "#9ef2e0",
+                fillColor: "#e6f0fd",
                 fillOpacity: 0.12,
               }}
             />
@@ -73,7 +73,7 @@ export default function LucenaMap() {
           <CircleMarker
             center={[boundary.center.latitude, boundary.center.longitude]}
             radius={8}
-            pathOptions={{ color: "#ffffff", weight: 2, fillColor: "#00695c", fillOpacity: 1 }}
+            pathOptions={{ color: "#ffffff", weight: 2, fillColor: "#0066eb", fillOpacity: 1 }}
           >
             <Popup>Lucena City proper</Popup>
           </CircleMarker>

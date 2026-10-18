@@ -10,9 +10,9 @@ export default function AnnouncementsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Mga Abiso"
-        title="Public Announcements"
-        description="Official advisories, notices, and updates from the City Government of Lucena."
+        eyebrow="Mga Abiso at Balita"
+        title="News and Announmcent Announcements"
+        description="Official advisories, notices, news, and updates from the City Government of Lucena."
       />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <AnnouncementsList />

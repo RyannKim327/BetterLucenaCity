@@ -12,15 +12,21 @@ export default function History() {
           View all →
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
-        {timeline.slice((timeline.length - 5)).map((lc, i: number) => {
-          return (
-            <Card key={`${i}. ${lc.date}`}>
-              <p className="text-xs uppercase tracking-wider text-secondary">{lc.date}</p>
-              <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{lc.content}</p>
-            </Card>
-          )
-        })}
+      <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col gap-2">
+          {timeline.slice((timeline.length - 4), timeline.length - 1).map((lc, i: number) => {
+            return (
+              <Card key={`${i}. ${lc.date}`}>
+                <p className="text-xs uppercase tracking-wider text-secondary">{lc.date}</p>
+                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{lc.content}</p>
+              </Card>
+            )
+          })}
+        </div>
+        <Card>
+          <p className="text-xs md:text-xl uppercase tracking-wider text-secondary">{timeline[timeline.length - 1].date}</p>
+          <p className="mt-2 text-sm md:text-2xl leading-relaxed text-on-surface-variant">{timeline[timeline.length - 1].content}</p>
+        </Card>
       </div>
     </section>
   )
