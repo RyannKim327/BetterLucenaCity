@@ -167,80 +167,105 @@ export function ProfileMenu() {
 
   const isAuthenticated = !!user;
 
-  if (!isAuthenticated) return <></>
+  if (!isAuthenticated) {
+    return (
+      <Link
+        href="/contribute"
+        className="inline-flex flex-row w-full items-center gap-2 p-2 bg-surface-container-low text-on-surface overflow-hidden border border-outline-variant/30" >
+        <div className="flex items-center gap-3">
+          <div className="flex size-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container">
+            <ShieldCheck size={18} strokeWidth={1.8} aria-hidden />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-on-surface">Guest</p>
+            <p className="text-xs text-on-surface-variant">Be a contributor</p>
+          </div>
+        </div>
+      </Link>
+    )
+  }
 
   return (
     <div ref={rootRef} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label="Profile menu"
-        className="inline-flex size-11 items-center justify-center rounded-full bg-surface-container-low text-on-surface hover:bg-primary/8 transition-colors overflow-hidden border border-outline-variant/30"
+      <div
+        className="inline-flex flex-row w-full items-center gap-2 p-2 bg-surface-container-low text-on-surface overflow-hidden border border-outline-variant/30"
       >
-        {loading ? (
-          <Loader2 size={20} className="animate-spin text-on-surface-variant" aria-hidden />
-        ) : profile?.avatar_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={profile.avatar_url}
-            alt={displayName ?? "Profile"}
-            className="size-11 object-cover"
-          />
+        {isAuthenticated ? (
+          <div className="flex justify-between w-full">
+            <button
+              type="button"
+              onClick={() => { setOpen((v) => !v) }}
+              aria-haspopup="menu"
+              aria-expanded={open}
+              aria-label="Profile menu"
+              className="flex flex-1 flex-row gap-2 items-center hover:bg-primary/8 transition-colors">
+              <span className="rounded-full overflow-hidden">
+                {loading ? (
+                  <Loader2 size={20} className="animate-spin text-on-surface-variant" aria-hidden />
+                ) : profile?.avatar_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={profile.avatar_url}
+                    alt={displayName ?? "Profile"}
+                    className="size-8 object-cover"
+                  />
+                ) : (
+                  <User size={22} strokeWidth={1.8} aria-hidden />
+                )}
+              </span>
+              <div className="flex flex-col items-start">
+                <span>{profile?.username}</span>
+                <span className="text-xs">{profile?.user_type}</span>
+              </div>
+            </button>
+            <div className="border-t border-outline-variant/30 p-1">
+              {isAuthenticated ? (
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={handleSignOut}
+                  disabled={signingOut}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-on-surface-variant hover:bg-primary/8 hover:text-on-surface transition-colors disabled:opacity-60"
+                >
+                  {signingOut ? (
+                    <Loader2 size={18} className="animate-spin" aria-hidden />
+                  ) : (
+                    <LogOut size={18} strokeWidth={1.8} aria-hidden />
+                  )}
+                </button>
+              ) : (
+                <Link
+                  href="/contribute"
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary/8 transition-colors"
+                >
+                  <LogIn size={18} strokeWidth={1.8} aria-hidden />
+                  Sign in
+                </Link>
+              )}
+            </div>
+          </div>
         ) : (
-          <User size={22} strokeWidth={1.8} aria-hidden />
-        )}
-      </button>
+          <div className="flex items-center gap-3">
+            <div className="flex size-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container">
+              <ShieldCheck size={18} strokeWidth={1.8} aria-hidden />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-on-surface">Guest</p>
+              <p className="text-xs text-on-surface-variant">Not signed in</p>
+            </div>
+          </div>
+        )
+        }
+      </div >
 
       {open && (
         <div
           role="menu"
           aria-label="Profile"
-          className="absolute right-0 top-full z-20 mt-2 min-w-[16rem] overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-high shadow-elevation-2"
+          className="absolute right-2 bottom-15 z-20 mt-2 min-w-[16rem] overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-high shadow-elevation-2"
         >
-          {/* Header */}
-          <div className="border-b border-outline-variant/30 bg-surface-container-low px-4 py-3">
-            {isAuthenticated ? (
-              <div className="flex items-center gap-3">
-                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary-container text-on-primary-container">
-                  {profile?.avatar_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={profile.avatar_url}
-                      alt=""
-                      className="size-9 object-cover"
-                    />
-                  ) : (
-                    <User size={18} strokeWidth={1.8} aria-hidden />
-                  )}
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-on-surface">
-                    {displayName ?? "User"}
-                  </p>
-                  <p className="truncate text-xs text-on-surface-variant">
-                    {profile?.user_type ? profile.user_type : "No role"} ·{" "}
-                    {profile?.approved ? "Approved" : "Pending"}
-                  </p>
-                  {user?.email && (
-                    <p className="truncate text-xs text-on-surface-variant">{user.email}</p>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <div className="flex size-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container">
-                  <ShieldCheck size={18} strokeWidth={1.8} aria-hidden />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-on-surface">Guest</p>
-                  <p className="text-xs text-on-surface-variant">Not signed in</p>
-                </div>
-              </div>
-            )}
-          </div>
-
           {/* Links */}
           <div className="p-1">
             {orderedLinks.map(({ href, label, Icon }) => (
@@ -262,37 +287,8 @@ export function ProfileMenu() {
               </p>
             )}
           </div>
-
-          <div className="border-t border-outline-variant/30 p-1">
-            {isAuthenticated ? (
-              <button
-                type="button"
-                role="menuitem"
-                onClick={handleSignOut}
-                disabled={signingOut}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-on-surface-variant hover:bg-primary/8 hover:text-on-surface transition-colors disabled:opacity-60"
-              >
-                {signingOut ? (
-                  <Loader2 size={18} className="animate-spin" aria-hidden />
-                ) : (
-                  <LogOut size={18} strokeWidth={1.8} aria-hidden />
-                )}
-                Sign out
-              </button>
-            ) : (
-              <Link
-                href="/contribute"
-                role="menuitem"
-                onClick={() => setOpen(false)}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary/8 transition-colors"
-              >
-                <LogIn size={18} strokeWidth={1.8} aria-hidden />
-                Sign in
-              </Link>
-            )}
-          </div>
         </div>
       )}
-    </div>
+    </div >
   );
 }
