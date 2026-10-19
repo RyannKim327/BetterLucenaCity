@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { CircleMarker, GeoJSON, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
+import { CircleMarker, GeoJSON, MapContainer, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import type { LatLngBoundsExpression } from "leaflet";
+// import type { LatLngBoundsExpression } from "leaflet";
 import { BoundaryData } from "@/types/map";
 
-function FitBounds({ data }: { data: BoundaryData }) {
-  const map = useMap();
-  useEffect(() => {
-    const bounds: LatLngBoundsExpression = [
-      [data.bounds.south, data.bounds.west],
-      [data.bounds.north, data.bounds.east],
-    ];
-    map.fitBounds(bounds, { padding: [24, 24] });
-  }, [map, data]);
-  return null;
-}
+// function FitBounds({ data }: { data: BoundaryData }) {
+//   const map = useMap();
+//   useEffect(() => {
+//     const bounds: LatLngBoundsExpression = [
+//       [data.bounds.south, data.bounds.west],
+//       [data.bounds.north, data.bounds.east],
+//     ];
+//     map.fitBounds(bounds, { padding: [24, 24] });
+//   }, [map, data]);
+//   return null;
+// }
 
 export default function LucenaMap() {
   const [boundary, setBoundary] = useState<BoundaryData | null>(null);
@@ -42,7 +42,9 @@ export default function LucenaMap() {
     <div className="relative h-full w-full z-1">
       <MapContainer
         center={[13.9333, 121.6167]}
-        zoom={10}
+        zoom={12}
+        minZoom={5}
+        maxZoom={19}
         scrollWheelZoom={false}
         className="h-full w-full"
         attributionControl={false}
@@ -65,7 +67,7 @@ export default function LucenaMap() {
                 fillOpacity: 0.12,
               }}
             />
-            <FitBounds data={boundary} />
+            {/* <FitBounds data={boundary} /> */}
           </>
         )}
 
