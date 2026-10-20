@@ -27,6 +27,10 @@ export const metadata: Metadata = {
       url: "https://github.com/RyannKim327"
     },
     {
+      name: "Kurt Atoat",
+      url: "https://github.com/seiyanndev"
+    },
+    {
       name: "Mark Luoie Alvarez",
       url: "https://github.com/marrrkkk"
     }
@@ -43,7 +47,7 @@ export const metadata: Metadata = {
   ],
   description: site.description,
   icons: {
-    icon: "/better-lucena-city.png",
+    icon: "/better-lucena-city.svg"
   },
 };
 
