@@ -1,8 +1,8 @@
 export const site = {
-  name: "BetterLucenaCity",
+  name: "Better Lucena City",
   locality: "Lucena City",
   province: "Quezon",
-  tagline: "Para sa bayan. Para sa kinabukasan.",
+  tagline: "A brighter city for every Lucenahin.",
   description:
     "A community-driven platform that makes Lucena's government information and public services more accessible, transparent, and easy to navigate.",
   cityHallAddress:
@@ -17,5 +17,5 @@ export const navLinks = [
   { href: "/legal", label: "Ordinances" },
   { href: "/announcements", label: "Announcements" },
   { href: "/contact", label: "Hotlines" },
-  // { href: "/contributors", label: "Contribute" }
+  { href: "/contributors", label: "Contributors" }
 ] as const;
