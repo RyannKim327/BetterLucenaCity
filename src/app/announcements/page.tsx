@@ -11,7 +11,7 @@ export default function AnnouncementsPage() {
     <div>
       <PageHeader
         eyebrow="Mga Abiso at Balita"
-        title="News and Announmcent Announcements"
+        title="News & Announcements"
         description="Official advisories, notices, news, and updates from the City Government of Lucena."
       />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">

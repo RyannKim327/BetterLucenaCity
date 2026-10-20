@@ -23,7 +23,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               {navLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
-                  <li key={link.href} className="w-full">
+                  <li
+                    onClick={() => { setVisibleNav(false) }}
+                    key={link.href}
+                    className="w-full">
                     <Link
                       href={link.href}
                       className={`inline-flex w-full h-10 items-center rounded px-4 text-sm transition-colors ${active

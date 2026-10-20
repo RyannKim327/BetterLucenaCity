@@ -59,13 +59,6 @@ export function ContributorsPageClient() {
         {/* Action buttons */}
         <div className="flex flex-wrap gap-3">
           <Link
-            href="/contributors"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-outline bg-surface-container-low px-6 text-sm font-medium text-primary transition-colors hover:bg-surface-container"
-          >
-            <Eye className="h-4 w-4" />
-            Show all contributors
-          </Link>
-          <Link
             href="/contribute"
             className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-on-primary shadow-elevation-1 transition-colors hover:bg-primary/90"
           >

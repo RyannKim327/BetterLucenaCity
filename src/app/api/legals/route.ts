@@ -174,6 +174,10 @@ export async function GET(request: NextRequest) {
     nullsFirst: false,
   });
 
+  const { data: ordinances } = await supa
+    .from("legals")
+    .select("*");
+
   if (error) {
     return NextResponse.json(
       { error: error.message, documents: [], totalByType: {}, total: 0 },
@@ -181,7 +185,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const rows = (data ?? []) as LegalRow[];
+  const rows = (ordinances ?? []) as LegalRow[];
   const documents = rows.map(toLegalDocument);
 
   const countsByType = Object.fromEntries(

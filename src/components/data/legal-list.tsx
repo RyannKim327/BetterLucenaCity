@@ -127,22 +127,22 @@ export function LegalList({ activeType }: { activeType: string | null }) {
                 {doc.summary}
               </p>
               <div className="flex gap-2">
-              <Link
-                href={`legal/${doc.id}`}
-                className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
-              >
-                Read the text content →
-              </Link>
-              {doc.sourceUrl && (
-                <a
-                  href={doc.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href={`legal/${doc.id}`}
                   className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
                 >
-                  Read full text ({doc.sourceName}) →
-                </a>
-              )}
+                  Read the text content →
+                </Link>
+                {doc.sourceUrl && (
+                  <a
+                    href={doc.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
+                  >
+                    Read full text ({doc.sourceName}) →
+                  </a>
+                )}
               </div>
             </Card>
           </li>

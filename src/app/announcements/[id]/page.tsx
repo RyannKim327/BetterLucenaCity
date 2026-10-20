@@ -56,42 +56,42 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
           <Link href="/announcements" className="inline-flex text-sm font-medium text-primary hover:underline">
             ← Back to announcements
           </Link>
-          <p className="mt-6 text-sm font-medium uppercase tracking-widest text-secondary">Abiso</p>
+          <p className="mt-6 text-sm font-medium uppercase tracking-widest text-secondary">News & Announcement</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight leading-tight">{row.title}</h1>
           <time dateTime={row.date_added} className="mt-3 block text-sm text-on-surface-variant">
             {formatDate(row.date_added)}
           </time>
         </div>
       </div>
-
-      <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-        <Card>
-          <Markdown content={row.content} />
-          {Array.isArray(row.data_source) && row.data_source.length > 0 && (
-            <div className="mt-6 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-              <p className="text-xs font-medium uppercase tracking-widest text-on-surface-variant">References</p>
-              <ul className="mt-2 space-y-1">
-                {row.data_source.map((u, i) => (
-                  <li key={`${u}-${i}`} className="truncate">
-                    <a href={u} target="_blank" rel="noreferrer" className="text-sm font-medium text-primary hover:underline">
-                      {u}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </Card>
-
-        <div className="mt-6 flex gap-3">
-          <Link
-            href="/announcements"
-            className="inline-flex h-10 items-center justify-center rounded-full border border-outline-variant px-6 text-sm font-medium text-primary hover:bg-primary/8"
-          >
-            View all announcements
-          </Link>
-        </div>
-      </section>
+      <div>
+        <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+          <Card>
+            <Markdown content={row.content} />
+            {Array.isArray(row.data_source) && row.data_source.length > 0 && (
+              <div className="mt-6 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                <p className="text-xs font-medium uppercase tracking-widest text-on-surface-variant">References</p>
+                <ul className="mt-2 space-y-1">
+                  {row.data_source.map((u, i) => (
+                    <li key={`${u}-${i}`} className="truncate">
+                      <a href={u} target="_blank" rel="noreferrer" className="text-sm font-medium text-primary hover:underline">
+                        {u}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </Card>
+          <div className="mt-6 flex gap-3">
+            <Link
+              href="/announcements"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-outline-variant px-6 text-sm font-medium text-primary hover:bg-primary/8"
+            >
+              View all announcements
+            </Link>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
