@@ -22,6 +22,9 @@ export default function AboutPage() {
         description="About BetterLucnaCity. Some shared basic information about us."
       />
       <section className="flex flex-col gap-2 mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <CollapsableCard summary="About the Logo">
+          <img src="/better-lucena-city-branding.png" />
+        </CollapsableCard>
         <CollapsableCard summary="Better Lucena City">
           <blockquote>
             &emsp;is a community-maintained directory of Better LGU digital transparency portals across the Philippines.
