@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#ffffff",
     icons: [
       {
-        src: "/better-lucena-city.png",
+        src: "/blc-logo.png",
         sizes: "192x192",
         type: "image/png",
       }
