@@ -3,10 +3,10 @@ import { LUCENA, fetchJson } from "./shared";
 
 export async function getDpwhProjects(query: DpwhQuery = {}) {
   const params = new URLSearchParams();
-  if (!query.scopeAll) {
-    params.set("region", LUCENA.region);
-    params.set("province", LUCENA.province);
-  }
+  // if (!query.scopeAll) {
+  //   params.set("region", LUCENA.region);
+  //   params.set("province", LUCENA.province);
+  // }
   if (query.search) params.set("search", query.search);
   if (query.status) params.set("status", query.status);
   if (query.year) params.set("infra_year", query.year);

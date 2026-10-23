@@ -3,7 +3,7 @@ import { getDpwhProjects } from "@/lib/sources/dpwh";
 
 const ALLOWED_STATUSES = new Set([
   "Completed",
-  "Ongoing",
+  "On-Going",
   "Not Started",
   "For Procurement",
   "Terminated",

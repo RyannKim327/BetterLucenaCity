@@ -28,10 +28,12 @@ function Failed() {
 
 type ApiError = { error: string };
 
-export function LiveDataSection() {
+export default function LiveDataSection() {
+
   const [weather, setWeather] = useState<PanelState<WeatherData>>({ status: "loading" });
   const [quakes, setQuakes] = useState<PanelState<EarthquakeData>>({ status: "loading" });
   const [dpwh, setDpwh] = useState<PanelState<DpwhData>>({ status: "loading" });
+  const [dpwhOngoing, setDpwhOngoing] = useState<PanelState<DpwhData>>({ status: "loading" })
 
   useEffect(() => {
     axios
@@ -49,11 +51,18 @@ export function LiveDataSection() {
       .catch(() => setQuakes({ status: "error" }));
 
     axios
-      .get<DpwhData | ApiError>("/api/dpwh/projects", { params: { limit: 6, status: "Ongoing" } })
+      .get<DpwhData | ApiError>("/api/dpwh/projects", { params: { search: "Lucena" } })
       .then((res) =>
         "error" in res.data ? setDpwh({ status: "error" }) : setDpwh({ status: "ready", data: res.data })
       )
       .catch(() => setDpwh({ status: "error" }));
+    axios
+      .get<DpwhData | ApiError>("/api/dpwh/projects", { params: { search: "Lucena", status: "On-Going" } })
+      .then((res) =>
+        "error" in res.data ? setDpwh({ status: "error" }) : setDpwhOngoing({ status: "ready", data: res.data })
+      )
+      .catch(() => setDpwh({ status: "error" }));
+
   }, []);
 
   return (
@@ -114,26 +123,28 @@ export function LiveDataSection() {
         <Panel title={`DPWH Projects · ${dpwh.status === "ready" ? dpwh.data.scope : "Quezon"}`}>
           {dpwh.status === "loading" && <Loading label="DPWH projects" />}
           {dpwh.status === "error" && <Failed />}
-          {dpwh.status === "ready" && (
-            <div>
+          <div>
+            {dpwh.status === "ready" && (
               <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                 <li><span className="font-semibold">{dpwh.data.summary.totalProjects.toLocaleString()}</span> total</li>
                 <li><span className="font-semibold">{dpwh.data.summary.completed.toLocaleString()}</span> completed</li>
                 <li><span className="font-semibold">{dpwh.data.summary.ongoing.toLocaleString()}</span> ongoing</li>
                 <li><span className="font-semibold">{formatPeso(dpwh.data.summary.totalBudget)}</span> budget</li>
               </ul>
-              <ul className="mt-3 space-y-2 border-t border-outline-variant/40 pt-3">
-                {dpwh.data.projects.slice(0, 3).map((p) => (
+            )}
+            {dpwhOngoing.status === "ready" && (
+              <ul className="mt-3 space-y-2 border-t border-outline-variant/40 pt-3 overflow-y-auto">
+                {dpwhOngoing.data.projects.slice(0, 5).map((p) => (
                   <li key={p.contractId} className="text-xs leading-snug">
-                    <span className="line-clamp-2">{p.description.toLowerCase()}</span>
+                    <span className="line-clamp-2">{p.description}</span>
                     <span className="block text-on-surface-variant">
                       {formatPeso(p.budget)} · {p.status} · {p.infraYear}
                     </span>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+            )}
+          </div>
         </Panel>
       </div>
 

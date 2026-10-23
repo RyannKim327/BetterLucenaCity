@@ -139,7 +139,7 @@ export const services: Service[] = [
     description:
       "Assess and pay real property tax, request tax clearances, and update property records.",
     office: "City Assessor & City Treasury",
-    featured: true,
+    featured: false,
     process: []
   },
   {

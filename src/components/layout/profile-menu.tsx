@@ -70,8 +70,7 @@ function hasPermission(profile: ProfileState, perm: string): boolean {
   return lower.includes(perm.toLowerCase());
 }
 
-export function ProfileMenu() {
-  const [open, setOpen] = useState(false);
+export function ProfileMenu({ setOrderedLinks }: { setOrderedLinks: (o: DropdownLink[]) => void }) {
   const [user, setUser] = useState<{ email?: string | null; id: string } | null>(null);
   const [profile, setProfile] = useState<ProfileState>(null);
   const [loading, setLoading] = useState(true);
@@ -128,22 +127,6 @@ export function ProfileMenu() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-    const onPointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
   const accessibleRoleLinks = ROLE_LINKS.filter((link) => {
     if (!link.perm) return true;
     return hasPermission(profile, link.perm);
@@ -159,7 +142,6 @@ export function ProfileMenu() {
     setSigningOut(true);
     const supabase = createClient();
     await supabase.auth.signOut();
-    setOpen(false);
     setSigningOut(false);
     router.refresh();
     router.push("/");
@@ -194,9 +176,10 @@ export function ProfileMenu() {
           <div className="flex justify-between w-full">
             <button
               type="button"
-              onClick={() => { setOpen((v) => !v) }}
+              onClick={() => {
+                setOrderedLinks(orderedLinks)
+              }}
               aria-haspopup="menu"
-              aria-expanded={open}
               aria-label="Profile menu"
               className="flex flex-1 flex-row gap-2 items-center hover:bg-primary/8 transition-colors">
               <span className="rounded-full overflow-hidden">
@@ -237,7 +220,6 @@ export function ProfileMenu() {
                 <Link
                   href="/contribute"
                   role="menuitem"
-                  onClick={() => setOpen(false)}
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary/8 transition-colors"
                 >
                   <LogIn size={18} strokeWidth={1.8} aria-hidden />
@@ -260,35 +242,17 @@ export function ProfileMenu() {
         }
       </div >
 
-      {open && (
-        <div
-          role="menu"
-          aria-label="Profile"
-          className="absolute right-2 bottom-15 z-20 mt-2 min-w-[16rem] overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-high shadow-elevation-2"
-        >
-          {/* Links */}
-          <div className="p-1">
-            {orderedLinks.map(({ href, label, Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                role="menuitem"
-                onClick={() => setOpen(false)}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-on-surface-variant hover:bg-primary/8 hover:text-on-surface transition-colors"
-              >
-                <Icon size={18} strokeWidth={1.8} aria-hidden />
-                {label}
-              </Link>
-            ))}
-
-            {!isAuthenticated && accessibleRoleLinks.length === 0 && (
-              <p className="px-3 py-2 text-xs leading-relaxed text-on-surface-variant">
-                Sign in to access Contribute, Discussions, and more based on your role.
-              </p>
-            )}
-          </div>
-        </div>
-      )}
+      <div
+        role="menu"
+        aria-label="Profile"
+        className="absolute right-2 bottom-15 z-20 mt-2 min-w-[16rem] overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-high shadow-elevation-2"
+      >
+        {!isAuthenticated && accessibleRoleLinks.length === 0 && (
+          <p className="px-3 py-2 text-xs leading-relaxed text-on-surface-variant">
+            Sign in to access Contribute, Discussions, and more based on your role.
+          </p>
+        )}
+      </div>
     </div >
   );
 }
