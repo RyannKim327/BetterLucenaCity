@@ -111,7 +111,7 @@ export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean
           : null
       );
       if (data) {
-        setAuth(true)
+        setAuth(data.approved)
       }
       setLoading(false);
     }
