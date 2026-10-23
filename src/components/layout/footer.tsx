@@ -21,9 +21,9 @@ export function Footer() {
 
   return (
     <footer className="mt-20 border-t border-outline-variant/40 bg-surface-container">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div className="flex gap-3 items-start">
-          <img alt="" src="blc-logo.png" className="w-25" />
+          <img alt="" src="/blc-logo.png" className="w-[6.25rem]" />
           <div>
             <p className="text-base font-semibold">
               {site.name} — {site.locality}
@@ -37,30 +37,30 @@ export function Footer() {
           </div>
         </div>
 
-        {/* <nav aria-label="Footer"> */}
-        {/*   <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant"> */}
-        {/*     Navigate */}
-        {/*   </p> */}
-        {/*   <ul className="mt-3 space-y-2"> */}
-        {/*     {navLinks.map((link) => ( */}
-        {/*       <li key={link.href}> */}
-        {/*         <Link href={link.href} className="text-sm text-on-surface hover:text-primary"> */}
-        {/*           {link.label} */}
-        {/*         </Link> */}
-        {/*       </li> */}
-        {/*     ))} */}
-        {/*     <li> */}
-        {/*       <Link href="/report" className="text-sm text-on-surface hover:text-primary"> */}
-        {/*         Report */}
-        {/*       </Link> */}
-        {/*     </li> */}
-        {/*     <li> */}
-        {/*       <Link href="/privacy" className="text-sm text-on-surface hover:text-primary"> */}
-        {/*         Privacy */}
-        {/*       </Link> */}
-        {/*     </li> */}
-        {/*   </ul> */}
-        {/* </nav> */}
+        <nav aria-label="Footer">
+          <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
+            Navigate
+          </p>
+          <ul className="mt-3 space-y-2">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-sm text-on-surface hover:text-primary">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/report" className="text-sm text-on-surface hover:text-primary">
+                Report
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="text-sm text-on-surface hover:text-primary">
+                Privacy
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
         <div>
           <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
