@@ -20,10 +20,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
   const [visibleNav, setVisibleNav] = useState(false)
   const [orderedLinks, setOrderedLinks] = useState<DropdownLink[]>([])
+  const [auth, setAuth] = useState(false)
 
   return (
     <div>
-      <Header setVisibleNav={setVisibleNav} visibleNav={visibleNav} />
+      <Header setVisibleNav={setVisibleNav} visibleNav={visibleNav} auth={auth} />
       <div className="flex flex-row w-full overflow-x-hidden">
         <main className={`w-full overflow-hidden`}>{children}</main>
         <div className={`${visibleNav ? "flex flex-col justify-between h-[calc(85%-1rem)] w-full md:w-[calc(35%-1rem)] fixed z-10 bg-surface-container-high right-0 top-30 bottom-0" : "w-0 overflow-hidden"} transition-all delay-75`}>
@@ -66,7 +67,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               })}
             </ul>
           </nav>
-          <ProfileMenu setOrderedLinks={setOrderedLinks} />
+          <ProfileMenu setAuth={setAuth} setOrderedLinks={setOrderedLinks} />
         </div>
       </div>
       <Footer />

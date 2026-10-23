@@ -26,7 +26,7 @@ export default function HeroSection() {
         </div>
         <MapClient className="hidden md:block w-full aspect-video" />
         <div className="absolute overflow-hidden -right-60 -bottom-60">
-          <img src="/sun.png" alt="" className="w-[37.5rem] opacity-5 animate-[spin_15s_linear_infinite]" />
+          <img src="/sun.png" alt="" className="w-[37.5rem] opacity-5 animate-[spin_50s_linear_infinite]" />
         </div>
       </div>
     </section>

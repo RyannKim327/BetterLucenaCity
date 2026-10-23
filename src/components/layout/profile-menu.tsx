@@ -70,7 +70,7 @@ function hasPermission(profile: ProfileState, perm: string): boolean {
   return lower.includes(perm.toLowerCase());
 }
 
-export function ProfileMenu({ setOrderedLinks }: { setOrderedLinks: (o: DropdownLink[]) => void }) {
+export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean) => void, setOrderedLinks: (o: DropdownLink[]) => void }) {
   const [user, setUser] = useState<{ email?: string | null; id: string } | null>(null);
   const [profile, setProfile] = useState<ProfileState>(null);
   const [loading, setLoading] = useState(true);
@@ -110,6 +110,9 @@ export function ProfileMenu({ setOrderedLinks }: { setOrderedLinks: (o: Dropdown
           }
           : null
       );
+      if (data) {
+        setAuth(true)
+      }
       setLoading(false);
     }
 
@@ -143,6 +146,7 @@ export function ProfileMenu({ setOrderedLinks }: { setOrderedLinks: (o: Dropdown
     const supabase = createClient();
     await supabase.auth.signOut();
     setSigningOut(false);
+    setAuth(false)
     router.refresh();
     router.push("/");
   };

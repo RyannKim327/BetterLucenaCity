@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Bell, Menu, X } from "lucide-react";
 import { site } from "@/lib/data/site";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import Hotlines from "./hotlines";
 
-export function Header({ setVisibleNav, visibleNav }: { setVisibleNav: (b: any) => void, visibleNav: boolean }) {
+export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b: any) => void, visibleNav: boolean, auth: boolean }) {
 
   return (
     <header className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-outline-variant/40 shadow-elevation-1">
@@ -37,7 +37,9 @@ export function Header({ setVisibleNav, visibleNav }: { setVisibleNav: (b: any) 
 
           <div className="flex items-center gap-1">
             <ThemeToggle />
-
+            {auth ?
+              <Bell />
+              : null}
             <button
               type="button"
               onClick={() => setVisibleNav((v: boolean) => !v)}
