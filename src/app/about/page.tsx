@@ -26,33 +26,40 @@ export default function AboutPage() {
           <img src="/better-lucena-city-branding.png" />
         </CollapsableCard>
         <CollapsableCard summary="Better Lucena City">
-          <blockquote>
-            &emsp;is a community-maintained directory of Better LGU digital transparency portals across the Philippines.
-            It is also a community-driven platform to share public information from local to national projects, ordinances, announcement
-            and other information may able to use for researches and other related educational activities.
+          <blockquote className="text-justify">
+            &emsp;Better Lucena City is part of BetterGov.ph,
+            a community-maintained directory of digital transparency portals from LGUs across the Philippines.
+            As a community-driven platform for our city,
+            we gather and share public information on local projects, ordinances, announcements, and other matters that shape our community.
+            We believe this information should be freely accessible to every Lucenahin,
+            so that students, researchers, and every citizen can use it for research, education, and for understanding how our city is being run.
           </blockquote>
         </CollapsableCard>
         <CollapsableCard summary="Why we do this?">
-          <blockquote>
-            &emsp;We want to give freedom to people, from the issues of unfinished flood controls, issues in traffic and flood, crimes.
-            We want to make every citizen well-informed from a shared information gathered by each person, from student, professionals or even a normal
-            Lucenahin. We want to tell to people not to rebel, but to give people knowledge what happen to Lucena City.
+          <blockquote className="text-justify">
+            &emsp;Our goal is to let the people move past the struggles of unfinished flood controls, traffic congestion and flooding, and crime.
+            We believe every citizen should be well-informed, and that starts with sharing information gathered by everyone:
+            students, professionals, and every ordinary Lucenahin.
+            Instead of turning to unrest, we want to give the people the knowledge they need to understand what is happening in Lucena City.
           </blockquote>
         </CollapsableCard>
         <CollapsableCard summary="How do we publish information?">
-          <blockquote>
-            &emsp;By publishing information, we filter it and analyzes it. Meaning we carefully taking time to research for a certain information,
-            looking for its relevance not just based on the given source, but also for the other sources related to the topic.
-            We have data collectors who are responsible to gather data from any public source, we also have data validator to check its relevance and
-            authenticity to prevent public misinformation. We also include the source in published information so that even normal Lucenahin
-            may able to do fact checking, and report it once the information is misleading or not.
+          <blockquote className="text-justify">
+            &emsp;We believe that information should be carefully examined before it reaches the public.
+            That is why we take the time to filter and analyze every detail,
+            looking beyond the original source to other related materials to ensure relevance and accuracy.
+            Our data collectors gather information from various public sources,
+            while our data validators check its authenticity and relevance to protect our community from misinformation.
+            By including the sources in everything we publish,
+            we empower even the ordinary Lucenahin to do their own fact-checking and report anything they find misleading or untrue.
           </blockquote>
         </CollapsableCard>
         <CollapsableCard summary="Non Partisan Policy">
-          <blockquote>
-            &emsp;We want to make each contributor a non partisan, or basically no political bias. This will help us to decide if we will going to
-            easily validate the information. This may able to protect someone's political perspective. Also the BetterLucenaCity wanted to tell that
-            each project created were came from the tax of everyone, we don't need to thank them, it is their responsibility as public officials.
+          <blockquote className="text-justify">
+            &emsp;We believe that every contributor should remain non-partisan and free from political bias.
+            This helps us validate information more easily and fairly, while respecting the political views of every Lucenahin.
+            BetterLucenaCity also wants to remind everyone that every project is funded by the taxes of the people.
+            We do not need to thank public officials for doing their job; serving the community is simply their responsibility.
           </blockquote>
         </CollapsableCard>
       </section>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-surface-container-low w-full overflow-hidden">
+    <section className="relative bg-surface-container-low w-full h-[calc(75%-1rem)] rounded-b-lg md:h-full overflow-hidden">
       <div className="flex mx-auto max-w-6xl gap-6 px-4 py-16 sm:px-6 md:py-24">
         <div className="flex flex-col justify-center max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-widest text-secondary">

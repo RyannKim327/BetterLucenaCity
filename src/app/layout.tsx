@@ -57,11 +57,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const visibleNav = true
-
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col antialiased">
+      <body className="h-dvh w-dvw flex flex-col antialiased">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <ThemeProvider>
           <MainLayout>{children}</MainLayout>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { navLinks, site } from "@/lib/data/site";
+import { site } from "@/lib/data/site";
 import { hotlines } from "@/lib/data/hotlines";
 import { Modal } from "@/components/ui/modal";
 import { ContributorsGrid } from "@/components/data/contributors-grid";
@@ -21,10 +21,10 @@ export function Footer() {
 
   return (
     <footer className="mt-20 border-t border-outline-variant/40 bg-surface-container">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <div className="items-end mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2">
         <div className="flex gap-3 items-start">
-          <img alt="" src="/blc-logo.png" className="w-[6.25rem]" />
           <div>
+            <img alt="" src="/blc-logo.png" className="w-[6.25rem]" />
             <p className="text-base font-semibold">
               {site.name} — {site.locality}
             </p>
@@ -36,31 +36,6 @@ export function Footer() {
             </p>
           </div>
         </div>
-
-        <nav aria-label="Footer">
-          <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-            Navigate
-          </p>
-          <ul className="mt-3 space-y-2">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-sm text-on-surface hover:text-primary">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link href="/report" className="text-sm text-on-surface hover:text-primary">
-                Report
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" className="text-sm text-on-surface hover:text-primary">
-                Privacy
-              </Link>
-            </li>
-          </ul>
-        </nav>
 
         <div>
           <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">

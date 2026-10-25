@@ -10,7 +10,7 @@ import Hotlines from "./hotlines";
 export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b: any) => void, visibleNav: boolean, auth: boolean }) {
 
   return (
-    <header className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-outline-variant/40 shadow-elevation-1">
+    <header className="sticky top-0 z-20 bg-background/90 backdrop-blur border-b border-outline-variant/40 shadow-elevation-1">
       <Hotlines />
       <div className="flex justify-end max-w-6xl gap-2 text-xs p-1 px-2 sm:px-6">
         <Link href="/contributors">Join Us</Link>

@@ -6,10 +6,16 @@ import { Card } from "@/components/ui/card";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy for BetterLucenaCity — how we collect, use, store, and protect your data in compliance with RA 10173 (Data Privacy Act of 2012).",
+    "Your privacy matters to us. This policy explains how Better Lucena City collects, uses, and protects your information, in compliance with the Data Privacy Act of 2012 (RA 10173).",
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
-const lastUpdated = "September 10, 2026";
+const lastUpdated = "October 25, 2026";
 
 export default function Privacy() {
   return (
@@ -17,7 +23,7 @@ export default function Privacy() {
       <PageHeader
         eyebrow="Legal · RA 10173"
         title="Privacy Policy"
-        description="How BetterLucenaCity collects, uses, and protects your information — compliant with the Data Privacy Act of 2012 (RA 10173)."
+        description="Your privacy matters to us. This policy explains how Better Lucena City collects, uses, and protects your information, in compliance with the Data Privacy Act of 2012 (RA 10173)."
       />
 
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
@@ -28,11 +34,12 @@ export default function Privacy() {
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">At a glance</p>
               <h2 className="mt-1 text-sm font-semibold text-on-surface">Privacy-first by design</h2>
               <p className="mt-1 max-w-2xl text-sm leading-relaxed text-on-surface-variant">
-                You are identified publicly by <span className="font-medium text-on-surface">username only</span> (opt-in/out).
-                Your <span className="font-medium text-on-surface">email is never displayed</span> — it is used only for system
-                notifications via the Head Maintainer. Private submissions stay in a{" "}
-                <span className="font-medium text-on-surface">Source ↔ Validator ↔ Head Maintainer</span> thread, never a public
-                GitHub Issue. We follow data minimisation, confidentiality, and purpose limitation under RA 10173.
+                We believe that contributing to a more transparent city should never come at the cost of your personal privacy.
+                You are identified publicly only by your username, and only if you choose to appear on our contributors list.
+                Your email address is never displayed anywhere on the platform; it is used solely for system notifications from the Head Maintainer.
+                Any private submissions you make stay within a secure thread between you, the assigned Validator, and the Head Maintainer.
+                We never turn private discussions into public GitHub issues.
+                We follow the principles of data minimization, confidentiality, and purpose limitation under RA 10173.
               </p>
             </div>
             <span className="shrink-0 rounded-full bg-surface-container-low px-3 py-1 text-xs font-medium text-on-surface-variant">
@@ -45,9 +52,9 @@ export default function Privacy() {
         <Card className="mt-4">
           <h2 className="text-base font-semibold text-on-surface">1. Who we are — Data controller</h2>
           <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            <span className="font-medium text-on-surface">BetterLucenaCity</span> (BetterGov.ph LGU Agent for Lucena City,
-            Quezon) is a community-driven civic portal. For data-privacy purposes, the Head Maintainer team acts as the
-            Personal Information Controller.
+            <span className="font-medium text-on-surface">BetterLucenaCity</span> part of the BetterGov.ph network,
+            is a community-driven civic portal for Lucena City, Quezon.
+            For data privacy purposes, the Head Maintainer team serves as the Personal Information Controller.
           </p>
           <ul className="mt-3 space-y-1 text-sm leading-relaxed text-on-surface-variant">
             <li>
@@ -55,12 +62,11 @@ export default function Privacy() {
               <a href="mailto:weryses19@gmail.com" className="font-medium text-primary hover:underline">
                 weryses19@gmail.com
               </a>{" "}
-              (include &quot;PRIVACY&quot; in the subject) — also listed in{" "}
+              (please include "PRIVACY" in the subject) {" "}
               <Link href="/contact" className="font-medium text-primary hover:underline">
                 /contact
               </Link>
             </li>
-            <li>• Address: Mayao Kanluran, Lucena City, Quezon 4301, Philippines</li>
           </ul>
         </Card>
 
@@ -68,57 +74,55 @@ export default function Privacy() {
         <Card className="mt-4">
           <h2 className="text-base font-semibold text-on-surface">2. Legal basis — RA 10173 (Data Privacy Act of 2012)</h2>
           <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            We process personal data on the following bases recognised under RA 10173:{" "}
-            <span className="font-medium text-on-surface">consent</span> (you sign in and agree to share data for civic
-            contribution), <span className="font-medium text-on-surface">legitimate purpose</span> (operating a transparent,
-            non-partisan civic portal), and{" "}
-            <span className="font-medium text-on-surface">compliance with legal obligations</span> where required.
+            We process personal data based on the following grounds recognized under the Data Privacy Act of 2012:
           </p>
+          <ul className="list-disc ml-5">
+            <li><b>Consent:</b> When you sign in, you agree to share limited data for the purpose of civic contribution.</li>
+            <li><b>Legitimate purpose:</b> Operating a transparent, non-partisan civic portal for the benefit of our community.</li>
+            <li><b>Compliance:</b> Meeting legal obligations when required.</li>
+          </ul>
           <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            Processing follows the principles of transparency, legitimate purpose, and proportionality — we collect only what is
-            necessary, use it only for the stated purpose, and keep it only as long as needed.
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-            Reports that contain sensitive information (e.g., harassment under RA 11313) are handled with both{" "}
-            <span className="font-medium text-on-surface">confidentiality under RA 10173</span> and{" "}
-            <span className="font-medium text-on-surface">safe-spaces protection under RA 11313</span>.
+            We follow the core principles of transparency, legitimate purpose, and proportionality.
+            That means we collect only what is necessary, use it only for the reasons we state here, and keep it only as long as it is needed.
+            Reports involving sensitive matters, such as harassment under RA 11313,
+            are handled with strict confidentiality and with protection under safe-spaces law.
           </p>
         </Card>
 
         {/* What we collect */}
         <Card className="mt-4">
-          <h2 className="text-base font-semibold text-on-surface">3. Information we collect</h2>
+          <h2 className="text-base font-semibold text-on-surface">3. What information we collect</h2>
 
-          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.1 Account & profile</h3>
+          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.1 Account and profile information</h3>
           <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
-            Created when you sign in via <span className="font-medium text-on-surface">Google or GitHub</span>. We store only
-            what is needed to operate your account and give credit for contributions:
+            When you sign in through Google or GitHub,
+            we create an account using only the information necessary to operate the platform and give proper credit for your contributions:
           </p>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
             <li>
-              • <span className="font-medium text-on-surface">Email</span> — from your sign-in provider; never displayed
-              publicly and used only for system notifications.
+              • <span className="font-medium text-on-surface">Email address</span> — provided by your sign-in provider; never
+              shown publicly and used only for system notifications.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Username</span> — your unique public handle (3–24 characters);
+              • <span className="font-medium text-on-surface">Username</span> — your unique public name (3 to 24 characters);
               shown on{" "}
               <Link href="/contributors" className="font-medium text-primary hover:underline">
                 /contributors
               </Link>{" "}
-              only if you opt in.
+              only if you choose to appear there.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Name and profile photo</span> — optional display name and avatar
-              from your sign-in provider.
+              • <span className="font-medium text-on-surface">Name and profile photo</span> — optional display details from
+              your sign-in provider.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Roles and account status</span> — your role (Head Maintainer,
-              Maintainer, Data Collaborator, Data Validator, or Tester) and whether your account is approved or restricted. Roles
-              determine what you can contribute, validate, or moderate.
+              • <span className="font-medium text-on-surface">Role and account status</span> — your assigned role (Head
+              Maintainer, Maintainer, Data Collaborator, Data Validator, or Tester) and whether your account is approved or
+              restricted. Roles determine what you are allowed to contribute, validate, or moderate.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Privacy preferences</span> — whether you choose to appear on the
-              public contributors list and whether your profile photo is shown. You control these at{" "}
+              • <span className="font-medium text-on-surface">Privacy preferences</span> — whether you want to appear on the
+              public contributors list and whether your profile photo is shown. You control these settings anytime at{" "}
               <Link href="/user/settings" className="font-medium text-primary hover:underline">
                 /user/settings
               </Link>
@@ -126,57 +130,59 @@ export default function Privacy() {
             </li>
           </ul>
 
-          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.2 Contributions & discussions you create</h3>
+          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.2 Your contributions and discussions</h3>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
             <li>
               • <span className="font-medium text-on-surface">Contributions and private discussion threads</span> — titles,
-              details, categories, source links, and supporting-document links you submit via{" "}
+              details, categories, source links, and supporting-document links you submit through{" "}
               <Link href="/contribute" className="font-medium text-primary hover:underline">
                 /contribute
               </Link>
-              . Large datasets are previewed in your browser and only the parsed rows are submitted — no raw file is stored on
-              our servers.
+              . If you upload large datasets, they are previewed in your browser first; only the parsed rows are submitted. No
+              raw file is stored on our servers.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Transparency data</span> you help verify — such as announcements,
-              ordinances, budget entries, and contact information — linked to your account for provenance and accountability.
+              • <span className="font-medium text-on-surface">Transparency data you help verify</span> — public information
+              such as announcements, ordinances, budget entries, and contact details are linked to your account for provenance
+              and accountability.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Reports</span> — the title, description, category, and source link
-              you provide at{" "}
+              • <span className="font-medium text-on-surface">Reports</span> — the title, description, category, and source
+              link you provide at{" "}
               <Link href="/report" className="font-medium text-primary hover:underline">
                 /report
               </Link>
-              . If you are signed in, the report is linked to your account; if you submit as a guest, we store the contact
-              email you provide solely to follow up on that report. Guest submissions are limited to public report types (such
-              as Data Misinformation and Security Concerns); private categories require sign-in.
+              . If you are signed in, the report is linked to your account. If you submit as a guest, we store only the contact
+              email you provide so we can follow up on your report. Guest submissions are limited to public report types such
+              as Data Misinformation and Security Concerns. Private report categories require you to sign in.
             </li>
           </ul>
 
-          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.3 Automatically collected — cookies & device preferences</h3>
+          <h3 className="mt-5 text-sm font-semibold text-on-surface">3.3 Automatically collected information</h3>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
             <li>
-              • <span className="font-medium text-on-surface">Essential session cookies</span> — required to keep you signed in
-              and to refresh your session securely. These are strictly necessary and do not require a consent banner.
+              • <span className="font-medium text-on-surface">Essential session cookies</span> — necessary to keep you signed
+              in and to refresh your session securely. These are strictly required for the platform to function and do not
+              require a separate consent banner.
             </li>
             <li>
               • <span className="font-medium text-on-surface">Theme preference</span> — your choice of light, dark, or system
               theme is saved locally on your device and is not treated as personal data.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Offline cache</span> — static assets may be cached locally to
-              support offline access. No personal data is stored in this cache.
+              • <span className="font-medium text-on-surface">Offline cache</span> — static assets may be stored locally on your
+              device to support offline access. No personal data is kept in this cache.
             </li>
           </ul>
 
           <h3 className="mt-5 text-sm font-semibold text-on-surface">3.4 What we do NOT collect</h3>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
-            <li>• No advertising cookies, cross-site trackers, or third-party analytics (no Google Analytics).</li>
-            <li>• No location tracking, contact sync, or device fingerprinting.</li>
-            <li>• No marketing profiling — we send no promotional emails.</li>
+            <li>• No advertising cookies, cross-site trackers, or third-party analytics such as Google Analytics.</li>
+            <li>• No location tracking, contact syncing, or device fingerprinting.</li>
+            <li>• No marketing profiles and no promotional emails.</li>
             <li>
-              • We do not collect sensitive personal data (government IDs, private addresses, private phone numbers) — please
-              redact such details before submitting.
+              • No sensitive personal data such as government IDs, private home addresses, or private phone numbers. Please
+              remove or redact such details before submitting anything to the platform.
             </li>
           </ul>
         </Card>
@@ -185,9 +191,10 @@ export default function Privacy() {
         <Card className="mt-4">
           <h2 className="text-base font-semibold text-on-surface">4. How we use your information</h2>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
-            <li>• To authenticate you and maintain your session.</li>
+            <li>• To verify your identity and keep your session secure.</li>
             <li>
-              • To attribute contributions for provenance while respecting your opt-in visibility choice — see{" "}
+              • To attribute contributions for transparency and accountability, while fully respecting your visibility
+              preferences. See{" "}
               <Link href="/contributors" className="font-medium text-primary hover:underline">
                 /contributors
               </Link>{" "}
@@ -203,13 +210,12 @@ export default function Privacy() {
               .
             </li>
             <li>
-              • To send <span className="font-medium text-on-surface">system notifications only</span> about your submissions
-              (received / needs more documents / published){" "}
-              <span className="font-medium text-on-surface">via the Head Maintainer</span> — validators never email you
-              directly; all validator-to-source communication stays in the private on-site discussion.
+              • To send system notifications about your submissions, such as when they are received, need more documents, or
+              are published. These messages come only from the Head Maintainer. Validators never email you directly; all
+              communication stays within the private on-site discussion thread.
             </li>
             <li>
-              • To moderate content and enforce the{" "}
+              • To moderate content and enforce our{" "}
               <a
                 href="https://github.com/RyannKim327/BetterLucenaCity/blob/main/CODE_OF_CONDUCT.md"
                 target="_blank"
@@ -217,12 +223,12 @@ export default function Privacy() {
                 className="font-medium text-primary hover:underline"
               >
                 Code of Conduct
-              </a>{" "}
-              (e.g., investigating harassment reports under RA 11313 — see Code of Conduct § Reporting Harassment).
+              </a>
+              , including investigating harassment reports under RA 11313.
             </li>
             <li>• To manage roles, approvals, and restrictions under a least-privilege model.</li>
             <li>
-              • To improve data accuracy — cross-referencing sources before publishing, with correction threads linked as
+              • To improve data accuracy by cross-referencing sources before publishing, with correction threads linked as
               provenance.
             </li>
           </ul>
@@ -235,12 +241,13 @@ export default function Privacy() {
             <div className="rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-3">
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">Public</p>
               <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
-                Your <span className="font-medium text-on-surface">username</span> (and profile photo only if you have enabled
-                both public listing and photo visibility) may appear on{" "}
+                Your <span className="font-medium text-on-surface">username</span> may appear on{" "}
                 <Link href="/contributors" className="font-medium text-primary hover:underline">
                   /contributors
-                </Link>
-                . Accounts pending approval are hidden regardless of opt-in. You can change these preferences anytime at{" "}
+                </Link>{" "}
+                only if you opt in. Your profile photo will only appear there if you have enabled both public listing and photo
+                visibility. Accounts that are still pending approval remain hidden regardless of your opt-in choice. You can
+                change these preferences anytime at{" "}
                 <Link href="/user/settings" className="font-medium text-primary hover:underline">
                   /user/settings
                 </Link>
@@ -270,23 +277,17 @@ export default function Privacy() {
             <div className="rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-3">
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">Private</p>
               <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
-                Your <span className="font-medium text-on-surface">email is never displayed</span> — not on /contributors, not
-                in discussion threads, not to validators. Discussion threads and{" "}
+                Your <span className="font-medium text-on-surface">email address is never displayed anywhere</span>: not on{" "}
+                <Link href="/contributors" className="font-medium text-primary hover:underline">
+                  /contributors
+                </Link>
+                , not in discussion threads, and not to validators. Discussion threads and{" "}
                 <Link href="/report" className="font-medium text-primary hover:underline">
                   /report
                 </Link>{" "}
-                submissions are visible only to you, assigned Validators, and Head Maintainers (or Head Maintainers only for
-                reports). Never a public GitHub Issue — private discussion protects contributor privacy and well-being as
-                described in{" "}
-                <a
-                  href="https://github.com/RyannKim327/BetterLucenaCity/blob/main/CONTRIBUTING.md#contributing-data--reports-no-code-needed"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-primary hover:underline"
-                >
-                  CONTRIBUTING — Why not GitHub Issues
-                </a>
-                .
+                submissions are visible only to you, the assigned Validators, and the Head Maintainers. For reports, only Head
+                Maintainers may view them. We never convert private discussions into public GitHub issues. This protects your
+                privacy and well-being as a contributor.
               </p>
             </div>
           </div>
@@ -371,9 +372,9 @@ export default function Privacy() {
           <h2 className="text-base font-semibold text-on-surface">8. Storage, retention & security</h2>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
             <li>
-              • <span className="font-medium text-on-surface">Where stored:</span> Encrypted cloud database managed by our
-              authentication and data provider. Access credentials are kept in server-only environment variables and never
-              exposed to the browser or committed to source code.
+              • <span className="font-medium text-on-surface">Where stored:</span> In an encrypted cloud database managed by our
+              authentication and data provider. Access credentials are kept in server-only environment variables and are never
+              exposed to the browser or stored in our source code.
             </li>
             <li>
               • <span className="font-medium text-on-surface">Access control:</span> Strict role-based access — you can view all
@@ -392,9 +393,9 @@ export default function Privacy() {
             </li>
             <li>
               • <span className="font-medium text-on-surface">Retention:</span> Your account data is kept while your account
-              exists; contributions and reports are retained for audit and provenance (the original discussion remains linked even
-              after a correction). Guest report contact emails are kept with the report for follow-up. You may request deletion
-              at any time — see §10.
+              exists. Contributions and reports are retained for audit and provenance; original discussions remain linked even
+              after corrections are made. Guest report contact emails are kept with the report for follow-up purposes. You may
+              request deletion at any time.
             </li>
             <li>
               • <span className="font-medium text-on-surface">Account deletion:</span> When your sign-in account is deleted,
@@ -414,8 +415,9 @@ export default function Privacy() {
             <li>• To Head Maintainers and assigned Validators on a strict need-to-know basis to review your submission.</li>
             <li>
               • With your <span className="font-medium text-on-surface">explicit consent</span> or under{" "}
-              <span className="font-medium text-on-surface">lawful order</span> (e.g., if you pursue a harassment case under RA
-              11313 and request records as evidence — disclosed per RA 10173 consent and legal-process requirements; see{" "}
+              <span className="font-medium text-on-surface">lawful order</span>, such as if you pursue a harassment case under
+              RA 11313 and request records as evidence. Any disclosure follows RA 10173 consent and legal process requirements
+              (see{" "}
               <a
                 href="https://github.com/RyannKim327/BetterLucenaCity/blob/main/CODE_OF_CONDUCT.md#reporting-harassment--ra-11313-safe-spaces-act--anti-bastos-law--report"
                 target="_blank"
@@ -426,11 +428,11 @@ export default function Privacy() {
               </a>
               ).
             </li>
-            <li>• To comply with applicable Philippine law or to respond to a valid government or National Privacy Commission request.</li>
+            <li>• To comply with applicable Philippine law or to respond to a valid request from a government agency or the National Privacy Commission.</li>
           </ul>
           <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-            Volunteer validators never email you directly; all validator-to-source communication stays in the private on-site
-            thread — as documented in{" "}
+            Volunteer validators never email you directly. All validator-to-source communication stays in the private on-site
+            thread, as documented in{" "}
             <a
               href="https://github.com/RyannKim327/BetterLucenaCity/blob/main/CODE_OF_CONDUCT.md#privacy--username-email--public-credit"
               target="_blank"
@@ -447,44 +449,46 @@ export default function Privacy() {
         <Card className="mt-4">
           <h2 className="text-base font-semibold text-on-surface">10. Your rights under RA 10173</h2>
           <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-            As a data subject you have the right to be informed, to access, to object, to erasure or blocking, to rectification,
-            to data portability (where applicable), to be indemnified for damages, and to file a complaint with the National
-            Privacy Commission (NPC).
+            As a data subject, you have the right to be informed, to access your data, to object to its processing, to request
+            erasure or blocking, to demand rectification, to data portability where applicable, to be indemnified for damages,
+            and to file a complaint with the National Privacy Commission.
           </p>
           <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-on-surface-variant">
             <li>
-              • <span className="font-medium text-on-surface">Access & rectification:</span> View and update your name,
-              username, and privacy preferences anytime at{" "}
+              • <span className="font-medium text-on-surface">Access and rectification:</span> You can view and update your
+              name, username, and privacy preferences anytime at{" "}
               <Link href="/user/settings" className="font-medium text-primary hover:underline">
                 /user/settings
               </Link>
               .
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Withdraw opt-in:</span> Turn off public listing or profile photo
-              visibility at any time — changes take effect immediately.
+              • <span className="font-medium text-on-surface">Withdraw opt-in:</span> You may turn off public listing or profile
+              photo visibility at any time.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Erasure / blocking:</span> Request account and data deletion by
-              emailing{" "}
-              <a href="mailto:weryses19@gmail.com" className="font-medium text-primary hover:underline">
-                weryses19@gmail.com
-              </a>{" "}
-              (include &quot;PRIVACY — Erasure request&quot; in the subject). Published civic data derived from official sources
-              may be retained for transparency with attribution removed where appropriate.
+              • <span className="font-medium text-on-surface">Data portability:</span> You may request a copy of your data in a
+              portable format where technically feasible.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Objection & restriction:</span> If your account is restricted, all
-              permissions are denied until reviewed; you may appeal by contacting a Head Maintainer.
+              • <span className="font-medium text-on-surface">Erasure or blocking:</span> You may request deletion or blocking
+              of your personal data, subject to legal and audit retention requirements.
             </li>
             <li>
-              • <span className="font-medium text-on-surface">Complaint:</span> you may lodge a complaint with the{" "}
+              • <span className="font-medium text-on-surface">Complaints:</span> You may file a complaint with the{" "}
               <a href="https://privacy.gov.ph" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
-                National Privacy Commission (privacy.gov.ph)
-              </a>
-              .
+                National Privacy Commission
+              </a>{" "}
+              if you believe your rights have been violated.
             </li>
           </ul>
+          <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
+            To exercise any of these rights, contact the Head Maintainer at{" "}
+            <a href="mailto:weryses19@gmail.com" className="font-medium text-primary hover:underline">
+              weryses19@gmail.com
+            </a>{" "}
+            with &quot;PRIVACY&quot; in the subject line.
+          </p>
         </Card>
 
         {/* Children */}
@@ -643,6 +647,6 @@ export default function Privacy() {
           For the authoritative legal source text, consult RA 10173 and issuances of the National Privacy Commission.
         </p>
       </section>
-    </div>
+    </div >
   );
 }

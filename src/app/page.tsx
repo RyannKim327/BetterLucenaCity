@@ -9,13 +9,13 @@ import History from "@/components/sections/history";
 export default function Home() {
 
   return (
-    <div>
+    <>
       <HeroSection />
       <AboutSection />
       <ServicesSection />
       <AnnouncementSection />
       <LiveDataSection />
       <History />
-    </div>
+    </>
   );
 }
