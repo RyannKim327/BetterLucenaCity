@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import sendEmail from "@/lib/email-send";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -64,7 +65,7 @@ export async function POST(request: Request) {
     .from("users")
     .update({ restricted: body.restricted })
     .eq("id", id)
-    .select("id, restricted")
+    .select("id, restricted, username, email")
     .maybeSingle();
 
   if (error) {
@@ -76,6 +77,20 @@ export async function POST(request: Request) {
       { error: "No rows updated — RLS blocked the update or user not found." },
       { status: 403 }
     );
+  }
+
+  if (data.restricted) {
+    await sendEmail({
+      subject: "Account Restricted/Suspension",
+      email: data.email,
+      content: `Greetings ${data.username}! The administrators of Better Lucena City restricted your account due to certain reports and violations. If you think this is a mistake, please send us your report in https://facebook.com/BetterLucenaCity.org`
+    })
+  } else {
+    await sendEmail({
+      subject: "Account Restricted/Suspension Uplifted",
+      email: data.email,
+      content: `Greetings ${data.username}! The administrators of Better Lucena City uplifted the restricted your account. Thank you.`
+    })
   }
 
   return NextResponse.json({ ok: true, id: data.id, restricted: data.restricted });

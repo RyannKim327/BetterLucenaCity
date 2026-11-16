@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import sendEmail from "@/lib/email-send";
 
 // Admin-only: change user_type (e.g., Tester -> Maintainer)
 // Must NOT allow Head Maintainer as target value
@@ -82,7 +83,7 @@ export async function POST(request: Request) {
     .from("users")
     .update({ user_type: requested })
     .eq("id", id)
-    .select("id, user_type")
+    .select("id, user_type, email, username")
     .maybeSingle();
 
   if (error) {
@@ -95,6 +96,12 @@ export async function POST(request: Request) {
       { status: 403 }
     );
   }
+
+  await sendEmail({
+    subject: "Account changed",
+    email: data.email,
+    content: `Greetings ${data.username}! An admin of Better Lucena City changed your role to ${data.user_type}. If you think this is a mistake, please message us on https://facebook.com/BetterLucenaCity.org or send us your report on https://better-lucena-city.vercel.app/report`
+  })
 
   return NextResponse.json({ ok: true, id: data.id, user_type: data.user_type });
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import sendEmail from "@/lib/email-send";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
     .from("users")
     .update({ approved: true })
     .eq("id", id)
-    .select("id, approved")
+    .select("id, approved, email, username, user_type")
     .maybeSingle();
 
   if (error) {
@@ -72,6 +73,20 @@ export async function POST(request: Request) {
       },
       { status: 403 }
     );
+  }
+
+  if (data.approved) {
+    await sendEmail({
+      subject: "Account Approval",
+      email: data.email,
+      content: `Greetings ${data.username}! The administrators of Better Lucena City approved your request to join with us as ${data.user_type}. Please follow the rules and regulation to prevent the suspension of your account.`
+    })
+  } else {
+    await sendEmail({
+      subject: "Account Notice",
+      email: data.email,
+      content: `Greetings ${data.username}! The administrators of Better Lucena City decided to decline your request due to some reasons. If you think this is a mistake, please contact us on facebook.com/BetterLucenaCity.org alongside with the screenshot of registration and reason why you want to be part of Better Lucena City.`
+    })
   }
 
   return NextResponse.json({ ok: true, id: data.id, approved: data.approved });
