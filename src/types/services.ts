@@ -1,11 +1,13 @@
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
-export interface ServicesCatergory {
+export interface ServicesCategory {
   name: string
   href: string
   icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
 }
+
+export type ServicesCatergory = ServicesCategory;
 
 export interface Process {
   name: string;

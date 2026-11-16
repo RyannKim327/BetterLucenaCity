@@ -1,7 +1,7 @@
-import { Service, ServicesCatergory } from "@/types/services";
+import { Service, ServicesCategory } from "@/types/services";
 import { BriefcaseMedical, Certificate, GraduationCap, ScrollText } from "lucide-react";
 
-export const servicesCategory: ServicesCatergory[] = [{
+export const servicesCategory: ServicesCategory[] = [{
   name: "Medical & Social Care",
   href: "care",
   icon: BriefcaseMedical
