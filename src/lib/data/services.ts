@@ -1,4 +1,23 @@
-import { Service } from "@/types/services";
+import { Service, ServicesCatergory } from "@/types/services";
+import { BriefcaseMedical, Certificate, GraduationCap, ScrollText } from "lucide-react";
+
+export const servicesCategory: ServicesCatergory[] = [{
+  name: "Medical & Social Care",
+  href: "care",
+  icon: BriefcaseMedical
+}, {
+  name: "Certificates & Civil Registration",
+  href: "certification",
+  icon: Certificate
+}, {
+  name: "Permits & Businesses",
+  href: "permits",
+  icon: ScrollText
+}, {
+  name: "Education & Scholarships",
+  href: "education",
+  icon: GraduationCap
+}]
 
 export const services: Service[] = [
   {
@@ -85,7 +104,7 @@ export const services: Service[] = [
   },
   {
     slug: "business-permit-change-information",
-    name: "Business Permit — Change of Information",
+    name: "Business Permit [Change of Information]",
     description:
       "Update business permit details via the Lucena eBPLS portal — change of business address, change of ownership, or other amendments. Requirements vary by change type.",
     office: "Business Permits and Licensing Office",
