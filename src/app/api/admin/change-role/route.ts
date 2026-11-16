@@ -97,11 +97,13 @@ export async function POST(request: Request) {
     );
   }
 
-  await sendEmail({
-    subject: "Account changed",
-    email: data.email,
-    content: `Greetings ${data.username}! An admin of Better Lucena City changed your role to ${data.user_type}. If you think this is a mistake, please message us on https://facebook.com/BetterLucenaCity.org or send us your report on https://better-lucena-city.vercel.app/report`
-  })
+  if (data.email) {
+    await sendEmail({
+      subject: "Account changed",
+      email: data.email,
+      content: `Greetings ${data.username}! An admin of Better Lucena City changed your role to ${data.user_type}. If you think this is a mistake, please message us on https://facebook.com/BetterLucenaCity.org or send us your report on https://better-lucena-city.vercel.app/report`
+    })
+  }
 
   return NextResponse.json({ ok: true, id: data.id, user_type: data.user_type });
 }

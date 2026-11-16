@@ -49,11 +49,19 @@ export async function POST(request: Request) {
     );
   }
 
+  if (body.approved !== undefined && typeof body.approved !== "boolean") {
+    return NextResponse.json(
+      { error: "approved must be boolean" },
+      { status: 400 }
+    );
+  }
+
+  const approved = body.approved !== false;
 
   // Use .select() to detect RLS-filtered 0-row updates (Supabase returns no error but empty data when RLS blocks)
   const { data, error } = await supabase
     .from("users")
-    .update({ approved: true })
+    .update({ approved })
     .eq("id", id)
     .select("id, approved, email, username, user_type")
     .maybeSingle();
@@ -75,18 +83,20 @@ export async function POST(request: Request) {
     );
   }
 
-  if (data.approved) {
-    await sendEmail({
-      subject: "Account Approval",
-      email: data.email,
-      content: `Greetings ${data.username}! The administrators of Better Lucena City approved your request to join with us as ${data.user_type}. Please follow the rules and regulation to prevent the suspension of your account.`
-    })
-  } else {
-    await sendEmail({
-      subject: "Account Notice",
-      email: data.email,
-      content: `Greetings ${data.username}! The administrators of Better Lucena City decided to decline your request due to some reasons. If you think this is a mistake, please contact us on facebook.com/BetterLucenaCity.org alongside with the screenshot of registration and reason why you want to be part of Better Lucena City.`
-    })
+  if (data.email) {
+    if (data.approved) {
+      await sendEmail({
+        subject: "Account Approval",
+        email: data.email,
+        content: `Greetings ${data.username}! The administrators of Better Lucena City approved your request to join with us as ${data.user_type}. Please follow the rules and regulation to prevent the suspension of your account.`
+      })
+    } else {
+      await sendEmail({
+        subject: "Account Notice",
+        email: data.email,
+        content: `Greetings ${data.username}! The administrators of Better Lucena City decided to decline your request due to some reasons. If you think this is a mistake, please contact us on facebook.com/BetterLucenaCity.org alongside with the screenshot of registration and reason why you want to be part of Better Lucena City.`
+      })
+    }
   }
 
   return NextResponse.json({ ok: true, id: data.id, approved: data.approved });

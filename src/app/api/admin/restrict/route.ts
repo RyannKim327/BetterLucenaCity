@@ -79,18 +79,20 @@ export async function POST(request: Request) {
     );
   }
 
-  if (data.restricted) {
-    await sendEmail({
-      subject: "Account Restricted/Suspension",
-      email: data.email,
-      content: `Greetings ${data.username}! The administrators of Better Lucena City restricted your account due to certain reports and violations. If you think this is a mistake, please send us your report in https://facebook.com/BetterLucenaCity.org`
-    })
-  } else {
-    await sendEmail({
-      subject: "Account Restricted/Suspension Uplifted",
-      email: data.email,
-      content: `Greetings ${data.username}! The administrators of Better Lucena City uplifted the restricted your account. Thank you.`
-    })
+  if (data.email) {
+    if (data.restricted) {
+      await sendEmail({
+        subject: "Account Restricted/Suspension",
+        email: data.email,
+        content: `Greetings ${data.username}! The administrators of Better Lucena City restricted your account due to certain reports and violations. If you think this is a mistake, please send us your report in https://facebook.com/BetterLucenaCity.org`
+      })
+    } else {
+      await sendEmail({
+        subject: "Account Restricted/Suspension Uplifted",
+        email: data.email,
+        content: `Greetings ${data.username}! The administrators of Better Lucena City uplifted the restricted your account. Thank you.`
+      })
+    }
   }
 
   return NextResponse.json({ ok: true, id: data.id, restricted: data.restricted });
