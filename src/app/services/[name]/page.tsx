@@ -54,16 +54,29 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-on-surface">{step.name}</p>
-                    <dl className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant">
-                      <div className="flex gap-1">
-                        <dt className="font-medium">Time:</dt>
-                        <dd>{step.timeEstimation}</dd>
-                      </div>
-                      <div className="flex gap-1">
-                        <dt className="font-medium">Amount:</dt>
-                        <dd className="text-primary">{step.amount}</dd>
-                      </div>
-                    </dl>
+                    {(step.timeEstimation || step.amount) && (
+                      <dl className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant">
+                        {step.timeEstimation && (
+                          <div className="flex gap-1">
+                            <dt className="font-medium">Time:</dt>
+                            <dd>{step.timeEstimation}</dd>
+                          </div>
+                        )}
+                        {step.amount && (
+                          <div className="flex gap-1">
+                            <dt className="font-medium">Amount:</dt>
+                            <dd className="text-primary">{step.amount}</dd>
+                          </div>
+                        )}
+                      </dl>
+                    )}
+                    {step.details && step.details.length > 0 && (
+                      <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-on-surface-variant">
+                        {step.details.map((detail, j) => (
+                          <li key={j}>{detail}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </li>
               ))}
