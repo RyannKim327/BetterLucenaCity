@@ -10,7 +10,7 @@ export async function GET() {
 
   const { data, error } = await supabase
     .from("users")
-    .select("id, email, first_name, last_name, username, avatar_url, user_type, approved, show_contributor, show_picture, date_added")
+    .select("id, email, first_name, last_name, username, avatar_url, user_type, approved, show_contributor, show_picture, notify_announcements, notify_discussions, notify_reports, notify_email, notify_push, date_added")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -31,6 +31,11 @@ export async function PATCH(request: Request) {
     username?: string;
     show_contributor?: boolean;
     show_picture?: boolean;
+    notify_announcements?: boolean;
+    notify_discussions?: boolean;
+    notify_reports?: boolean;
+    notify_email?: boolean;
+    notify_push?: boolean;
   };
   try {
     body = await request.json();
@@ -63,6 +68,21 @@ export async function PATCH(request: Request) {
   if (body.show_picture !== undefined) {
     updates.show_picture = !!body.show_picture;
   }
+  if (body.notify_announcements !== undefined) {
+    updates.notify_announcements = !!body.notify_announcements;
+  }
+  if (body.notify_discussions !== undefined) {
+    updates.notify_discussions = !!body.notify_discussions;
+  }
+  if (body.notify_reports !== undefined) {
+    updates.notify_reports = !!body.notify_reports;
+  }
+  if (body.notify_email !== undefined) {
+    updates.notify_email = !!body.notify_email;
+  }
+  if (body.notify_push !== undefined) {
+    updates.notify_push = !!body.notify_push;
+  }
 
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "No fields to update." }, { status: 400 });
@@ -72,7 +92,7 @@ export async function PATCH(request: Request) {
     .from("users")
     .update(updates)
     .eq("id", user.id)
-    .select("id, email, first_name, last_name, username, avatar_url, user_type, approved, show_contributor, show_picture")
+    .select("id, email, first_name, last_name, username, avatar_url, user_type, approved, show_contributor, show_picture, notify_announcements, notify_discussions, notify_reports, notify_email, notify_push")
     .maybeSingle();
 
   if (error) {

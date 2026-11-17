@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Bell, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { site } from "@/lib/data/site";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import Hotlines from "./hotlines";
 
 export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b: any) => void, visibleNav: boolean, auth: boolean }) {
@@ -37,9 +38,7 @@ export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b:
 
           <div className="flex items-center gap-1">
             <ThemeToggle />
-            {auth ?
-              <Bell />
-              : null}
+            <NotificationBell auth={auth} />
             <button
               type="button"
               onClick={() => setVisibleNav((v: boolean) => !v)}

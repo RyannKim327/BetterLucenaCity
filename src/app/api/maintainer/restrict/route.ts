@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import { notifyAccount } from "@/lib/notifications";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -92,6 +93,14 @@ export async function POST(request: Request) {
       { status: 403 }
     );
   }
+
+  after(async () => {
+    await notifyAccount(supabase, data.id, {
+      title: "Account restricted",
+      body: "Your account has been restricted due to reported violations. Contact the maintainers if you think this is a mistake.",
+      href: "/user",
+    })
+  })
 
   return NextResponse.json({ ok: true, id: data.id, restricted: data.restricted });
 }

@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, after } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import CheckPermission from "@/lib/roles"
+import { dispatchNotification, VALIDATOR_ROLES } from "@/lib/notifications"
 
 export const dynamic = "force-dynamic"
 
@@ -78,7 +79,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     update = { approved_by: user.id, archive_by: null, is_open: false }
   } else if (action === "unapprove") {
     if (!row.approved_by) return NextResponse.json({ error: "Not approved" }, { status: 409 })
-    update = { approved_by: null, is_open: row.archive_by ? false : true }
+    update = { approved_by: null }
   } else if (action === "archive") {
     if (row.approved_by) return NextResponse.json({ error: "Cannot archive an approved discussion — unapprove first" }, { status: 409 })
     if (row.archive_by) return NextResponse.json({ error: "Already archived" }, { status: 409 })
@@ -90,6 +91,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
   const { data: updated, error: updErr } = await supabase.from("discussion").update(update).eq("id", id).select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by").single()
   if (updErr) return NextResponse.json({ error: updErr.message }, { status: 500 })
+
+  let response = updated
+
+  // The approved-record lock trigger only allows changing approved_by in the unapprove update.
+  // Reopen the thread in a separate statement once the record is no longer approved.
+  if (action === "unapprove") {
+    const reopen = row.archive_by ? false : true
+    if (updated.is_open !== reopen) {
+      const { data: reopened, error: reopenErr } = await supabase.from("discussion").update({ is_open: reopen }).eq("id", id).select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by").single()
+      if (reopenErr) return NextResponse.json({ error: reopenErr.message }, { status: 500 })
+      if (reopened) response = reopened
+    }
+  }
 
   // Propagate approval to linked table (publish) — validators approve to make data public
   if (linkedTable) {
@@ -104,5 +118,50 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
   }
 
-  return NextResponse.json(updated)
+  after(async () => {
+    const actionLabel =
+      action === "approve"
+        ? "approved"
+        : action === "unapprove"
+          ? "returned to draft"
+          : action === "archive"
+            ? "archived"
+            : "unarchived"
+
+    if (updated.user_id && updated.user_id !== user.id) {
+      await dispatchNotification(supabase, {
+        category: "discussion",
+        title: `Your discussion was ${actionLabel}`,
+        body: updated.title,
+        href: `/discussion/${id}`,
+        recipientIds: [updated.user_id],
+        data: { discussionId: id, action },
+      })
+    }
+
+    if (action === "approve") {
+      if (row.type === "announcements") {
+        await dispatchNotification(supabase, {
+          category: "announcement",
+          title: "New announcement published",
+          body: updated.title,
+          href: `/announcements/${row.reference_id}`,
+          data: { discussionId: id, announcementId: row.reference_id },
+          excludeUserIds: [user.id],
+        })
+      } else {
+        await dispatchNotification(supabase, {
+          category: "discussion",
+          title: "Contribution approved",
+          body: updated.title,
+          href: `/discussion/${id}`,
+          roles: VALIDATOR_ROLES,
+          excludeUserIds: [user.id],
+          data: { discussionId: id, action },
+        })
+      }
+    }
+  })
+
+  return NextResponse.json(response)
 }

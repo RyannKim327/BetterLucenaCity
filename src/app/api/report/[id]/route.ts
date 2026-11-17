@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import { dispatchNotification } from "@/lib/notifications";
 
 export const dynamic = "force-dynamic";
 
@@ -66,7 +67,23 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: "done (boolean) is required" }, { status: 400 });
   }
 
-  const { data, error } = await supabase.from("report").update({ done: body.done }).eq("id", id).select("id, done").single();
+  const { data, error } = await supabase.from("report").update({ done: body.done }).eq("id", id).select("id, done, user_id, title").single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  if (data.user_id) {
+    after(async () => {
+      await dispatchNotification(supabase, {
+        category: "report",
+        title: data.done ? "Report marked as resolved" : "Report reopened",
+        body: data.title,
+        href: `/report/${id}`,
+        recipientIds: [data.user_id],
+        requireOptIn: false,
+        excludeUserIds: [user.id],
+        data: { reportId: id, done: data.done },
+      });
+    });
+  }
+
   return NextResponse.json(data);
 }

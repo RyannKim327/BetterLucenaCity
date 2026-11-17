@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
 import sendEmail from "@/lib/email-send";
+import { notifyAccount } from "@/lib/notifications";
 
 // Admin-only: change user_type (e.g., Tester -> Maintainer)
 // Must NOT allow Head Maintainer as target value
@@ -101,6 +102,14 @@ export async function POST(request: Request) {
     subject: "Account changed",
     email: data.email,
     content: `Greetings ${data.username}! An admin of Better Lucena City changed your role to ${data.user_type}. If you think this is a mistake, please message us on https://facebook.com/BetterLucenaCity.org or send us your report on https://better-lucena-city.vercel.app/report`
+  })
+
+  after(async () => {
+    await notifyAccount(supabase, data.id, {
+      title: "Your role was changed",
+      body: `You are now a ${data.user_type}.`,
+      href: "/user",
+    })
   })
 
   return NextResponse.json({ ok: true, id: data.id, user_type: data.user_type });

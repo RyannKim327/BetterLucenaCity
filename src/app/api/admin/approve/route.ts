@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
 import sendEmail from "@/lib/email-send";
+import { notifyAccount } from "@/lib/notifications";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -88,6 +89,16 @@ export async function POST(request: Request) {
       content: `Greetings ${data.username}! The administrators of Better Lucena City decided to decline your request due to some reasons. If you think this is a mistake, please contact us on facebook.com/BetterLucenaCity.org alongside with the screenshot of registration and reason why you want to be part of Better Lucena City.`
     })
   }
+
+  after(async () => {
+    await notifyAccount(supabase, data.id, {
+      title: data.approved ? "Account approved" : "Account request declined",
+      body: data.approved
+        ? `You can now contribute as ${data.user_type}. Welcome to Better Lucena City!`
+        : "Your request was declined. Contact the maintainers if you think this is a mistake.",
+      href: "/user",
+    })
+  })
 
   return NextResponse.json({ ok: true, id: data.id, approved: data.approved });
 }

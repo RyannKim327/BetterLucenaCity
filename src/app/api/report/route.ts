@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
 import { report_types } from "@/lib/report-types";
+import { dispatchNotification, MAINTAINER_ROLES } from "@/lib/notifications";
 
 export const dynamic = "force-dynamic";
 
@@ -133,5 +134,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true, id: data?.id ?? id }, { status: 201 });
+  const reportId = data?.id ?? id;
+
+  after(async () => {
+    await dispatchNotification(supabase, {
+      category: "report",
+      title: "New report submitted",
+      body: title,
+      href: `/report/${reportId}`,
+      roles: MAINTAINER_ROLES,
+      excludeUserIds: isAuthenticated && user ? [user.id] : [],
+      data: { reportId, reportType: typeRaw },
+    });
+  });
+
+  return NextResponse.json({ ok: true, id: reportId }, { status: 201 });
 }

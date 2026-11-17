@@ -12,7 +12,7 @@ export default async function UserSettings() {
 
   const { data: profile } = await supabase
     .from("users")
-    .select("first_name, last_name, username, show_contributor, show_picture")
+    .select("first_name, last_name, username, show_contributor, show_picture, notify_announcements, notify_discussions, notify_reports, notify_email, notify_push")
     .eq("id", user?.id)
     .maybeSingle();
 
@@ -22,6 +22,11 @@ export default async function UserSettings() {
     username: profile?.username ?? "",
     show_contributor: profile?.show_contributor ?? false,
     show_picture: profile?.show_picture ?? false,
+    notify_announcements: profile?.notify_announcements ?? false,
+    notify_discussions: profile?.notify_discussions ?? false,
+    notify_reports: profile?.notify_reports ?? false,
+    notify_email: profile?.notify_email ?? true,
+    notify_push: profile?.notify_push ?? false,
   };
 
   return (

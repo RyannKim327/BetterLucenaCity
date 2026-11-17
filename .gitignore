@@ -35,6 +35,7 @@ yarn-error.log*
 /public/sw.js
 /public/swe-*.js
 /public/workbox-*.js
+/public/worker-*.js
 
 # env files (can opt-in for committing if needed)
 .env*

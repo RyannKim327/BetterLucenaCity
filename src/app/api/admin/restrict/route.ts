@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
 import sendEmail from "@/lib/email-send";
+import { notifyAccount } from "@/lib/notifications";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -92,6 +93,16 @@ export async function POST(request: Request) {
       content: `Greetings ${data.username}! The administrators of Better Lucena City uplifted the restricted your account. Thank you.`
     })
   }
+
+  after(async () => {
+    await notifyAccount(supabase, data.id, {
+      title: data.restricted ? "Account restricted" : "Account restriction lifted",
+      body: data.restricted
+        ? "Your account has been restricted due to reported violations. Contact the maintainers if you think this is a mistake."
+        : "Your account restriction has been lifted. Welcome back!",
+      href: "/user",
+    })
+  })
 
   return NextResponse.json({ ok: true, id: data.id, restricted: data.restricted });
 }

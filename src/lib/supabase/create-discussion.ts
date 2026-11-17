@@ -1,4 +1,5 @@
 import { createClient as createServerClient } from "./server"
+import { dispatchNotification, VALIDATOR_ROLES } from "@/lib/notifications"
 
 export type DiscussionType = "announcements" | "legals" | "local_budget" | "procurement"
 
@@ -31,6 +32,16 @@ export default async function CreateDiscussion(data: DiscussionPayload) {
     .single()
 
   if (error) throw error
+
+  await dispatchNotification(supabase, {
+    category: "discussion",
+    title: "New contribution awaiting validation",
+    body: data.title,
+    href: `/discussion/${disData.id}`,
+    data: { discussionId: disData.id, discussionType: data.type, referenceId: data.reference_id },
+    roles: VALIDATOR_ROLES,
+    excludeUserIds: [data.user_id],
+  })
 
   return disData.id as string
 }

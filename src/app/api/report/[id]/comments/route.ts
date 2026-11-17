@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import CheckPermission from "@/lib/roles";
+import { dispatchNotification, MAINTAINER_ROLES } from "@/lib/notifications";
 
 export const dynamic = "force-dynamic";
 
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     (await CheckPermission(user.id, "maintainer").catch(() => false)) ||
     (await CheckPermission(user.id, "admin").catch(() => false));
 
-  const { data: report } = await supabase.from("report").select("id, user_id, done").eq("id", id).maybeSingle();
+  const { data: report } = await supabase.from("report").select("id, user_id, title, done").eq("id", id).maybeSingle();
   if (!report) return NextResponse.json({ error: "Report not found" }, { status: 404 });
   if (!canSeeAll && report.user_id !== user.id) {
     return NextResponse.json({ error: "Forbidden — you can only comment on your own reports" }, { status: 403 });
@@ -91,6 +92,36 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     .select("id, report_id, user_id, comment, date_added")
     .single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  after(async () => {
+    const body = comment.length > 160 ? `${comment.slice(0, 157)}…` : comment;
+    const data_ = { reportId: id, commentId: data.id, reportTitle: report.title };
+
+    if (report.user_id && report.user_id !== user.id) {
+      await dispatchNotification(supabase, {
+        category: "report",
+        title: "New comment on your report",
+        body,
+        href: `/report/${id}`,
+        recipientIds: [report.user_id],
+        requireOptIn: false,
+        excludeUserIds: [user.id],
+        data: data_,
+      });
+    }
+
+    if (!canSeeAll) {
+      await dispatchNotification(supabase, {
+        category: "report",
+        title: "New comment on a report",
+        body,
+        href: `/report/${id}`,
+        roles: MAINTAINER_ROLES,
+        excludeUserIds: [user.id],
+        data: data_,
+      });
+    }
+  });
 
   return NextResponse.json(data, { status: 201 });
 }
