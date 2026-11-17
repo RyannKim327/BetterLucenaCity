@@ -9,8 +9,9 @@ export interface ServicesCatergory {
 
 export interface Process {
   name: string;
-  timeEstimation: string;
-  amount: string;
+  timeEstimation?: string;
+  amount?: string;
+  details?: string[];
 }
 
 export interface Service {

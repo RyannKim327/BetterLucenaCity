@@ -185,6 +185,9 @@ export default function SitemapPage() {
           <Link href="/robots.txt" className="text-xs font-medium text-primary hover:underline">
             robots.txt →
           </Link>
+          <Link href="/feed.xml" className="text-xs font-medium text-primary hover:underline">
+            RSS feed →
+          </Link>
         </div>
 
         {/* Visual hierarchy */}

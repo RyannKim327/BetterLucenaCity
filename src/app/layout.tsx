@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { site } from "@/lib/data/site";
+import { getSiteUrl } from "@/lib/seo";
 import "./globals.css";
 import MainLayout from "@/components/layout/main";
 
@@ -13,9 +14,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: `${site.name}`,
     template: `%s · ${site.name}`,
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   },
   robots: {
     follow: true,

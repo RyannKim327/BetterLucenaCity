@@ -1,14 +1,8 @@
 import type { MetadataRoute } from "next";
-
-function getBaseUrl(): string {
-  // Always use the canonical Vercel URL — do NOT use VERCEL_URL (which is the
-  // per-deployment URL like ...-git-branch.vercel.app). Override only via NEXT_PUBLIC_SITE_URL.
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  return "https://better-lucena-city.vercel.app";
-}
+import { getSiteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getSiteUrl();
   return {
     rules: [
       {

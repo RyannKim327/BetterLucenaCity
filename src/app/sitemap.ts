@@ -1,14 +1,10 @@
 import type { MetadataRoute } from "next";
+import { getPublishedAnnouncements, getSiteUrl } from "@/lib/seo";
 
-function getBaseUrl(): string {
-  // Always use the canonical Vercel URL — do NOT use VERCEL_URL (which is the
-  // per-deployment URL like ...-git-branch.vercel.app). Override only via NEXT_PUBLIC_SITE_URL.
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  return "https://better-lucena-city.vercel.app";
-}
+export const revalidate = 3600;
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = getBaseUrl();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getSiteUrl();
   const now = new Date();
 
   // NOTE: Only visitor-facing public URLs are included.
@@ -45,10 +41,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { path: "/sitemap", changeFrequency: "monthly", priority: 0.4 },
     ];
 
-  return routes.map((r) => ({
+  const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
     url: `${baseUrl}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
+
+  const announcements = await getPublishedAnnouncements(1000);
+  const announcementEntries: MetadataRoute.Sitemap = announcements.map((a) => ({
+    url: `${baseUrl}/announcements/${a.id}`,
+    lastModified: new Date(a.date_added),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...announcementEntries];
 }

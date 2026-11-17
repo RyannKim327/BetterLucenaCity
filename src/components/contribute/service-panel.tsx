@@ -12,7 +12,7 @@ const labelClass = "block text-sm font-medium text-on-surface";
 
 type ProcessDraft = Process;
 
-const emptyProcess = (): ProcessDraft => ({ name: "", timeEstimation: "", amount: "" });
+const emptyProcess = (): ProcessDraft => ({ name: "", timeEstimation: "", amount: "", details: [] });
 
 export function ServicePanel({ userEmail }: { userEmail: string }) {
   const [services, setServices] = useState<Service[]>([...initialServices]);
@@ -20,8 +20,13 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [processes, setProcesses] = useState<ProcessDraft[]>([emptyProcess()]);
 
-  function updateProcess(idx: number, field: keyof ProcessDraft, value: string) {
+  function updateProcess(idx: number, field: "name" | "timeEstimation" | "amount", value: string) {
     setProcesses((prev) => prev.map((p, i) => (i === idx ? { ...p, [field]: value } : p)));
+  }
+
+  function updateProcessDetails(idx: number, value: string) {
+    const details = value.split("\n").map((line) => line.trim()).filter(Boolean);
+    setProcesses((prev) => prev.map((p, i) => (i === idx ? { ...p, details } : p)));
   }
 
   function addProcess() {
@@ -50,10 +55,15 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
       return;
     }
 
-    // Clean process array: filter out empty rows where all three are blank
+    // Clean process array: filter out empty rows where all fields are blank
     const cleaned: Process[] = processes
-      .map((p) => ({ name: p.name.trim(), timeEstimation: p.timeEstimation.trim(), amount: p.amount.trim() }))
-      .filter((p) => p.name || p.timeEstimation || p.amount);
+      .map((p) => ({
+        name: p.name.trim(),
+        timeEstimation: p.timeEstimation?.trim() ?? "",
+        amount: p.amount?.trim() ?? "",
+        details: (p.details ?? []).map((d) => d.trim()).filter(Boolean),
+      }))
+      .filter((p) => p.name || p.timeEstimation || p.amount || (p.details && p.details.length > 0));
 
     // Validate that if a row is partially filled, name is required
     for (const p of cleaned) {
@@ -162,48 +172,60 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
                   </button>
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
-                  Each row is <code className="rounded bg-surface-container-low px-1 py-0.5 text-[11px]">[process name, time estimation, amt to pay or free]</code>. Leave blank to omit the whole array.
+                  Each row is <code className="rounded bg-surface-container-low px-1 py-0.5 text-[11px]">[process name, time estimation, amt to pay or free, sub-list]</code>. The sub-list holds one bullet per line. Leave blank to omit the whole array.
                 </p>
 
                 <div className="mt-3 space-y-3">
                   {processes.map((p, idx) => (
-                    <div key={idx} className="grid gap-2 rounded-xl border border-outline-variant/40 bg-surface-container-low p-3 sm:grid-cols-[1.4fr_0.9fr_0.9fr_auto]">
-                      <div>
-                        <label className="block text-xs font-medium text-on-surface-variant">Process name</label>
-                        <input
-                          value={p.name}
-                          onChange={(e) => updateProcess(idx, "name", e.target.value)}
-                          placeholder="e.g., Submit requirements at BPLO window"
-                          className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                        />
+                    <div key={idx} className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-3">
+                      <div className="grid gap-2 sm:grid-cols-[1.4fr_0.9fr_0.9fr_auto]">
+                        <div>
+                          <label className="block text-xs font-medium text-on-surface-variant">Process name</label>
+                          <input
+                            value={p.name}
+                            onChange={(e) => updateProcess(idx, "name", e.target.value)}
+                            placeholder="e.g., Submit requirements at BPLO window"
+                            className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-on-surface-variant">Time estimation</label>
+                          <input
+                            value={p.timeEstimation}
+                            onChange={(e) => updateProcess(idx, "timeEstimation", e.target.value)}
+                            placeholder="e.g., 15 mins / 3 days"
+                            className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-on-surface-variant">Amt to pay or Free</label>
+                          <input
+                            value={p.amount}
+                            onChange={(e) => updateProcess(idx, "amount", e.target.value)}
+                            placeholder="e.g., Free or ₱500"
+                            className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                        </div>
+                        <div className="flex items-end">
+                          <button
+                            type="button"
+                            onClick={() => removeProcess(idx)}
+                            aria-label="Remove step"
+                            className="inline-flex size-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-secondary-container/40 hover:text-on-secondary-container"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-xs font-medium text-on-surface-variant">Time estimation</label>
-                        <input
-                          value={p.timeEstimation}
-                          onChange={(e) => updateProcess(idx, "timeEstimation", e.target.value)}
-                          placeholder="e.g., 15 mins / 3 days"
-                          className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      <div className="mt-2">
+                        <label className="block text-xs font-medium text-on-surface-variant">Sub-list (one item per line)</label>
+                        <textarea
+                          value={(p.details ?? []).join("\n")}
+                          onChange={(e) => updateProcessDetails(idx, e.target.value)}
+                          rows={2}
+                          placeholder={"e.g., Bring a valid ID\nBring the accomplished form"}
+                          className="mt-1 w-full resize-y rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-on-surface-variant">Amt to pay or Free</label>
-                        <input
-                          value={p.amount}
-                          onChange={(e) => updateProcess(idx, "amount", e.target.value)}
-                          placeholder="e.g., Free or ₱500"
-                          className="mt-1 w-full rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-sm placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                        />
-                      </div>
-                      <div className="flex items-end">
-                        <button
-                          type="button"
-                          onClick={() => removeProcess(idx)}
-                          aria-label="Remove step"
-                          className="inline-flex size-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-secondary-container/40 hover:text-on-secondary-container"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
                       </div>
                     </div>
                   ))}
