@@ -24,40 +24,40 @@ export const services: Service[] = [
     slug: "business-permits",
     name: "Business Permits & Licensing",
     description:
-      "Apply for or renew business permits, secure mayor's permits, and check licensing requirements.",
+      "Mag-apply o magre-renew ng business permit, kumuha ng mayor's permit, at suriin ang mga licensing requirements.",
     office: "Business Permits and Licensing Office",
     featured: true,
     source: "https://client.ebpls-lucenacity.com/#new-application",
     process: [
       {
-        name: "Prepare Required Documents",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Ihanda ang mga Kinakailangang Dokumento",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Fill Out Business Permit Application Form",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Punan ang Form ng Aplikasyon para sa Business Permit",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Upload the Requirements",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "I-upload ang mga Kinakailangan",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Inspection & Approval",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Inspeksyon at Pag-apruba",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Assessment and Payment",
-        timeEstimation: "Not specified",
-        amount: "Based on Statement of Account",
+        name: "Pagtataya at Pagbabayad",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Batay sa Statement of Account",
       },
       {
-        name: "Release of Business Permit",
-        timeEstimation: "Within the overall 3–5 business day processing period",
-        amount: "Included in assessed fees",
+        name: "Pag-isyu ng Business Permit",
+        timeEstimation: "Sa loob ng pangkalahatang 3–5 araw ng trabaho para sa pagproseso",
+        amount: "Kasama sa mga nakatakdang bayaran",
       },
     ]
   },
@@ -65,40 +65,40 @@ export const services: Service[] = [
     slug: "business-permit-renewal",
     name: "Business Permit Renewal",
     description:
-      "Renew an existing business permit via the Lucena eBPLS portal — annual renewal for established businesses, with online payment via GCash or Landbank (0211-3057-54, City Government of Lucena).",
+      "I-renew ang existing business permit sa pamamagitan ng Lucena eBPLS portal — taunang renewal para sa mga established business, may online payment via GCash o Landbank (0211-3057-54, City Government of Lucena).",
     office: "Business Permits and Licensing Office",
     featured: true,
     source: "https://client.ebpls-lucenacity.com/#renew-application",
     process: [
       {
-        name: "Prepare Required Documents",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Ihanda ang mga Kinakailangang Dokumento",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Fill Out Renewal Application Form (login with BPLO credentials)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Punan ang Form ng Pagre-renew (mag-login gamit ang BPLO credentials)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Upload the Requirements (single PDF)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "I-upload ang mga Kinakailangan (isang PDF)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Inspection & Approval (if required)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Inspeksyon at Pag-apruba (kung kinakailangan)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Assessment and Payment",
-        timeEstimation: "Not specified",
-        amount: "Based on Statement of Account",
+        name: "Pagtataya at Pagbabayad",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Batay sa Statement of Account",
       },
       {
-        name: "Release of Business Permit",
-        timeEstimation: "Within 3–5 business days",
-        amount: "Included in assessed fees",
+        name: "Pag-isyu ng Business Permit",
+        timeEstimation: "Sa loob ng 3–5 araw ng trabaho",
+        amount: "Kasama sa mga nakatakdang bayaran",
       },
     ]
   },
@@ -106,39 +106,39 @@ export const services: Service[] = [
     slug: "business-permit-change-information",
     name: "Business Permit [Change of Information]",
     description:
-      "Update business permit details via the Lucena eBPLS portal — change of business address, change of ownership, or other amendments. Requirements vary by change type.",
+      "I-update ang details ng business permit sa Lucena eBPLS portal — pagbabago ng business address, pagbabago ng ownership, o iba pang amendment. Nag-iiba ang requirements ayon sa uri ng pagbabago.",
     office: "Business Permits and Licensing Office",
     source: "https://client.ebpls-lucenacity.com/#change-information",
     process: [
       {
-        name: "Prepare Required Documents (varies by change type)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Ihanda ang mga Kinakailangang Dokumento (nababago ayon sa uri ng pagbabago)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Fill Out Business Permit Application Form",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Punan ang Form ng Aplikasyon para sa Business Permit",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Upload the Requirements (single PDF)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "I-upload ang mga Kinakailangan (isang PDF)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Inspection & Approval (if required)",
-        timeEstimation: "Not specified",
-        amount: "Not specified",
+        name: "Inspeksyon at Pag-apruba (kung kinakailangan)",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Hindi tinukoy",
       },
       {
-        name: "Assessment and Payment",
-        timeEstimation: "Not specified",
-        amount: "Based on Statement of Account",
+        name: "Pagtataya at Pagbabayad",
+        timeEstimation: "Hindi tinukoy",
+        amount: "Batay sa Statement of Account",
       },
       {
-        name: "Release of Updated Business Permit",
-        timeEstimation: "Within 3–5 business days",
-        amount: "Included in assessed fees",
+        name: "Pag-isyu ng Na-update na Business Permit",
+        timeEstimation: "Sa loob ng 3–5 araw ng trabaho",
+        amount: "Kasama sa mga nakatakdang bayaran",
       },
     ]
   },
@@ -146,7 +146,7 @@ export const services: Service[] = [
     slug: "civil-registry",
     name: "Civil Registry",
     description:
-      "Request copies of birth, marriage, and death certificates, and file late registrations.",
+      "Humingi ng kopya ng birth, marriage, at death certificates, at magsampa ng late registration.",
     office: "Office of the City Civil Registrar",
     featured: true,
     process: []
@@ -155,7 +155,7 @@ export const services: Service[] = [
     slug: "real-property-tax",
     name: "Real Property Tax",
     description:
-      "Assess and pay real property tax, request tax clearances, and update property records.",
+      "I-assess at bayaran ang real property tax, humingi ng tax clearance, at i-update ang property records.",
     office: "City Assessor & City Treasury",
     featured: false,
     process: []
@@ -164,7 +164,7 @@ export const services: Service[] = [
     slug: "health-services",
     name: "Health Services",
     description:
-      "Access consultations, immunization, maternal care, and medical assistance programs.",
+      "Mag-access ng consultation, immunization, maternal care, at mga medical assistance program.",
     office: "City Health Office",
     featured: true,
     process: []
@@ -172,47 +172,69 @@ export const services: Service[] = [
   {
     slug: "yakap-program",
     name: "Philhealth YAKAP Program",
-    description: "The YAKAP program (Yaman ng Kalusugan Program or Yamang Kalusugan at Proteksyon) is the Philippine Health Insurance Corporation's (PhilHealth) expanded primary care and preventive healthcare program. Launched as an evolution of the older Konsulta program, YAKAP shifts the healthcare system from treating severe illnesses in hospitals to catching health problems early through regular checkups and community clinics.",
+    description: "Ang YAKAP program (Yaman ng Kalusugan Program o Yamang Kalusugan at Proteksyon) ay ang pinapalawak na primary care at preventive healthcare program ng Philippine Health Insurance Corporation (PhilHealth). Inilunsad ito bilang ebolusyon ng mas lumang Konsulta program, at binabago ng YAKAP ang healthcare system mula sa pagtreat ng malalang sakit sa ospital patungo sa maagang pag-detect ng health problems sa pamamagitan ng regular na checkup at community clinic.",
     office: "Lucena City Health",
     featured: true,
     source: "https://www.philhealth.gov.ph/",
     process: [
       {
-        name: "Verify or Update Your PhilHealth Membership",
+        name: "I-verify o I-update ang iyong PhilHealth Membership",
         details: [
-          "Ensure you have an active PhilHealth Identification Number (PIN) and an updated Member Data Record (MDR).",
-          "If you need to register or update your records, you can visit the PhilHealth Local Health Insurance Office (LHIO) Lucena or coordinate with the City Health Office (CHO) Lucena.",
+          "Tiyaking mayroon kang aktibong PhilHealth Identification Number (PIN) at na-update na Member Data Record (MDR).",
+          "Kung kailangan magrehistro o i-update ang records, maaari kang pumunta sa PhilHealth Local Health Insurance Office (LHIO) Lucena o makipag-ugnayan sa City Health Office (CHO) Lucena.",
         ],
       },
       {
-        name: "Choose an Accredited YAKAP Clinic",
+        name: "Pumili ng Akreditadong YAKAP Clinic",
         details: [
-          "Select an accredited Primary Care Provider (PCP) or YAKAP clinic in Lucena City (there are multiple accredited health centers, clinics, and hospitals in the city).",
-          "You can register and assign your clinic through the eGovPH Super App, the PhilHealth Member Portal, or by visiting the LHIO Lucena office directly.",
+          "Pumili ng akreditadong Primary Care Provider (PCP) o YAKAP clinic sa Lungsod ng Lucena (maraming akreditadong health center, klinika, at ospital sa lungsod).",
+          "Maaari kang magrehistro at magtalaga ng clinic sa pamamagitan ng eGovPH Super App, PhilHealth Member Portal, o sa pagpunta nang diretso sa opisina ng LHIO Lucena.",
         ],
       },
       {
-        name: "Undergo Your First Patient Encounter (FPE)",
+        name: "Dumaan sa First Patient Encounter (FPE)",
         details: [
-          "Visit your chosen accredited YAKAP clinic or health center in Lucena City.",
-          "Clinic staff will perform a digital liveness check and health assessment (First Patient Encounter).",
-          "This entitles you to free primary care checkups, basic laboratory tests, cancer screenings, and prescriptions with a Unique Prescription Security Code (UPSC) if needed.",
+          "Pumunta sa napili mong akreditadong YAKAP clinic o health center sa Lungsod ng Lucena.",
+          "Suriin ka ng staff ng clinic sa pamamagitan ng digital liveness check at health assessment (First Patient Encounter).",
+          "May karapatan ka nito sa libreng primary care checkup, basic laboratory tests, cancer screening, at reseta na may Unique Prescription Security Code (UPSC) kung kinakailangan.",
         ],
       },
       {
-        name: "Claim Free Medicines via GAMOT",
+        name: "Kumuha ng Libreng Gamot sa pamamagitan ng GAMOT",
         details: [
-          "If prescribed essential medicines (part of the 75 available drugs under the GAMOT package), bring your prescription/UPSC to a GAMOT-accredited pharmacy.",
-          "You can avail of up to ₱20,000 annually in free medications.",
+          "Kung may reseta para sa essential medicines (bahagi ng 75 available na gamot sa GAMOT package), dalhin ang reseta/UPSC sa isang GAMOT-accredited na parmasya.",
+          "Maaari kang kumuha ng hanggang ₱20,000 taunang halaga ng libreng gamot.",
         ],
       },
     ]
   },
   {
+    slug: "free-med",
+    name: "Free Medicine from Yakap Program",
+    description: "Libreng gamot para sa mga residente ng Lucena sa pamamagitan ng YAKAP/GAMOT program. Magparehistro sa barangay health center o City Health Office: kailangan ang Government ID para sa 18 taong gulang pataas, at birth certificate para sa 17 taong gulang pababa.",
+    office: "Barangay Health Center/City Health Office",
+    process: [
+      {
+        name: "Pumunta at Magparehistro sa Barangay Health Center o City Health Office",
+        details: [
+          "Magpunta sa barangay health center o sa City Health Office ng Lucena para magparehistro sa Libreng Gamot (YAKAP/GAMOT) program.",
+        ],
+      },
+      {
+        name: "Ihanda ang mga Kinakailangang Dokumento",
+        details: [
+          "18 taong gulang pataas: magdala ng Government ID.",
+          "17 taong gulang pababa: magdala ng birth certificate.",
+        ],
+      },
+    ],
+    featured: true
+  },
+  {
     slug: "social-services",
     name: "Social Welfare Services",
     description:
-      "Social assistance, senior citizen and PWD IDs, and support for indigent residents.",
+      "Social assistance, senior citizen at PWD ID, at suporta para sa mga indigent resident.",
     office: "City Social Welfare and Development Office",
     featured: true,
     process: []
@@ -221,14 +243,14 @@ export const services: Service[] = [
     slug: "building-permits",
     name: "Building & Construction Permits",
     description:
-      "Secure building permits, occupancy permits, and coordinate inspections.",
+      "Kumuha ng building permit at occupancy permit, at i-coordinate ang mga inspeksyon.",
     office: "Office of the City Building Official",
     featured: true,
     process: [
       {
-        name: "Verify or Update Your PhilHealth Membership",
-        timeEstimation: "Within 3–5 business days",
-        amount: "Included in assessed fees",
+        name: "I-verify o I-update ang iyong PhilHealth Membership",
+        timeEstimation: "Sa loob ng 3–5 araw ng trabaho",
+        amount: "Kasama sa mga nakatakdang bayaran",
       }
     ]
   },
@@ -236,7 +258,7 @@ export const services: Service[] = [
     slug: "employment",
     name: "Employment Assistance",
     description:
-      "Job matching, local employment facilitation, and special program for employment of students.",
+      "Job matching, lokal na employment facilitation, at special program para sa employment ng mga estudyante.",
     office: "Public Employment Service Office (PESO)",
     process: []
   },
@@ -244,53 +266,53 @@ export const services: Service[] = [
     slug: "brgy-services",
     name: "Barangay Clearance",
     description:
-      "An official document issued by your barangay certifying that you are a bona fide resident of good moral character with no pending complaint, blotter record, or case at the barangay level. Commonly required for employment, business and building permits, bank accounts, loans, and school requirements.",
+      "Opisyal na dokumento mula sa iyong barangay na nagpapatunay na bona fide resident ka, may good moral character, at walang pending complaint, blotter record, o case sa antas ng barangay. Karaniwang kailangan para sa employment, business at building permit, bank account, loan, at school requirements.",
     office: "Barangay Hall (Punong Barangay)",
     source: "https://barangayclearance.ph/",
     process: [
       {
-        name: "Prepare Your Documents",
+        name: "Ihanda ang iyong mga Dokumento",
         details: [
-          "Bring a valid ID, proof of residency (utility bill, lease contract, or voter registration), a filled-out application form, the clearance fee, and a cedula if your barangay asks for one.",
-          "Bring the original and one photocopy of every item. Commonly accepted IDs include the national ID, driver's license, passport, UMID, voter's certification, PRC ID, school ID, and company ID.",
+          "Magdala ng valid ID, patunay ng paninirahan (utility bill, lease contract, o voter registration), punong form ng aplikasyon, bayaran para sa clearance, at cedula kung hihilingin ito ng barangay.",
+          "Magdala ng orihinal at isang photocopy ng bawat dokumento. Karaniwang tinatanggap na ID: national ID, driver's license, passport, UMID, voter's certification, PRC ID, school ID, at company ID.",
         ],
       },
       {
-        name: "Go to Your Barangay Hall",
+        name: "Pumunta sa Barangay Hall ninyo",
         details: [
-          "Visit the barangay where you actually live, not where you were born. Applying in a barangay where you do not reside is an automatic refusal.",
-          "Opening hours are usually 8:00 AM to 5:00 PM, Monday to Friday; some halls open on Saturday mornings.",
+          "Pumunta sa barangay kung saan ka talaga nakatira, hindi kung saan ka ipinanganak. Awtomatikong pagtanggi ang aplikasyon sa barangay na hindi mo tinitirhan.",
+          "Karaniwang bukas ang opisina mula 8:00 AM hanggang 5:00 PM, Lunes hanggang Biyernes; may ilang barangay na bukas Sabado ng umaga.",
         ],
       },
       {
-        name: "Get and Fill Out the Application Form",
+        name: "Kumuha at Punan ang Form ng Aplikasyon",
         details: [
-          "Write your full name, complete address, age, civil status, contact number, and purpose.",
-          "State the purpose exactly as the receiving office worded it: “For Employment”, “For Business Permit”, and “For Bank Requirement” are not interchangeable.",
+          "Isulat ang buong pangalan, kumpletong address, edad, civil status, contact number, at layunin.",
+          "Isulat ang layunin eksakto kung paano ito nakasaad sa opisinang tatanggap: ang “For Employment”, “For Business Permit”, at “For Bank Requirement” ay hindi magpapalitan.",
         ],
       },
       {
-        name: "Submit Your Requirements and Blotter Check",
+        name: "Isumite ang mga Kinakailangan at Ipacheck ang Blotter",
         details: [
-          "Hand over the form, your ID, and documents. Staff check the barangay blotter for any record under your name and address — this is the actual clearance step.",
-          "A pending complaint or barangay case will hold the clearance until it is settled through the Lupong Tagapamayapa.",
+          "Iabot ang form, ID, at mga dokumento. Susuriin ng staff ang barangay blotter para sa anumang record sa pangalan at address mo — ito ang aktwal na hakbang ng clearance.",
+          "Ang nakabinbing reklamo o kaso sa barangay ay magpapahinto sa clearance hangga't hindi ito naaayos sa pamamagitan ng Lupong Tagapamayapa.",
         ],
       },
       {
-        name: "Pay the Fee",
-        timeEstimation: "A few minutes",
-        amount: "Personal use ₱20–₱100; business use often ₱200–₱1,000+",
+        name: "Magbayad ng Bayaran",
+        timeEstimation: "Ilang minuto",
+        amount: "Para sa personal na gamit ₱20–₱100; para sa negosyo kadalasang ₱200–₱1,000+",
         details: [
-          "Each barangay sets its own rate under the Local Government Code. First-time job seekers pay nothing under RA 11261, and indigent residents are often free with a certificate of indigency.",
-          "Bring exact change and keep the official receipt, as a permit office may ask to see it later.",
+          "Bawat barangay ang nagtatakda ng sariling rate sa ilalim ng Local Government Code. Ang first-time job seekers ay hindi nagbabayad sa ilalim ng RA 11261, at ang mga indigent resident ay madalas libre kapag may certificate of indigency.",
+          "Magdala ng eksaktong pera at itago ang official receipt, dahil baka hingan ito ng permit office pagkatapos.",
         ],
       },
       {
-        name: "Wait for Processing and Receive Your Clearance",
-        timeEstimation: "Walk-in release usually takes 10–30 minutes",
+        name: "Hintayin ang Pagproseso at Tanggapin ang Clearance",
+        timeEstimation: "Karaniwang 10–30 minuto ang paglabas para sa walk-in",
         details: [
-          "Check the spelling of your name, your address, and the purpose, and confirm the dry seal, date, and the barangay captain's signature. Without the dry seal, the clearance is not valid.",
-          "Validity runs from 6 months to 1 year in most barangays, though many employers and banks accept only a copy issued within the last 3 months.",
+          "Suriin ang spelling ng pangalan, address, at layunin, pati ang dry seal, petsa, at lagda ng barangay captain. Kung walang dry seal, hindi valid ang clearance.",
+          "Ang validity ay 6 na buwan hanggang 1 taon sa karamihang barangay, ngunit maraming employer at bangko ang tumatanggap lamang ng kopyang inisyu sa nakaraang 3 buwan.",
         ],
       },
     ],
@@ -299,33 +321,33 @@ export const services: Service[] = [
     slug: "cedula",
     name: "Cedula (Community Tax Certificate)",
     description:
-      "Also called a community tax certificate or residence certificate, the cedula is issued at the barangay hall or city treasurer's office and is required by many barangays when applying for a clearance or certificate.",
+      "Tinatawag ding community tax certificate o residence certificate, ang cedula ay inisyu sa barangay hall o city treasurer's office at hinihingi ng maraming barangay kapag nag-aapply ng clearance o certificate.",
     office: "Barangay Hall / City Treasurer's Office",
     source: "https://barangayclearance.ph/",
     process: [
       {
-        name: "Confirm If Your Barangay Requires One",
+        name: "Kumpirmahin Kung Kailangan ito ng Barangay ninyo",
         details: [
-          "Many barangays require a cedula, but not every one makes it compulsory for a personal clearance. Ask the desk first to avoid an extra trip.",
+          "Maraming barangay ang humihingi ng cedula, ngunit hindi lahat ay sapilitan para sa personal na clearance. Magtanong muna sa desk para hindi ka magbalik-balik.",
         ],
       },
       {
-        name: "Prepare Your Details",
+        name: "Ihanda ang iyong mga Detalye",
         details: [
-          "Bring a valid ID and your basic personal details. The rate depends on your declared income, so declare it accurately.",
+          "Magdala ng valid ID at mga basic personal details. Ang bayaran ay nakasalalay sa idineklarang kita, kaya isulat ito nang tama.",
         ],
       },
       {
-        name: "Apply at the Barangay Hall or City Treasurer's Office",
+        name: "Mag-apply sa Barangay Hall o City Treasurer's Office",
         details: [
-          "The cedula is bought in the same hall where you request your clearance, or at the city treasurer's office.",
+          "Binibili ang cedula sa parehong barangay hall kung saan kukuha ng clearance, o sa city treasurer's office.",
         ],
       },
       {
-        name: "Pay the Fee",
-        amount: "Basic rate starts at a few pesos and rises with declared income",
+        name: "Magbayad ng Bayaran",
+        amount: "Ang basic rate ay nagsisimula sa ilang piso at tumataas ayon sa idineklarang kita",
         details: [
-          "Most residents pay a small amount. Keep the official receipt for your records.",
+          "Karamihan sa mga residente ay nagbabayad ng maliit na halaga. Itago ang official receipt para sa sariling tala.",
         ],
       },
     ],
@@ -334,36 +356,36 @@ export const services: Service[] = [
     slug: "barangay-indigency",
     name: "Barangay Certificate of Indigency",
     description:
-      "A barangay certification stating that you or your household have limited income and cannot afford a fee or service. It is accepted by hospitals, DSWD, and legal aid offices for financial aid and fee waivers, and indigent residents often use it to get their barangay clearance for free.",
+      "Sertipiko mula sa barangay na nagpapatunay na limitado ang kita mo o ng iyong sambahayan at hindi kayang bayaran ang fee o serbisyo. Tinatanggap ito ng mga ospital, DSWD, at legal aid office para sa financial aid at fee waiver, at madalas gamitin ng mga indigent resident para libreng makuha ang barangay clearance.",
     office: "Barangay Hall",
     source: "https://barangayclearance.ph/",
     process: [
       {
-        name: "Prepare Your Documents",
+        name: "Ihanda ang iyong mga Dokumento",
         details: [
-          "Bring a valid ID, proof of address, and documents showing your household's financial situation.",
+          "Magdala ng valid ID, patunay ng address, at mga dokumentong nagpapakita ng pinansyal na kalagayan ng sambahayan.",
         ],
       },
       {
-        name: "Request the Certificate at the Barangay Hall",
+        name: "Humingi ng Sertipiko sa Barangay Hall",
         details: [
-          "A certificate of indigency confirms limited income for aid and fee waivers. You apply at the same desk and with the same form used for other barangay certificates.",
-          "State the exact purpose so the wording matches what the receiving office expects, such as hospital bill assistance, medicine, or burial aid.",
+          "Pinatutunayan ng certificate of indigency ang limitadong kita para sa tulong at pagwawaksi ng bayaran. Mag-aapply ka sa parehong desk at form na ginagamit para sa ibang sertipiko ng barangay.",
+          "Isulat ang eksaktong layunin upang tumugma sa inaasahan ng tatanggap na opisina, halimbawa: tulong sa bill ng ospital, gamot, o tulong sa paglilibing.",
         ],
       },
       {
-        name: "Pay the Fee (if any)",
-        amount: "Small fee set by ordinance, often free",
+        name: "Magbayad ng Bayaran (kung mayroon)",
+        amount: "Maliit na bayarang itinakda ng ordinansa, madalas libre",
         details: [
-          "The fee is usually small, and some barangays issue it free of charge.",
+          "Karaniwang maliit ang bayaran, at may ilang barangay na nagbibigay nito nang libre.",
         ],
       },
       {
-        name: "Receive and Check the Certificate",
-        timeEstimation: "Often issued the same day",
+        name: "Tanggapin at Suriin ang Sertipiko",
+        timeEstimation: "Madalas inisyu sa parehong araw",
         details: [
-          "Confirm the dry seal and signature — offices may reject the document without them.",
-          "Most offices accept the certificate within 3 to 6 months. Check with the requesting office, such as the hospital or DSWD, since some require one from the city social welfare office instead.",
+          "Kumpirmahin ang dry seal at lagda — maaaring tanggihan ng opisina ang dokumento kung wala ang mga ito.",
+          "Karamihang opisina ay tumatanggap ng sertipiko sa loob ng 3 hanggang 6 na buwan. Magtanong sa humihinging opisina, gaya ng ospital o DSWD, dahil may ilang nangangailangan ng mula sa city social welfare office sa halip.",
         ],
       },
     ],
@@ -372,7 +394,7 @@ export const services: Service[] = [
     slug: "scholarship",
     name: "Scholarship Programs",
     description:
-      "City-funded scholarships for qualified students of Lucena City.",
+      "Mga scholarship na pinondohan ng lungsod para sa mga qualified na estudyante ng Lucena City.",
     office: "City Scholarship Office",
     process: []
   },

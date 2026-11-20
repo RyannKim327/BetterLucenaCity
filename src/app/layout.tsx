@@ -38,7 +38,7 @@ export const metadata: Metadata = {
       url: "https://github.com/seiyanndev"
     },
     {
-      name: "Mark Luoie Alvarez",
+      name: "Mark Louie Alvarez",
       url: "https://github.com/marrrkkk"
     }
   ],
@@ -50,7 +50,10 @@ export const metadata: Metadata = {
     "BetterLucenaCity",
     "Lucena City Services",
     "Lucena City History",
-    "Lucena City Population"
+    "Lucena City Population",
+    "Lucena City Website",
+    "Lucena City",
+    "Lucena Website"
   ],
   description: site.description,
   icons: {
