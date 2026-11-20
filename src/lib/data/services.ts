@@ -1,21 +1,33 @@
 import { Service, ServicesCatergory } from "@/types/services";
-import { BriefcaseMedical, Certificate, GraduationCap, ScrollText } from "lucide-react";
+import { BriefcaseBusiness, Certificate, GraduationCap, HeartPulse, Landmark } from "lucide-react";
 
 export const servicesCategory: ServicesCatergory[] = [{
-  name: "Medical & Social Care",
-  href: "care",
-  icon: BriefcaseMedical
+  name: "Business & Permits",
+  href: "business",
+  description: "Business permits, renewals, amendments, construction, and property tax.",
+  icon: BriefcaseBusiness
 }, {
-  name: "Certificates & Civil Registration",
-  href: "certification",
-  icon: Certificate
+  name: "Barangay",
+  href: "barangay",
+  description: "Barangay clearance, cedula, and certificate of indigency.",
+  icon: Landmark,
+  featured: true
 }, {
-  name: "Permits & Businesses",
-  href: "permits",
-  icon: ScrollText
+  name: "Health & Social Services",
+  href: "health",
+  description: "City health, barangay health centers, PhilHealth, and social welfare programs.",
+  icon: HeartPulse,
+  featured: true
 }, {
-  name: "Education & Scholarships",
+  name: "Civil Registration",
+  href: "civil-registration",
+  description: "Birth, marriage, and death certificates from the City Civil Registrar.",
+  icon: Certificate,
+  featured: true
+}, {
+  name: "Education & Employment",
   href: "education",
+  description: "Scholarships, job matching, and employment assistance.",
   icon: GraduationCap
 }]
 
@@ -26,7 +38,7 @@ export const services: Service[] = [
     description:
       "Mag-apply o magre-renew ng business permit, kumuha ng mayor's permit, at suriin ang mga licensing requirements.",
     office: "Business Permits and Licensing Office",
-    featured: true,
+    category: "business",
     source: "https://client.ebpls-lucenacity.com/#new-application",
     process: [
       {
@@ -67,7 +79,7 @@ export const services: Service[] = [
     description:
       "I-renew ang existing business permit sa pamamagitan ng Lucena eBPLS portal — taunang renewal para sa mga established business, may online payment via GCash o Landbank (0211-3057-54, City Government of Lucena).",
     office: "Business Permits and Licensing Office",
-    featured: true,
+    category: "business",
     source: "https://client.ebpls-lucenacity.com/#renew-application",
     process: [
       {
@@ -108,6 +120,7 @@ export const services: Service[] = [
     description:
       "I-update ang details ng business permit sa Lucena eBPLS portal — pagbabago ng business address, pagbabago ng ownership, o iba pang amendment. Nag-iiba ang requirements ayon sa uri ng pagbabago.",
     office: "Business Permits and Licensing Office",
+    category: "business",
     source: "https://client.ebpls-lucenacity.com/#change-information",
     process: [
       {
@@ -148,8 +161,52 @@ export const services: Service[] = [
     description:
       "Humingi ng kopya ng birth, marriage, at death certificates, at magsampa ng late registration.",
     office: "Office of the City Civil Registrar",
-    featured: true,
+    category: "civil-registration",
     process: []
+  },
+  {
+    slug: "psa-birth-certificate",
+    name: "PSA Birth Certificate",
+    description:
+      "Kumuha ng certified copy ng birth certificate mula sa Philippine Statistics Authority (PSA). Ang Lucena CRS outlet ay nasa 3rd Floor, Pacific Mall, M.L. Tagarao St., Brgy. 3, Lucena City. Puwede ring mag-order online para maihatid o ma-pick up.",
+    office: "Philippine Statistics Authority (PSA) — Lucena CRS Outlet",
+    category: "civil-registration",
+    source: "https://psa.gov.ph/birth-certificate",
+    process: [
+      {
+        name: "Mag-book ng appointment online (para sa walk-in)",
+        details: [
+          "Pumunta sa https://appointment.psa.gov.ph/ at piliin ang Region IV-A (CALABARZON) at ang Quezon/Lucena outlet.",
+          "Isulat ang pangalan at email ng taong personal na pupunta, i-verify ang one-time PIN, piliin ang Birth Certificate, petsa, at oras. I-save ang appointment slip — libre ang pag-book at hindi ito pwedeng ipasa sa iba.",
+          "Kinakailangan ang appointment para sa walk-in at hindi pwedeng mag-book ang mga menor de edad. Kung walang available na slot, subukang muli o gamitin ang online ordering.",
+        ],
+      },
+      {
+        name: "Ihanda ang mga kinakailangang detalye at dokumento",
+        details: [
+          "Buong pangalan ng may-ari ng record, pangalan ng ama, maiden name ng ina, petsa at lugar ng kapanganakan (lungsod/bayan at probinsya), kung late registered at ang taon, pangalan at address ng humihingi, relasyon, bilang ng kopya, at layunin.",
+          "Magdala ng valid ID at ng appointment slip. Kung kumakatawan sa iba: valid ID ng may-ari, sariling valid ID, at authorization letter o SPA na partikular na nagsasaad na para ito sa PSA civil registry document.",
+          "Confidential ang birth record — karaniwang ang may-ari, asawa, magulang, direktang descendants, legal guardian, o authorized representative ang pwedeng humingi.",
+        ],
+      },
+      {
+        name: "Pumunta sa PSA Lucena outlet o mag-order online",
+        details: [
+          "Walk-in: 3rd Floor, Pacific Mall, M.L. Tagarao St., Brgy. 3, Lucena City (Lunes–Biyernes). Dumating nang maaga at ipakita ang appointment slip.",
+          "Online: mag-order sa https://www.psaserbilis.com.ph para sa delivery o LBC pickup, o sa https://psahelpline.ph para sa delivery, store pickup, o E-Certificate.",
+        ],
+      },
+      {
+        name: "Magbayad at tanggapin ang certificate",
+        timeEstimation: "Karaniwang ilang oras sa outlet; humigit-kumulang 6–8 araw ng trabaho para sa online delivery sa mga probinsya",
+        amount: "₱155 bawat kopya sa outlet; ₱330 para sa unang kopya via PSA Serbilis delivery (maaaring magbago)",
+        details: [
+          "Sa outlet, bayaran ang fee at tanggapin ang certificate sa araw ng appointment kung nasa database na ang record; ang manual verification ay maaaring tumagal ng ilang araw.",
+          "Suriin ang spelling ng pangalan, petsa, at lugar ng kapanganakan bago umalis. Para sa delivered copy, ipakita ang valid ID sa courier o sa pickup branch.",
+          "Kung hindi pa nasa PSA database ang record, maaaring kailanganin muna ang certification mula sa Local Civil Registrar bago ang PSA copy.",
+        ],
+      },
+    ],
   },
   {
     slug: "real-property-tax",
@@ -157,7 +214,7 @@ export const services: Service[] = [
     description:
       "I-assess at bayaran ang real property tax, humingi ng tax clearance, at i-update ang property records.",
     office: "City Assessor & City Treasury",
-    featured: false,
+    category: "business",
     process: []
   },
   {
@@ -166,7 +223,7 @@ export const services: Service[] = [
     description:
       "Mag-access ng consultation, immunization, maternal care, at mga medical assistance program.",
     office: "City Health Office",
-    featured: true,
+    category: "health",
     process: []
   },
   {
@@ -174,7 +231,7 @@ export const services: Service[] = [
     name: "Philhealth YAKAP Program",
     description: "Ang YAKAP program (Yaman ng Kalusugan Program o Yamang Kalusugan at Proteksyon) ay ang pinapalawak na primary care at preventive healthcare program ng Philippine Health Insurance Corporation (PhilHealth). Inilunsad ito bilang ebolusyon ng mas lumang Konsulta program, at binabago ng YAKAP ang healthcare system mula sa pagtreat ng malalang sakit sa ospital patungo sa maagang pag-detect ng health problems sa pamamagitan ng regular na checkup at community clinic.",
     office: "Lucena City Health",
-    featured: true,
+    category: "health",
     source: "https://www.philhealth.gov.ph/",
     process: [
       {
@@ -213,6 +270,7 @@ export const services: Service[] = [
     name: "Free Medicine from Yakap Program",
     description: "Libreng gamot para sa mga residente ng Lucena sa pamamagitan ng YAKAP/GAMOT program. Magparehistro sa barangay health center o City Health Office: kailangan ang Government ID para sa 18 taong gulang pataas, at birth certificate para sa 17 taong gulang pababa.",
     office: "Barangay Health Center/City Health Office",
+    category: "health",
     process: [
       {
         name: "Pumunta at Magparehistro sa Barangay Health Center o City Health Office",
@@ -228,7 +286,6 @@ export const services: Service[] = [
         ],
       },
     ],
-    featured: true
   },
   {
     slug: "social-services",
@@ -236,7 +293,7 @@ export const services: Service[] = [
     description:
       "Social assistance, senior citizen at PWD ID, at suporta para sa mga indigent resident.",
     office: "City Social Welfare and Development Office",
-    featured: true,
+    category: "health",
     process: []
   },
   {
@@ -245,7 +302,7 @@ export const services: Service[] = [
     description:
       "Kumuha ng building permit at occupancy permit, at i-coordinate ang mga inspeksyon.",
     office: "Office of the City Building Official",
-    featured: true,
+    category: "business",
     process: [
       {
         name: "I-verify o I-update ang iyong PhilHealth Membership",
@@ -260,6 +317,7 @@ export const services: Service[] = [
     description:
       "Job matching, lokal na employment facilitation, at special program para sa employment ng mga estudyante.",
     office: "Public Employment Service Office (PESO)",
+    category: "education",
     process: []
   },
   {
@@ -268,6 +326,7 @@ export const services: Service[] = [
     description:
       "Opisyal na dokumento mula sa iyong barangay na nagpapatunay na bona fide resident ka, may good moral character, at walang pending complaint, blotter record, o case sa antas ng barangay. Karaniwang kailangan para sa employment, business at building permit, bank account, loan, at school requirements.",
     office: "Barangay Hall (Punong Barangay)",
+    category: "barangay",
     source: "https://barangayclearance.ph/",
     process: [
       {
@@ -323,6 +382,7 @@ export const services: Service[] = [
     description:
       "Tinatawag ding community tax certificate o residence certificate, ang cedula ay inisyu sa barangay hall o city treasurer's office at hinihingi ng maraming barangay kapag nag-aapply ng clearance o certificate.",
     office: "Barangay Hall / City Treasurer's Office",
+    category: "barangay",
     source: "https://barangayclearance.ph/",
     process: [
       {
@@ -358,6 +418,7 @@ export const services: Service[] = [
     description:
       "Sertipiko mula sa barangay na nagpapatunay na limitado ang kita mo o ng iyong sambahayan at hindi kayang bayaran ang fee o serbisyo. Tinatanggap ito ng mga ospital, DSWD, at legal aid office para sa financial aid at fee waiver, at madalas gamitin ng mga indigent resident para libreng makuha ang barangay clearance.",
     office: "Barangay Hall",
+    category: "barangay",
     source: "https://barangayclearance.ph/",
     process: [
       {
@@ -396,6 +457,7 @@ export const services: Service[] = [
     description:
       "Mga scholarship na pinondohan ng lungsod para sa mga qualified na estudyante ng Lucena City.",
     office: "City Scholarship Office",
+    category: "education",
     process: []
   },
 ];

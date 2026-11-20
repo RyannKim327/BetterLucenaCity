@@ -4,7 +4,9 @@ import { ForwardRefExoticComponent, RefAttributes } from "react";
 export interface ServicesCatergory {
   name: string
   href: string
+  description: string
   icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
+  featured?: boolean
 }
 
 export interface Process {
@@ -19,7 +21,7 @@ export interface Service {
   name: string;
   description: string;
   office: string;
-  featured?: boolean;
+  category: string;
   process: Process[];
   source?: string
 }

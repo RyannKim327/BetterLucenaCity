@@ -1,41 +1,47 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { services } from "@/lib/data/services";
+import { services, servicesCategory } from "@/lib/data/services";
 
 export default function ServicesSection() {
-  const featuredServices = services.filter((s) => s.featured);
-
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="services-heading">
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <h2 id="services-heading" className="text-2xl font-semibold tracking-tight">
-            Popular Services
-          </h2>
-          <p className="mt-1 text-on-surface-variant">
-            Mga karaniwang serbisyo ng lungsod
-          </p>
-        </div>
-        <Link href="/services" className="shrink-0 text-sm font-medium text-primary hover:underline">
-          View all →
-        </Link>
-      </div>
+    <section className="w-full" aria-labelledby="services-heading">
+      <h2 id="services-heading" className="sr-only">
+        Featured services
+      </h2>
+      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {servicesCategory.map((category) => {
+          if (!category.featured) return null;
 
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredServices.map((service) => (
-          <li key={service.slug}>
-            <Card className="h-full">
-              <p className="text-xs uppercase tracking-wider text-secondary">
-                {service.office}
-              </p>
-              <h3 className="mt-2 text-base font-semibold">{service.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-                {service.description}
-              </p>
-            </Card>
-          </li>
-        ))}
+          const Icon = category.icon;
+          const count = services.filter((service) => service.category === category.href).length;
+
+          return (
+            <li key={category.href}>
+              <Link href={`/services?category=${category.href}`} className="group block h-full">
+                <Card hover className="flex h-full flex-col p-4!">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-container">
+                      <Icon size={18} strokeWidth={1.8} aria-hidden />
+                    </span>
+                    <span className="text-[11px] font-medium text-on-surface-variant">
+                      {count} {count === 1 ? "service" : "services"}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 text-sm font-semibold group-hover:text-primary">
+                    {category.name}
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-on-surface-variant">
+                    {category.description}
+                  </p>
+                  <span className="mt-auto pt-3 text-xs font-medium text-primary">
+                    Browse category →
+                  </span>
+                </Card>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </section>
-  )
+  );
 }

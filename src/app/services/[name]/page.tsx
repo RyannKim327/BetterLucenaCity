@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { services } from "@/lib/data/services";
+import { services, servicesCategory } from "@/lib/data/services";
 
 interface Props {
   params: Promise<{ name: string }>;
@@ -20,15 +20,18 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   if (!service) notFound();
 
+  const category = servicesCategory.find((item) => item.href === service.category);
+  const backHref = category ? `/services?category=${category.href}` : "/services";
+
   return (
     <div>
       <div className="border-b border-outline-variant/40 bg-surface-container-low">
         <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
           <Link
-            href="/services"
+            href={backHref}
             className="inline-flex text-sm font-medium text-primary hover:underline"
           >
-            ← Back to services
+            ← Back to {category ? category.name : "services"}
           </Link>
           <p className="mt-6 text-sm font-medium uppercase tracking-widest text-secondary">
             {service.office}

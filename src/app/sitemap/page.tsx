@@ -22,7 +22,7 @@ const sitemap: SitemapNode[] = [
     href: "/",
     label: "Home",
     description:
-      "Landing page — Hero, About Lucena, featured services, announcements preview, and live civic data (weather, earthquakes, DPWH projects, map).",
+      "Landing page — Hero, About Lucena, services by category, announcements preview, and live civic data (weather, earthquakes, DPWH projects, map).",
     badge: "Public",
   },
   {
@@ -36,13 +36,18 @@ const sitemap: SitemapNode[] = [
     href: "/transparency",
     label: "Transparency",
     description:
-      "Open Books, Open Government — Budget & Spending, National Budget (GAA FY2020–2026 via BetterGov.ph API, #national-budget), Procurement, Ordinances & Resolutions, Full Disclosure Policy.",
+      "Open Books, Open Government — Budget & Spending, National Budget (GAA FY2020–2026 via BetterGov.ph API, #national-budget), National Projects (DPWH project map), Procurement, Ordinances & Resolutions, Full Disclosure Policy.",
     badge: "Public",
     children: [
       {
         href: "/transparency#national-budget",
         label: "#national-budget",
         description: "Live National Budget section embedded on the transparency page.",
+      },
+      {
+        href: "/transparency/national-projects",
+        label: "/transparency/national-projects",
+        description: "DPWH national infrastructure project map with status, budget, and progress markers.",
       },
       {
         href: "/legal",
@@ -242,7 +247,7 @@ export default function SitemapPage() {
               <span className="font-medium text-on-surface">Footer</span> — About (BetterLucenaCity description + City Hall address), Navigate (same 6 nav links), Emergency Hotlines, copyright tagline, link to /contributors “Be one of us? Be a contributor?”.
             </li>
             <li>
-              <span className="font-medium text-on-surface">Home sections</span> (at /) — Hero (map + CTA), About Lucena, Services preview, Announcements preview, Live Data (weather/earthquakes/DPWH/map).
+              <span className="font-medium text-on-surface">Home sections</span> (at /) — Hero (CTA + services by category), About Lucena, Announcements preview, Live Data (weather/earthquakes/DPWH/map).
             </li>
           </ul>
         </Card>

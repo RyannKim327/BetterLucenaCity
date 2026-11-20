@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: "/services", changeFrequency: "weekly", priority: 0.9 },
       { path: "/transparency", changeFrequency: "daily", priority: 0.9 },
       { path: "/transparency/local-budget", changeFrequency: "weekly", priority: 0.8 },
+      { path: "/transparency/national-projects", changeFrequency: "daily", priority: 0.8 },
       { path: "/transparency/procurement", changeFrequency: "weekly", priority: 0.8 },
       { path: "/legal", changeFrequency: "weekly", priority: 0.8 },
       { path: "/legal/fdp", changeFrequency: "monthly", priority: 0.6 },

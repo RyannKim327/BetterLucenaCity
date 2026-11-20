@@ -26,6 +26,13 @@ const transparencyAreas = [
     href: "#national-budget",
   },
   {
+    title: "National Projects",
+    description:
+      "Map of national government infrastructure projects in Lucena City, with implementation status, budget, and progress per marker.",
+    status: "View project map",
+    href: "/transparency/national-projects",
+  },
+  {
     title: "Procurement",
     description:
       "Public bidding notices, awarded contracts, and supplier information.",

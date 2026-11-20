@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { services as initialServices } from "@/lib/data/services";
+import { services as initialServices, servicesCategory } from "@/lib/data/services";
 import type { Service, Process } from "@/types/services";
 import { CheckCircle2, Loader2, Plus, Trash2, Briefcase, ListOrdered } from "lucide-react";
 
@@ -46,7 +46,10 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
     const name = String(data.get("name") ?? "").trim();
     const description = String(data.get("description") ?? "").trim();
     const office = String(data.get("office") ?? "").trim();
-    const featured = data.get("featured") === "on";
+    const requestedCategory = String(data.get("category") ?? "").trim();
+    const category = servicesCategory.some((item) => item.href === requestedCategory)
+      ? requestedCategory
+      : "business";
     const source = String(data.get("source") ?? "").trim();
 
     if (!name || !description || !office) {
@@ -80,7 +83,7 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
       category: "Service Information",
       title: name,
       source,
-      details: `Service: ${name} | Office: ${office} | Featured: ${featured ? "yes" : "no"} | ${description} | Process: ${JSON.stringify(cleaned)}`,
+      details: `Service: ${name} | Office: ${office} | Category: ${category} | ${description} | Process: ${JSON.stringify(cleaned)}`,
       consent: true,
     };
 
@@ -95,7 +98,7 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
         throw new Error(body.error ?? "Failed to submit.");
       }
       const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-      setServices((prev) => [{ slug, name, description, office, featured, process: cleaned }, ...prev]);
+      setServices((prev) => [{ slug, name, description, office, category, process: cleaned }, ...prev]);
       setStatus("success");
       form.reset();
       setProcesses([emptyProcess()]);
@@ -136,6 +139,19 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
               </div>
 
               <div>
+                <label htmlFor="s-category" className={labelClass}>
+                  Category
+                </label>
+                <select id="s-category" name="category" defaultValue="business" className={fieldClass}>
+                  {servicesCategory.map((item) => (
+                    <option key={item.href} value={item.href}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
                 <label htmlFor="s-desc" className={labelClass}>
                   Description <span className="text-secondary">*</span>
                 </label>
@@ -148,13 +164,6 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
                   className={`${fieldClass} resize-y`}
                 />
               </div>
-
-              <label className="flex items-center gap-2 rounded-xl border border-outline-variant/30 bg-surface-container px-3.5 py-3 text-sm">
-                <input type="checkbox" name="featured" className="h-4 w-4 rounded border-outline text-primary focus:ring-primary/30" />
-                <span className="text-on-surface-variant">
-                  <span className="font-medium text-on-surface">Featured</span> — highlight on Services page
-                </span>
-              </label>
 
               {/* Process array */}
               <div className="rounded-xl border border-outline-variant/30 bg-surface-container p-4">
@@ -278,19 +287,16 @@ export function ServicePanel({ userEmail }: { userEmail: string }) {
               </span>
             </div>
             <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
-              Keys shown: <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">name</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">office</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">featured</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">process[]</code>. New submissions appear at the top.
+              Keys shown: <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">name</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">office</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">category</code> · <code className="rounded bg-surface-container px-1 py-0.5 text-[11px]">process[]</code>. New submissions appear at the top.
             </p>
             <ul className="mt-4 space-y-3 max-h-[640px] overflow-auto pr-1">
               {services.map((s, idx) => (
                 <li
                   key={`${s.slug}-${idx}`}
-                  className={`rounded-xl border px-3.5 py-3 ${s.featured ? "border-primary/20 bg-primary-container/10" : "border-outline-variant/40 bg-surface-container"}`}
+                  className="rounded-xl border border-outline-variant/40 bg-surface-container px-3.5 py-3"
                 >
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-medium leading-snug">{s.name}</p>
-                    {s.featured && (
-                      <span className="rounded-full bg-primary-container px-2 py-0.5 text-[11px] font-medium text-on-primary-container">Featured</span>
-                    )}
                     {idx === 0 && services.length > initialServices.length && (
                       <span className="rounded-full bg-secondary-container px-2 py-0.5 text-[11px] font-medium text-on-secondary-container">New</span>
                     )}

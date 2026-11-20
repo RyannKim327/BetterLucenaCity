@@ -4,8 +4,8 @@ import { getDpwhProjects } from "@/lib/sources/dpwh";
 const ALLOWED_STATUSES = new Set([
   "Completed",
   "On-Going",
-  "Not Started",
-  "For Procurement",
+  "Not-Started",
+  "For-Procurement",
   "Terminated",
 ]);
 
