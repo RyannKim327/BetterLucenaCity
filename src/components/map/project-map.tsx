@@ -15,7 +15,7 @@ export type MappedProject = Omit<DpwhProject, "latitude" | "longitude"> & {
 export const STATUS_LEGEND = [
   { status: "Completed", label: "Done", color: "#2e7d32" },
   { status: "On-Going", label: "On Going", color: "#f59e0b" },
-  { status: "Not-Started", label: "Not started", color: "#dc2626" },
+  { status: "Not Started", label: "Not started", color: "#dc2626" },
 ] as const;
 
 function statusMeta(status: string) {
