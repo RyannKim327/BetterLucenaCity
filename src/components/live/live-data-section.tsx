@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DpwhData, EarthquakeData, PanelState, WeatherData } from "@/types/live-data";
 import { formatPeso } from "@/lib/functions";
+import Link from "next/link";
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -86,7 +87,7 @@ export default function LiveDataSection() {
                 Humidity {weather.data.current.humidityPct}% · Wind {weather.data.current.windSpeedKph} km/h
               </p>
               <ul className="mt-4 grid grid-cols-2 gap-2 border-t border-outline-variant/40 pt-3">
-                {weather.data.daily.slice(1).map((d) => (
+                {weather.data.daily.map((d) => (
                   <li key={d.date} className="text-xs text-on-surface-variant">
                     <span aria-hidden>{d.icon} </span>
                     {new Date(d.date).toLocaleDateString("en-PH", { weekday: "short" })}{" "}
@@ -106,7 +107,7 @@ export default function LiveDataSection() {
           )}
           {quakes.status === "ready" && quakes.data.earthquakes.length > 0 && (
             <ul className="space-y-3">
-              {quakes.data.earthquakes.slice(0, 4).map((q, i: number) => (
+              {quakes.data.earthquakes.slice(0, 5).map((q, i: number) => (
                 <li key={i}>
                   <a href={q.details_link} target="_blank" rel="noreferrer" className="font-medium hover:text-primary">
                     M{q.magnitude?.toFixed(1)} · {q.location}
@@ -123,7 +124,7 @@ export default function LiveDataSection() {
         <Panel title={`DPWH Projects · ${dpwh.status === "ready" ? dpwh.data.scope : "Quezon"}`}>
           {dpwh.status === "loading" && <Loading label="DPWH projects" />}
           {dpwh.status === "error" && <Failed />}
-          <div>
+          <div className="flex flex-col">
             {dpwh.status === "ready" && (
               <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                 <li><span className="font-semibold">{dpwh.data.summary.totalProjects.toLocaleString()}</span> total</li>
@@ -144,14 +145,17 @@ export default function LiveDataSection() {
                 ))}
               </ul>
             )}
+            <Link
+              className="mt-5 shrink-0 self-end text-sm font-medium text-primary hover:underline"
+              href="/transparency/national-projects">See the project mapping →</Link>
           </div>
         </Panel>
-      </div>
+      </div >
 
       <p className="mt-4 text-xs text-on-surface-variant">
         Sources: Open-Meteo · Phivolcs · DPWH Infrastructure Transparency Portal.
         Cached server-side; not an official government channel.
       </p>
-    </section>
+    </section >
   );
 }

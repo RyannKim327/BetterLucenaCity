@@ -26,7 +26,7 @@ export function Footer() {
           <div>
             <img alt="" src="/blc-logo.png" className="w-[6.25rem]" />
             <p className="text-base font-semibold">
-              {site.name} — {site.locality}
+              {site.name} - {site.locality}
             </p>
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-on-surface-variant">
               {site.description}

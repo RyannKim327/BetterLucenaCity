@@ -17,6 +17,9 @@ export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b:
         <Link href="/contributors">Join Us</Link>
         <Link href="https://bettergov.ph">BetterGov.PH</Link>
         <Link href="/about">About Us</Link>
+        <Link className="text-hotline font-bold md:hidden" href="/contact">
+          Emergency Hotlines
+        </Link>
       </div>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-4">

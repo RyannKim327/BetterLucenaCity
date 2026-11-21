@@ -9,7 +9,13 @@ export const metadata: Metadata = {
   keywords: [
     "Lucena City Barangay Census",
     "Lucena City Population",
-    "Barangays Lucena City"
+    "Barangays Lucena City",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
   ]
 };
 

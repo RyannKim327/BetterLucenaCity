@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { services, servicesCategory } from "@/lib/data/services";
 
-export default function ServicesSection() {
+export default function ServicesSection({ className }: { className?: string }) {
   return (
     <section className="w-full" aria-labelledby="services-heading">
       <h2 id="services-heading" className="sr-only">
         Featured services
       </h2>
-      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className={`grid gap-3 sm:grid-cols-2 xl:grid-cols-2 ${className ?? ""}`}>
         {servicesCategory.map((category) => {
           if (!category.featured) return null;
 
@@ -42,6 +42,6 @@ export default function ServicesSection() {
           );
         })}
       </ul>
-    </section>
+    </section >
   );
 }

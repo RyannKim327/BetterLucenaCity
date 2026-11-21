@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: "Sitemap",
   description:
     "Human-readable sitemap of BetterLucenaCity — all public user-facing pages. Administrative routes are excluded. Report page follows RA 10173 (Data Privacy Act) and RA 11313 (Safe Spaces Act) plus Philippine anti-discrimination laws.",
+  keywords: [
+    "Better Lucena City Sitemap",
+    "Lucena City Website Pages",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
 type SitemapNode = {

@@ -4,6 +4,10 @@ import { AnnouncementsList } from "@/components/data/announcements-list";
 
 export const metadata: Metadata = {
   title: "Announcements",
+  keywords: [
+    "Better Lucena City Announcements",
+    "Lucena City Public Announcements",
+  ]
 };
 
 export default function AnnouncementsPage() {

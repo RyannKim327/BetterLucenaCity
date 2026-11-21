@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     "Lucena City Population",
     "Lucena City Website",
     "Lucena City",
-    "Lucena Website"
+    "Lucena Website",
   ],
   description: site.description,
   icons: {

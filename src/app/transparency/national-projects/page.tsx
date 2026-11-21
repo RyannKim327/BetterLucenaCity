@@ -9,6 +9,16 @@ export const metadata: Metadata = {
   title: "National Projects",
   description:
     "Map of national government infrastructure projects in Lucena City and their implementation status.",
+  keywords: [
+    "National Projects in Lucena City",
+    "Lucena City National Projects Map",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
 export const revalidate = 900;

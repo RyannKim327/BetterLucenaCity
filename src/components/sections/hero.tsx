@@ -7,8 +7,17 @@ export default function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative w-full overflow-hidden rounded-b-lg bg-surface-container-low"
+      className="relative w-full overflow-hidden rounded-b-lg bg-hero"
     >
+      <div className="pointer-events-none absolute -right-60 -bottom-60 overflow-hidden">
+        <Image
+          src="/sun.png"
+          alt=""
+          width={600}
+          height={600}
+          className="opacity-10 animate-[spin_50s_linear_infinite]"
+        />
+      </div>
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 md:grid md:grid-cols-[2fr_3fr] md:items-center md:gap-10 md:py-24">
         <div className="flex flex-col">
           <p className="text-sm font-medium uppercase tracking-widest text-secondary">
@@ -32,15 +41,6 @@ export default function HeroSection() {
           </div>
         </div>
         <ServicesSection />
-        <div className="pointer-events-none absolute -right-60 -bottom-60 overflow-hidden">
-          <Image
-            src="/sun.png"
-            alt=""
-            width={600}
-            height={600}
-            className="opacity-5 animate-[spin_50s_linear_infinite]"
-          />
-        </div>
       </div>
     </section>
   );

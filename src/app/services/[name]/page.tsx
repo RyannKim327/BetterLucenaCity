@@ -11,7 +11,19 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;
   const service = services.find((item) => item.slug === name.toLowerCase());
-  return { title: service ? `${service.name} — Services` : "Services" };
+  return {
+    title: service ? `${service.name} — Services` : "Services",
+    keywords: [
+      service ? service.name : "Services",
+      "Lucena City Services",
+    ],
+    authors: [
+      {
+        name: "RyannKim327",
+        url: "https://github.com/RyannKim327"
+      }
+    ]
+  };
 }
 
 export default async function ServiceDetailPage({ params }: Props) {

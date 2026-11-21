@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "Your privacy matters to us. This policy explains how Better Lucena City collects, uses, and protects your information, in compliance with the Data Privacy Act of 2012 (RA 10173).",
+  keywords: [
+    "Better Lucena City Privacy Policy",
+    "Lucena City Data Privacy",
+    "Data Privacy Act of 2012",
+  ],
   authors: [
     {
       name: "RyannKim327",

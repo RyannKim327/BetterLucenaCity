@@ -6,6 +6,16 @@ import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Transparency",
+  keywords: [
+    "Lucena City National Budget",
+    "Lucena City Transparency Board",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
 export const revalidate = 3600;

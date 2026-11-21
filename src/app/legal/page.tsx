@@ -4,6 +4,11 @@ import { LegalList } from "@/components/data/legal-list";
 
 export const metadata: Metadata = {
   title: "Laws & Ordinances",
+  keywords: [
+    "Lucena City Ordinances",
+    "Lucena City Resolutions",
+    "Laws of Lucena City",
+  ]
 };
 
 export default async function LegalPage({

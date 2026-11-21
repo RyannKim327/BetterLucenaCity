@@ -7,6 +7,19 @@ import { hotlines } from "@/lib/data/hotlines";
 
 export const metadata: Metadata = {
   title: "Contact",
+  description: "Contact details and Emergency Hotlines of Lucena City and some National Response Team",
+  keywords: [
+    "Lucena City Hotlines",
+    "Lucena City Emergency Hotlines",
+    "Lucena City Emergency",
+    "Lucena City Contacts",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
 export default function ContactPage() {

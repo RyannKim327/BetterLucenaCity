@@ -1,8 +1,23 @@
 import { PageHeader } from "@/components/layout/page-header";
-import { ContributorsPageClient } from "@/components/contributors/contributors-page-client";
 import { LucenaHistory } from "@/lib/data/history";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "History of Lucena City",
+  keywords: [
+    "About Lucena City",
+    "History of Lucena",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
+};
 
 export default function Contributors() {
   return (

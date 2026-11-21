@@ -9,9 +9,20 @@ export const metadata: Metadata = {
   keywords: [
     "About Better Lucena City",
     "Better Lucena City About Us",
-    "Lucenahin"
+    "Lucenahin",
+    "Better Lucena City Logo",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    },
+    {
+      name: "Kurt Atoat",
+      url: "https://github.com/seiyanndev"
+    }
   ]
-}
+};
 
 export default function AboutPage() {
   return (

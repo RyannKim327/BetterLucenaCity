@@ -7,6 +7,19 @@ import { services, servicesCategory } from "@/lib/data/services";
 
 export const metadata: Metadata = {
   title: "Services",
+  keywords: [
+    "Lucena City Services",
+    "Lucena City Health Services",
+    "Lucena City Educational and Employment Services",
+    "Lucena City Barangay Services",
+    "Lucena City Civil Registration Services",
+  ],
+  authors: [
+    {
+      name: "RyannKim327",
+      url: "https://github.com/RyannKim327"
+    }
+  ]
 };
 
 interface Props {

@@ -12,9 +12,13 @@ export default function History() {
           View all →
         </Link>
       </div>
-      <div className="flex flex-col md:flex-row gap-2">
-        <div className="flex flex-col gap-2">
-          {timeline.slice((timeline.length - 4), timeline.length - 1).map((lc, i: number) => {
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
+        <Card className="md:flex md:flex-col md:col-span-2">
+          <p className="text-xs md:text-xl uppercase tracking-wider text-secondary">{timeline[timeline.length - 1].date}</p>
+          <p className="md:flex md:justify-center md:items-center md:w-full md:h-full mt-2 text-sm md:text-2xl leading-relaxed text-on-surface-variant">{timeline[timeline.length - 1].content}</p>
+        </Card>
+        <div className="flex flex-col gap-2 md:col-span-3">
+          {timeline.slice((timeline.length - 5), timeline.length - 1).map((lc, i: number) => {
             return (
               <Card key={`${i}. ${lc.date}`}>
                 <p className="text-xs uppercase tracking-wider text-secondary">{lc.date}</p>
@@ -23,10 +27,6 @@ export default function History() {
             )
           })}
         </div>
-        <Card className="md:flex md:flex-col">
-          <p className="text-xs md:text-xl uppercase tracking-wider text-secondary">{timeline[timeline.length - 1].date}</p>
-          <p className="md:flex md:justify-center md:items-center md:w-full md:h-full mt-2 text-sm md:text-2xl leading-relaxed text-on-surface-variant">{timeline[timeline.length - 1].content}</p>
-        </Card>
       </div>
     </section>
   )

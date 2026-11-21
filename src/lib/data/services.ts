@@ -28,7 +28,8 @@ export const servicesCategory: ServicesCatergory[] = [{
   name: "Education & Employment",
   href: "education",
   description: "Scholarships, job matching, and employment assistance.",
-  icon: GraduationCap
+  icon: GraduationCap,
+  featured: true
 }]
 
 export const services: Service[] = [

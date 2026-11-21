@@ -19,7 +19,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .eq("id", Number(id))
     .maybeSingle();
   const title = (data as { title?: string } | null)?.title ?? "Announcement";
-  return { title: `${title} — Announcements` };
+  return {
+    title: `${title} — Announcements`,
+    keywords: [
+      title,
+      "Lucena City Announcements",
+      "Lucena City News",
+    ],
+    authors: [
+      {
+        name: "RyannKim327",
+        url: "https://github.com/RyannKim327"
+      }
+    ]
+  };
 }
 
 export default async function AnnouncementDetailPage({ params }: PageProps) {
