@@ -20,7 +20,7 @@ export function Footer() {
   const [open, setOpen] = useState(false);
 
   return (
-    <footer className="mt-20 border-t border-outline-variant/40 bg-surface-container">
+    <footer className="mt-20 border-t border-outline-variant/40 bg-footer">
       <div className="items-end mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2">
         <div className="flex gap-3 items-start">
           <div>

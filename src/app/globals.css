@@ -25,6 +25,7 @@
   --outline-variant: #bec5c9;
   --hero-bg: #dae2f3;
   --hotline: #0066eb;
+  --footer: #dae2f3;
 }
 
 .dark {
@@ -50,6 +51,7 @@
   --outline-variant: #3f4649;
   --hero-bg: #010610;
   --hotline: #df080f;
+  --footer: #1c1f20;
 }
 
 @theme inline {
@@ -74,6 +76,7 @@
   --color-outline-variant: var(--outline-variant);
   --color-hero: var(--hero-bg);
   --color-hotline: var(--hotline);
+  --color-footer: var(--footer);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
