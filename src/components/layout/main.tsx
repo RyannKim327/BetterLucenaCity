@@ -19,7 +19,7 @@ type DropdownLink = {
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [visibleNav, setVisibleNav] = useState(false)
-  const [orderedLinks, setOrderedLinks] = useState<DropdownLink[]>([])
+  const [orderedLinks, setOrderedLinks] = useState<DropdownLink[] | null>(null)
   const [auth, setAuth] = useState(false)
 
   return (
@@ -54,7 +54,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 </li>
               );
             })}
-            {orderedLinks.length > 0 &&
+            {orderedLinks && orderedLinks.length > 0 &&
               <div className="p-px bg-on-surface-variant w-full" />}
             {orderedLinks && orderedLinks.map(l => {
               return (

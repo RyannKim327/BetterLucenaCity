@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import {
   User,
@@ -70,7 +70,7 @@ function hasPermission(profile: ProfileState, perm: string): boolean {
   return lower.includes(perm.toLowerCase());
 }
 
-export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean) => void, setOrderedLinks: (o: DropdownLink[]) => void }) {
+export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean) => void, setOrderedLinks: Dispatch<SetStateAction<DropdownLink[] | null>> }) {
   const [user, setUser] = useState<{ email?: string | null; id: string } | null>(null);
   const [profile, setProfile] = useState<ProfileState>(null);
   const [loading, setLoading] = useState(true);
@@ -181,14 +181,16 @@ export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean
             <button
               type="button"
               onClick={() => {
-                setOrderedLinks(orderedLinks)
+                setOrderedLinks((prev) => (prev === null ? orderedLinks : null))
               }}
               aria-haspopup="menu"
               aria-label="Profile menu"
               className="flex flex-1 flex-row gap-2 items-center hover:bg-primary/8 transition-colors">
               <span className="rounded-full overflow-hidden">
                 {loading ? (
-                  <Loader2 size={20} className="animate-spin text-on-surface-variant" aria-hidden />
+                  <Loader2
+                  size={20}
+                  className="animate-spin text-on-surface-variant" aria-hidden />
                 ) : profile?.avatar_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -242,8 +244,7 @@ export function ProfileMenu({ setAuth, setOrderedLinks }: { setAuth: (v: boolean
               <p className="text-xs text-on-surface-variant">Not signed in</p>
             </div>
           </div>
-        )
-        }
+        )}
       </div >
 
       <div
