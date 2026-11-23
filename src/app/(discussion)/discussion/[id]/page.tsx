@@ -17,7 +17,8 @@ interface DiscussionRow {
   title: string
   content: string
   type: string
-  reference_id: number
+  reference_id: number | null
+  reference_uuid?: string | null
   date_added: string | null
   is_open: boolean | null
   data_source: string[] | null
@@ -55,7 +56,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
 
   const { data: discussion, error } = await supabase
     .from("discussion")
-    .select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by")
+    .select("id, user_id, title, content, type, reference_id, reference_uuid, date_added, is_open, data_source, approved_by, archive_by")
     .eq("id", id).maybeSingle()
 
   if (error || !discussion) {
@@ -93,6 +94,10 @@ export default async function DiscussionDetail({ params }: PageProps) {
       else linked = data
     } else if (row.type === "procurement") {
       const { data, error: e } = await supabase.from("procurement").select("id, source, pricebid, date, data_source, approved_by").eq("id", row.reference_id).maybeSingle()
+      if (e) linkedError = e.message
+      else linked = data
+    } else if (row.type === "evacuation_centers" && row.reference_uuid) {
+      const { data, error: e } = await supabase.from("evacuation_centers").select("id, name, barangay, latitude, longitude, data_source, approved_by").eq("id", row.reference_uuid).maybeSingle()
       if (e) linkedError = e.message
       else linked = data
     }
@@ -138,7 +143,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
           {status === "approved" && <span className="rounded-full bg-tertiary-container px-3 py-1 text-xs font-medium text-on-tertiary-container">Approved · permanently closed</span>}
           {status === "archived" && <span className="rounded-full bg-secondary-container px-3 py-1 text-xs font-medium text-on-secondary-container">Archived · temporarily closed</span>}
           {status === "open" && <span className="rounded-full bg-primary-container px-3 py-1 text-xs font-medium text-on-primary-container">Open</span>}
-          <span className="text-xs text-on-surface-variant">ref #{row.reference_id}</span>
+          <span className="text-xs text-on-surface-variant">ref #{row.reference_uuid ?? row.reference_id ?? "—"}</span>
           {row.date_added && <time className="text-xs text-on-surface-variant">{formatDate(row.date_added)}</time>}
         </div>
         {row.approved_by && <p className="mt-2 text-xs text-on-surface-variant">Approved by <span className="font-medium text-on-surface">{row.approved_by.slice(0, 8)}</span> — thread closed permanently</p>}
@@ -161,7 +166,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
       </Card>
 
       <Card>
-        <h2 className="text-sm font-semibold">Linked record ({row.type} #{row.reference_id})</h2>
+        <h2 className="text-sm font-semibold">Linked record ({row.type} #{row.reference_uuid ?? row.reference_id ?? "—"})</h2>
         <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
           {row.approved_by ? "This linked record is approved and locked — it must not be edited after it is done." : row.archive_by ? "Temporarily closed — editing is paused until unarchived." : row.user_id === user.id ? "You are the data collector — you may modify this linked data while the thread is open. Once approved it becomes permanently locked." : "Linked data is owned by the data collector and may be edited only by them while the thread is open."}
         </p>
@@ -290,7 +295,7 @@ export default async function DiscussionDetail({ params }: PageProps) {
           <p className="mt-2 text-xs text-on-surface-variant">No linked record found (may have been removed).</p>
         )}
         <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
-          When a thread is approved, the linked entry is published and appears on its public page (legal documents, announcements, or budget). Until then it remains pending.
+          When a thread is approved, the linked entry is published and appears on its public page (legal documents, announcements, budget, or the evacuation center map). Until then it remains pending.
         </p>
       </Card>
 

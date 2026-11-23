@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const canContribute = await CheckPermission(user.id, "contribute")
   if (!canValidate && !canContribute) return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 
-  const { data: discussion, error } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by").eq("id", id).maybeSingle()
+  const { data: discussion, error } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, reference_uuid, date_added, is_open, data_source, approved_by, archive_by").eq("id", id).maybeSingle()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   if (!discussion) return NextResponse.json({ error: "Not found" }, { status: 404 })
   if (!canValidate && discussion.user_id !== user.id) return NextResponse.json({ error: "Forbidden — you can only access your own discussions" }, { status: 403 })
@@ -45,6 +45,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   } else if (discussion.type === "procurement") {
     const { data } = await supabase.from("procurement").select("*").eq("id", discussion.reference_id).maybeSingle()
     linked = data
+  } else if (discussion.type === "evacuation_centers" && discussion.reference_uuid) {
+    const { data } = await supabase.from("evacuation_centers").select("*").eq("id", discussion.reference_uuid).maybeSingle()
+    linked = data
   }
 
   return NextResponse.json({ discussion, linked })
@@ -60,7 +63,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   const canContribute = await CheckPermission(user.id, "contribute")
   if (!canValidate && !canContribute) return NextResponse.json({ error: "Forbidden — need contribute or validate" }, { status: 403 })
 
-  const { data: discussion, error: dErr } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, data_source, is_open, approved_by, archive_by").eq("id", id).maybeSingle()
+  const { data: discussion, error: dErr } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, reference_uuid, data_source, is_open, approved_by, archive_by").eq("id", id).maybeSingle()
   if (dErr) return NextResponse.json({ error: dErr.message }, { status: 500 })
   if (!discussion) return NextResponse.json({ error: "Discussion not found" }, { status: 404 })
 
@@ -101,7 +104,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 
   const type = discussion.type as string
-  const refId = discussion.reference_id as number
+  const refId = discussion.reference_id as number | null
+  const refUuid = (discussion as { reference_uuid?: string | null }).reference_uuid as string | null
 
   try {
     if (type === "announcements") {
@@ -239,6 +243,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
 
     if (type === "procurement") {
+      if (refId == null) return NextResponse.json({ error: "Missing reference id" }, { status: 400 })
       const source = body.source !== undefined ? String(body.source).trim() : undefined
       const pricebidRaw = body.pricebid
 
@@ -268,6 +273,55 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
       const { data: refreshed } = await supabase.from("procurement").select("*").eq("id", refId).maybeSingle()
       return NextResponse.json({ message: "Procurement updated", linked: refreshed })
+    }
+
+    if (type === "evacuation_centers") {
+      if (!refUuid) return NextResponse.json({ error: "Missing reference uuid" }, { status: 400 })
+      const name = body.name !== undefined ? String(body.name).trim() : undefined
+      const barangay = body.barangay !== undefined ? String(body.barangay).trim() : undefined
+      const latRaw = body.latitude
+      const lngRaw = body.longitude
+
+      if (name !== undefined && !name) return NextResponse.json({ error: "name cannot be empty" }, { status: 400 })
+      if (barangay !== undefined && !barangay) return NextResponse.json({ error: "barangay cannot be empty" }, { status: 400 })
+
+      const { data: current, error: curErr } = await supabase.from("evacuation_centers").select("id, approved_by").eq("id", refUuid).maybeSingle()
+      if (curErr) return NextResponse.json({ error: curErr.message }, { status: 500 })
+      if (!current) return NextResponse.json({ error: "Linked evacuation center not found" }, { status: 404 })
+      if ((current as { approved_by: string | null }).approved_by) return NextResponse.json({ error: "Linked record is approved and locked" }, { status: 403 })
+
+      const updateLinked: Record<string, unknown> = {}
+      if (name !== undefined) updateLinked.name = name
+      if (barangay !== undefined) updateLinked.barangay = barangay
+      if (latRaw !== undefined) {
+        const lat = typeof latRaw === "string" ? parseFloat(latRaw) : Number(latRaw)
+        if (!Number.isFinite(lat) || lat < -90 || lat > 90) return NextResponse.json({ error: "Invalid latitude" }, { status: 400 })
+        updateLinked.latitude = lat
+      }
+      if (lngRaw !== undefined) {
+        const lng = typeof lngRaw === "string" ? parseFloat(lngRaw) : Number(lngRaw)
+        if (!Number.isFinite(lng) || lng < -180 || lng > 180) return NextResponse.json({ error: "Invalid longitude" }, { status: 400 })
+        updateLinked.longitude = lng
+      }
+      if (dataSourceUrls !== null) updateLinked.data_source = dataSourceUrls
+      if (Object.keys(updateLinked).length === 0) return NextResponse.json({ error: "No fields to update" }, { status: 400 })
+
+      const { error: updErr } = await supabase.from("evacuation_centers").update(updateLinked as never).eq("id", refUuid)
+      if (updErr) return NextResponse.json({ error: updErr.message }, { status: 500 })
+
+      const discussionUpdate: Record<string, unknown> = {}
+      if (name !== undefined || barangay !== undefined) {
+        const baseName = name ?? String(discussion.title ?? "").replace(/^Evacuation center:\s*/, "").split(" (")[0]
+        const nextBarangay = barangay ?? String(discussion.title ?? "").match(/\(([^)]+)\)\s*$/)?.[1]
+        discussionUpdate.title = `Evacuation center: ${baseName}${nextBarangay ? ` (${nextBarangay})` : ""}`
+      }
+      if (dataSourceUrls !== null) discussionUpdate.data_source = dataSourceUrls
+      if (Object.keys(discussionUpdate).length > 0) {
+        await supabase.from("discussion").update(discussionUpdate as never).eq("id", id)
+      }
+
+      const { data: refreshed } = await supabase.from("evacuation_centers").select("*").eq("id", refUuid).maybeSingle()
+      return NextResponse.json({ message: "Evacuation center updated", linked: refreshed })
     }
 
     return NextResponse.json({ error: `Editing not supported for type: ${type}` }, { status: 400 })

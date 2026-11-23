@@ -111,7 +111,7 @@ const sitemap: SitemapNode[] = [
     href: "/contribute",
     label: "Contribute",
     description:
-      "Contributor portal — entry hub with 5 section cards. Requires sign-in (Google/GitHub) + approved role with collect permission. Unauthenticated users see sign-in + guidelines; pending users see approval state; testers see limited-access notice.",
+      "Contributor portal — entry hub with 6 section cards. Requires sign-in (Google/GitHub) + approved role with collect permission. Unauthenticated users see sign-in + guidelines; pending users see approval state; testers see limited-access notice.",
     badge: "Auth · Approved",
     children: [
       {
@@ -140,6 +140,12 @@ const sitemap: SitemapNode[] = [
         label: "/contribute/ordinances",
         description:
           "Ordinances & Legal — centered form for ordinances, resolutions, EOs, memoranda with references for validation.",
+      },
+      {
+        href: "/contribute/evacuation-locator",
+        label: "/contribute/evacuation-locator",
+        description:
+          "Evacuation Locator — submit a center's name and barangay, then click the map to capture its latitude and longitude for validation.",
       },
     ],
   },

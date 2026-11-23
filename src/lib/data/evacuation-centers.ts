@@ -23,6 +23,7 @@ export async function getEvacuationCenters(): Promise<EvacuationCenter[]> {
   const { data, error } = await supa
     .from("evacuation_centers")
     .select("id, name, barangay, latitude, longitude")
+    .not("approved_by", "is", null)
     .order("name", { ascending: true });
 
   if (error) return [];

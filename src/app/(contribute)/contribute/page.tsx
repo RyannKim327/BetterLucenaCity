@@ -10,6 +10,7 @@ import {
   Scale,
   ArrowRight,
   ShieldCheck,
+  MapPin,
 } from "lucide-react";
 
 const contributeSections = [
@@ -47,6 +48,13 @@ const contributeSections = [
     description: "Submit ordinances, resolutions, executive orders, and memoranda. Centered form layout.",
     icon: Scale,
     color: "bg-primary-container text-on-primary-container",
+  },
+  {
+    href: "/contribute/evacuation-locator",
+    title: "Evacuation Locator",
+    description: "I-pin ang evacuation center sa mapa para makuha ang eksaktong latitude at longitude.",
+    icon: MapPin,
+    color: "bg-secondary-container text-on-secondary-container",
   },
 ];
 

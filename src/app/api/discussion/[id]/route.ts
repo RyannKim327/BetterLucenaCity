@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const canContribute = await CheckPermission(user.id, "contribute")
   if (!canValidate && !canContribute) return NextResponse.json({ error: "Forbidden — need contribute or validate" }, { status: 403 })
 
-  const { data, error } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by").eq("id", id).maybeSingle()
+  const { data, error } = await supabase.from("discussion").select("id, user_id, title, content, type, reference_id, reference_uuid, date_added, is_open, data_source, approved_by, archive_by").eq("id", id).maybeSingle()
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 })
 
@@ -36,6 +36,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     linked = r
   } else if (data.type === "procurement") {
     const { data: r } = await supabase.from("procurement").select("*").eq("id", data.reference_id).maybeSingle()
+    linked = r
+  } else if (data.type === "evacuation_centers" && data.reference_uuid) {
+    const { data: r } = await supabase.from("evacuation_centers").select("*").eq("id", data.reference_uuid).maybeSingle()
     linked = r
   }
 
@@ -64,14 +67,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: "Invalid action. Use approve | unapprove | archive | unarchive" }, { status: 400 })
   }
 
-  const { data: row, error: fetchErr } = await supabase.from("discussion").select("id, type, reference_id, is_open, approved_by, archive_by").eq("id", id).maybeSingle()
+  const { data: row, error: fetchErr } = await supabase.from("discussion").select("id, type, reference_id, reference_uuid, is_open, approved_by, archive_by").eq("id", id).maybeSingle()
   if (fetchErr) return NextResponse.json({ error: fetchErr.message }, { status: 500 })
   if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 })
 
   let update: Record<string, unknown> = {}
   let linkedTable: string | null = null
+  let linkedId: string | number | null = null
   if (row.type === "legals" || row.type === "announcements" || row.type === "local_budget" || row.type === "procurement") {
     linkedTable = row.type
+    linkedId = row.reference_id as number | null
+  } else if (row.type === "evacuation_centers") {
+    linkedTable = row.type
+    linkedId = row.reference_uuid as string | null
   }
 
   if (action === "approve") {
@@ -106,12 +114,12 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 
   // Propagate approval to linked table (publish) — validators approve to make data public
-  if (linkedTable) {
+  if (linkedTable && linkedId != null) {
     try {
       if (action === "approve") {
-        await supabase.from(linkedTable).update({ approved_by: user.id } as never).eq("id", row.reference_id).is("approved_by", null)
+        await supabase.from(linkedTable).update({ approved_by: user.id } as never).eq("id", linkedId).is("approved_by", null)
       } else if (action === "unapprove") {
-        await supabase.from(linkedTable).update({ approved_by: null } as never).eq("id", row.reference_id)
+        await supabase.from(linkedTable).update({ approved_by: null } as never).eq("id", linkedId)
       }
     } catch {
       // best-effort; don't fail discussion update if linked propagation fails

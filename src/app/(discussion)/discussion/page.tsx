@@ -11,7 +11,8 @@ interface DiscussionRow {
   title: string
   content: string
   type: string
-  reference_id: number
+  reference_id: number | null
+  reference_uuid?: string | null
   date_added: string | null
   is_open: boolean | null
   data_source: string[] | null
@@ -44,7 +45,7 @@ export default async function Discussions({ searchParams }: { searchParams?: Pro
   const allowed: TabKey[] = ["all", "open", "approved", "archived"]
   const tab: TabKey = (allowed as string[]).includes(rawTab) ? (rawTab as TabKey) : "all"
 
-  let query = supabase.from("discussion").select("id, user_id, title, content, type, reference_id, date_added, is_open, data_source, approved_by, archive_by").order("date_added", { ascending: false })
+  let query = supabase.from("discussion").select("id, user_id, title, content, type, reference_id, reference_uuid, date_added, is_open, data_source, approved_by, archive_by").order("date_added", { ascending: false })
 
   // Contributors (without validate) see only their own threads
   if (!canValidate && canContribute) {
@@ -118,7 +119,7 @@ export default async function Discussions({ searchParams }: { searchParams?: Pro
                     </span>
                     {status === "approved" && <span className="rounded-full bg-tertiary-container px-3 py-1 text-xs font-medium text-on-tertiary-container">Approved</span>}
                     {status === "archived" && <span className="rounded-full bg-secondary-container px-3 py-1 text-xs font-medium text-on-secondary-container">Archived</span>}
-                    <span className="text-xs text-on-surface-variant">ref #{d.reference_id}</span>
+                    <span className="text-xs text-on-surface-variant">ref #{d.reference_uuid ?? d.reference_id ?? "—"}</span>
                     {d.date_added && <time className="text-xs text-on-surface-variant">{formatDate(d.date_added)}</time>}
                   </div>
                   <h2 className="mt-2 text-base font-semibold leading-snug">{d.title}</h2>
