@@ -80,10 +80,17 @@ const sitemap: SitemapNode[] = [
     badge: "Public",
   },
   {
-    href: "/contact",
-    label: "Contact",
+    href: "/emergency/hotlines",
+    label: "Emergency Hotlines",
     description:
       "Visit City Hall (Mayao Kanluran, Lucena 4301), office hours Mon–Fri 8AM–5PM and emergency hotlines grid.",
+    badge: "Public",
+  },
+  {
+    href: "/emergency/planning",
+    label: "Disaster Preparedness",
+    description:
+      "Taglish tips for lindol, baha, bagyo, at sunog, plus the list of Lucena City evacuation centers with barangay and coordinates.",
     badge: "Public",
   },
   {

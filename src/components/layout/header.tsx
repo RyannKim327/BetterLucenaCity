@@ -24,7 +24,7 @@ export function Header({ setVisibleNav, visibleNav, auth }: { setVisibleNav: (b:
           href="/about">About Us</Link>
         <Link
           className="text-hotline font-bold md:hidden"
-          href="/contact">
+          href="/emergency/hotlines">
           Emergency Hotlines
         </Link>
       </div>
