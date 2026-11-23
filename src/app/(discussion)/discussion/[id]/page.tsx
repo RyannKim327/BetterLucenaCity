@@ -5,9 +5,11 @@ import { Card } from "@/components/ui/card"
 import { formatDate } from "@/lib/functions"
 import Link from "next/link"
 import { CommentForm } from "@/components/discussion/comment-form"
-import { TableIcon } from "lucide-react"
+import { MapPin, TableIcon } from "lucide-react"
 import { DiscussionStatusActions } from "@/components/discussion/discussion-status-actions"
 import { LinkedDataEditor } from "@/components/discussion/linked-data-editor"
+import EvacuationMapClient from "@/components/map/evacuation-map-client"
+import type { EvacuationCenter } from "@/types/emergency"
 
 interface PageProps { params: Promise<{ id: string }> }
 
@@ -39,6 +41,31 @@ function renderDataSource(urls: string[] | null) {
       ))}
     </ul>
   )
+}
+
+function locationFromLinked(value: unknown): EvacuationCenter | null {
+  if (!value || typeof value !== "object") return null
+  const record = value as {
+    id?: string | null
+    name?: string | null
+    barangay?: string | null
+    latitude?: number | string | null
+    longitude?: number | string | null
+  }
+  if (record.latitude == null || record.longitude == null) return null
+
+  const latitude = Number(record.latitude)
+  const longitude = Number(record.longitude)
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null
+  if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) return null
+
+  return {
+    id: record.id ?? undefined,
+    name: record.name?.trim() || "Linked location",
+    barangay: record.barangay?.trim() || "Lucena City",
+    latitude,
+    longitude,
+  }
 }
 
 export default async function DiscussionDetail({ params }: PageProps) {
@@ -105,6 +132,8 @@ export default async function DiscussionDetail({ params }: PageProps) {
     linkedError = "Failed to load linked record"
   }
 
+  const location = locationFromLinked(linked)
+
   // Fetch comments
   const { data: comments } = await supabase
     .from("discussion_comments")
@@ -164,6 +193,23 @@ export default async function DiscussionDetail({ params }: PageProps) {
           </div>
         )}
       </Card>
+
+      {location && (
+        <Card>
+          <div className="flex items-start gap-3">
+            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+            <div>
+              <h2 className="text-sm font-semibold">Location on map — {location.name}</h2>
+              <p className="mt-1 text-xs leading-relaxed text-on-surface-variant">
+                Check the pin against the submitted details before validating this record.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <EvacuationMapClient centers={[location]} />
+          </div>
+        </Card>
+      )}
 
       <Card>
         <h2 className="text-sm font-semibold">Linked record ({row.type} #{row.reference_uuid ?? row.reference_id ?? "—"})</h2>

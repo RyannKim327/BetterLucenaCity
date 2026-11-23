@@ -64,7 +64,7 @@ export function PendingList() {
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-on-surface-variant">Pending (approved = false) — review who the contributors are before approving.</p>
+      <p className="text-sm text-on-surface-variant">Pending contributors — review who they are before approving.</p>
       <ul className="divide-y divide-outline-variant/30 rounded-xl border border-outline-variant/40 bg-surface-container-low">
         {users.map((u) => (
           <li key={u.id} className="flex items-center gap-3 p-4">

@@ -327,7 +327,7 @@ export function TransparencyPanel({ userEmail }: { userEmail: string }) {
                 <p className="mt-2 text-xs text-on-surface-variant">Showing first 10 of {rows.length} rows. Full dataset will be sent to the database on upload.</p>
               )}
               <p className="mt-3 text-xs leading-relaxed text-on-surface-variant">
-                Preview only — the file is not uploaded as-is. We extract the table above and POST the JSON rows to the database for validation. Large files are truncated in preview but fully transmitted as data.
+                Preview only — the file is not uploaded as-is. We extract the table above and send the records for validation. Large files are truncated in preview but fully transmitted as data.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">

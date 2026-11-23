@@ -97,7 +97,7 @@ export function LinkedDataEditor({ discussionId, type, linked, isApproved, isArc
         ) : canEditGeneric ? (
           <div className="mt-3 rounded-xl border border-primary/20 bg-primary-container/20 px-4 py-3">
             <p className="text-xs leading-relaxed text-on-surface-variant">
-              This linked {type} record can be edited by the data collector while the thread is open. Use the thread comments to coordinate, or call <code className="rounded bg-surface px-1 py-0.5 text-xs">PATCH /api/discussion/{discussionId}/linked</code> to update. Announcement editing has a full UI below; other types support edits via the same endpoint (validator may unapprove to unlock if needed).
+              This linked {type} record can be edited by the data collector while the thread is open. Use the thread comments to coordinate. Announcement editing has a full UI below; other types can be updated from the thread (a validator may unapprove to unlock if needed).
             </p>
           </div>
         ) : null}

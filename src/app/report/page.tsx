@@ -125,7 +125,7 @@ export default async function ReportPage({ searchParams }: Props) {
               <div className="mt-6 rounded-xl border border-secondary/30 bg-secondary-container/30 px-4 py-3">
                 <p className="text-sm font-medium text-on-secondary-container">Failed to load reports</p>
                 <p className="mt-1 text-xs leading-relaxed text-on-secondary-container">{fetchError}</p>
-                <p className="mt-2 text-xs text-on-secondary-container">If the report table has not been migrated yet, this view will be empty until data exists.</p>
+                <p className="mt-2 text-xs text-on-secondary-container">If no reports have been filed yet, this view will be empty until data exists.</p>
               </div>
             ) : (
               <div className="mt-6">

@@ -158,7 +158,7 @@ export function normalizeDataSource(input: unknown): { urls: string[]; error?: s
   } else if (typeof input === "string") {
     arr = parseCommaSeparated(input)
   } else {
-    return { urls: [], error: "Invalid data_source format" }
+    return { urls: [], error: "Invalid reference links format" }
   }
   // dedupe preserve order
   const deduped: string[] = []
